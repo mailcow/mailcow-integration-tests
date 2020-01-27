@@ -1,0 +1,19 @@
+---
+kind: pipeline
+name: default
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: lint
+  pull: default
+  image: timovibritannia/ansible
+  commands:
+  - ansible-lint ./
+---
+kind: signature
+hmac: 2f4e1b168b4e7553a83df0e9d7227c256dc7db20af5142a9199749f58b1db361
+
+...
