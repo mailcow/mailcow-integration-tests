@@ -1,0 +1,116 @@
+---
+
+- name: Sending a email to {{ mailcow__dev_null_email }} not encrypted
+  mail:
+    host: "{{ mailcow__hostname }}"
+    port: 587
+    from: "{{ mailcow__mailbox_user_one }}@{{ mailcow__hostname }}"
+    username: "{{ mailcow__mailbox_user_one }}@{{ mailcow__hostname }}"
+    password: "{{ mailcow_mailbox_pw }}"
+    to:
+      - "{{ mailcow__dev_null_email }}"
+    subject: Ansible-report
+    body: "System {{ ansible_hostname }} says hello"
+    secure: never
+  register: result_sendmail_no_tls
+  ignore_errors: yes
+
+- set_fact:
+    result_sendmail_no_tls_sucess: success
+  when: ('msg' in result_sendmail_no_tls) and ("No Authentication on the server" in result_sendmail_no_tls.msg)
+
+- set_fact:
+    result_sendmail_no_tls_sucess: failed
+  when: ('msg' in result_sendmail_no_tls) and ("No Authentication on the server" not in result_sendmail_no_tls.msg)
+
+- name: Sending a email to {{ mailcow__dev_null_email }} always encrypted
+  mail:
+    host: "{{ mailcow__hostname }}"
+    port: 587
+    from: "{{ mailcow__mailbox_user_one }}@{{ mailcow__test_domain }}"
+    username: "{{ mailcow__mailbox_user_one }}@{{ mailcow__test_domain }}"
+    password: "{{ mailcow_mailbox_pw }}"
+    to:
+      - "{{ mailcow__dev_null_email }}"
+    subject: Ansible-report
+    body: System {{ ansible_hostname }} says hello
+    secure: starttls
+  register: result_sendmail_tls
+
+- set_fact:
+    result_sendmail_tls_sucess: success
+  when: ('msg' in result_sendmail_tls) and ("Mail sent successfully" in result_sendmail_tls.msg)
+
+- set_fact:
+    result_sendmail_tls_sucess: failed
+  when: ('msg' in result_sendmail_tls) and ("Mail sent successfully" not in result_sendmail_tls.msg)
+
+- name: Get Rspamd log using API
+  uri:
+    url: "https://{{ mailcow__hostname }}/api/v1/get/logs/rspamd-history/1"
+    method: GET
+    body_format: json
+    return_content: yes
+    status_code: 200
+    headers:
+      X-API-Key: "{{ mailcow__api_key }}"
+  register: result_sendmail_rspamd
+
+- set_fact:
+    result_sendmail_rspamd_symbols_list: "{{ result_sendmail_rspamd.json[0].symbols | list }}"
+
+- name: Debug Rspamd symbols as list
+  debug:
+    var: result_sendmail_rspamd_symbols_list
+
+## Symbol Checks
+- set_fact:
+    result_sendmail_rspamd_symbols_mailcow_auth_sucess: success
+  when: "'MAILCOW_AUTH' in result_sendmail_rspamd_symbols_list"
+
+- set_fact:
+    result_sendmail_rspamd_symbols_mailcow_auth_sucess: failed
+  when: "'MAILCOW_AUTH' not in result_sendmail_rspamd_symbols_list"
+
+- set_fact:
+    result_sendmail_rspamd_symbols_dyn_rl_check_sucess: success
+  when: "'DYN_RL_CHECK' in result_sendmail_rspamd_symbols_list"
+
+- set_fact:
+    result_sendmail_rspamd_symbols_dyn_rl_check_sucess: failed
+  when: "'DYN_RL_CHECK' not in result_sendmail_rspamd_symbols_list"
+
+- set_fact:
+    result_sendmail_rspamd_symbols_dkim_signed_sucess: success
+  when: "'DKIM_SIGNED' in result_sendmail_rspamd_symbols_list"
+
+- set_fact:
+    result_sendmail_rspamd_symbols_dkim_signed_sucess: failed
+  when: "'DKIM_SIGNED' not in result_sendmail_rspamd_symbols_list"
+## End Symbol Checks
+
+- name: Sending a email from a not existing alias
+  mail:
+    host: "{{ mailcow__hostname }}"
+    port: 587
+    from: "iamnull@{{ mailcow__test_domain }}"
+    username: "{{ mailcow__mailbox_user_one }}@{{ mailcow__test_domain }}"
+    password: "{{ mailcow_mailbox_pw }}"
+    to:
+      - "{{ mailcow__dev_null_email }}"
+    subject: Ansible-report
+    body: "System {{ ansible_hostname }} says hello"
+  ignore_errors: yes
+  register: result_sendmai_not_allowed_alias
+
+- name: Debug sending a email from a non exsting alias
+  debug:
+    var: result_sendmai_not_allowed_alias.msg
+
+- set_fact:
+    result_sendmail_not_allowed_alias_sucess: success
+  when: "'Sender address rejected: not owned by user' in result_sendmai_not_allowed_alias.msg"
+
+- set_fact:
+    result_sendmail_not_allowed_alias_sucess: failed
+  when: "'Sender address rejected: not owned by user' not in result_sendmai_not_allowed_alias.msg"

@@ -1,0 +1,66 @@
+---
+
+- name: Create Alias
+  uri:
+    url: "https://{{ mailcow__hostname }}/api/v1/add/alias"
+    method: POST
+    body_format: json
+    return_content: yes
+    status_code: 200
+    body: "{{ mailcow__demo_alias_json | to_json }}"
+    headers:
+      X-API-Key: "{{ mailcow__api_key }}"
+  register: result_alias
+  until: ('json' in result_alias)
+  retries: 10
+  delay: 10
+
+- name: Debug Creation
+  debug:
+    var: result_alias.json
+
+- name: Get Alias
+  uri:
+    url: "https://{{ mailcow__hostname }}/api/v1/get/alias/all"
+    method: GET
+    body_format: json
+    return_content: yes
+    status_code: 200
+    headers:
+      X-API-Key: "{{ mailcow__api_key }}"
+  register: result_alias_get
+  until:
+    - ('json' in result_alias_get)
+  retries: 10
+  delay: 10
+
+- name: Debug Get
+  debug:
+    var: result_alias_get.json
+
+- set_fact:
+    result_alias_get_success: success
+  when: ('json' in result_alias_get) and (result_alias_get.json[0] is defined)
+
+- set_fact:
+    result_alias_get_success: failed
+  when: ('json' in result_alias_get) and (result_alias_get.json[0] is not defined)
+
+- name: Delete Alias
+  uri:
+    url: "https://{{ mailcow__hostname }}/api/v1/delete/alias"
+    method: POST
+    body_format: json
+    return_content: yes
+    status_code: 200
+    body: ["2"]
+    headers:
+      X-API-Key: "{{ mailcow__api_key }}"
+  register: result_alias_delete
+  until: ('json' in result_alias_delete)
+  retries: 10
+  delay: 10
+
+- name: Debug Deletion
+  debug:
+    var: result_alias_delete.json

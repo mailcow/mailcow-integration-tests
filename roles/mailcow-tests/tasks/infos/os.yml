@@ -1,0 +1,13 @@
+---
+
+- name: "HOST INFO: OS"
+  debug:
+    var: ansible_distribution
+
+- name: "HOST INFO: OS version"
+  debug:
+    var: ansible_distribution_version
+
+- name: "HOST INFO: OS kernel"
+  debug:
+    var: ansible_kernel

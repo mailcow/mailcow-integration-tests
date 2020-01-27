@@ -1,0 +1,66 @@
+---
+
+- name: Stop Postfix
+  become: yes
+  command: docker-compose stop postfix-mailcow
+  args:
+    chdir: /opt/mailcow-dockerized
+
+- name: Wait 120 seconds
+  wait_for:
+    timeout: 120
+  delegate_to: localhost
+
+- name: Get watchdog log using API
+  uri:
+    url: "https://{{ mailcow__hostname }}/api/v1/get/logs/watchdog/200"
+    method: GET
+    body_format: json
+    return_content: yes
+    status_code: 200
+    headers:
+      X-API-Key: "{{ mailcow__api_key }}"
+  register: result_watchdog_log
+  ignore_errors: yes
+  retries: 100
+  delay: 1
+  until:
+    - ('json' in result_watchdog_log)
+
+- name: Debug watchdog log
+  debug:
+    var: result_watchdog_log.json
+
+- set_fact:
+    result_watchdog_log_success: success
+    result_watchdog_log_success_log: "{{ item }}"
+  when:
+    - ('service' in item) and ('Postfix' in item.service)
+    - ('lvl' in item) and ('100' not in item.lvl)
+  loop: "{{ result_watchdog_log.json | json_query('[*]') }}"
+
+- set_fact:
+    result_watchdog_log_success: failed
+  when:
+    - result_watchdog_log_success is not defined
+
+- name: Wait 30 seconds
+  wait_for:
+    timeout: 30
+  delegate_to: localhost
+
+- name: Check if container is running again
+  command: "docker inspect -f {% raw %}'{{.State.Running}}'{% endraw %} mailcowdockerized_postfix-mailcow_1"
+  args:
+    chdir: /opt/mailcow-dockerized
+  register: result_watchdog_container_state
+
+- set_fact:
+    result_watchdog_container_state_success: success
+  when:
+    - ('false' in result_watchdog_container_state.stdout)
+
+- set_fact:
+    result_watchdog_container_state_success: failed
+  when:
+    - ('true' in result_watchdog_container_state.stdout)

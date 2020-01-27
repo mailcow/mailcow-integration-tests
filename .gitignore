@@ -1,0 +1,8 @@
+.galaxy/*
+.vault-pw
+*.retry
+keys/*
+hostvars.yml
+id_ssh_rsa
+id_ssh_rsa.pub
+group_vars/all/secrets.yml

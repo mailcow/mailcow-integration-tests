@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Integration test for {{ drone_commit_hash }}</title>
+  <style>
+    * {
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+    	box-sizing: border-box;
+    }
+    
+    body {
+      background:#353a40;
+    }
+    
+    table {
+      border-collapse: separate;
+      background:#fff;
+      @include border-radius(5px);
+      margin:50px auto;
+      @include box-shadow(0px 0px 5px rgba(0,0,0,0.3));
+    }
+    
+    thead {
+      @include border-radius(5px);
+    }
+    
+    thead th {
+      font-family: 'Patua One', monospace;
+      font-size:16px;
+      font-weight:400;
+      color:#fff;
+      @include text-shadow(1px 1px 0px rgba(0,0,0,0.5));
+      text-align:left;
+      padding:20px;
+      border-top:1px solid #858d99;
+      background: #353a40;
+    
+      &:first-child {
+       @include border-top-left-radius(5px);
+      }
+    
+      &:last-child {
+        @include border-top-right-radius(5px);
+      }
+    }
+    
+    tbody tr td {
+      font-family: 'Open Sans', sans-serif;
+      font-weight:400;
+      color:#5f6062;
+      font-size:13px;
+      padding:20px 20px 20px 20px;
+      border-bottom:1px solid #e0e0e0;
+    
+    }
+    
+    tbody tr:nth-child(2n) {
+      background:#f0f3f5;
+    }
+    
+    tbody tr:last-child td {
+      border-bottom:none;
+      &:first-child {
+        @include border-bottom-left-radius(5px);
+      }
+      &:last-child {
+        @include border-bottom-right-radius(5px);
+      }
+    }
+    
+    span.highlight {
+        background-color: yellow;
+    }
+  </style>
+</head>
+<body>
+
+<table>
+    <thead>
+        <tr>
+            <th>OS</th>
+            <th>OS version</th>
+            <th>Kernel</th>
+            <th>Commit hash</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ ansible_distribution }}</td>
+            <td>{{ ansible_distribution_version }}</td>
+            <td>{{ ansible_kernel }}</td>
+            <td><a href="{{ mailcow__git_http_url }}/commit/{{ drone_commit_hash_long }}">{{ drone_commit_hash }}</a></td>
+        </tr>
+    </tbody>
+</table>
+
+<table>
+    <thead>
+        <tr>
+            <th>Test</th>
+            <th>Result</th>
+            <th>Log</th>
+        </tr>
+    </thead>
+    <tbody>
+{% for tests in mailcow_test_results %}
+        <tr>
+            <td>{{ tests.name }}</td>
+            <td>{% if tests.result == 'success' %}<font color="green">{{ tests.result }}</font>{% else %}<font color="red">{{ tests.result }}</font>{% endif %}</td>
+            <td>{{ tests.log }}</td>
+        </tr>
+{% endfor %}
+    </tbody>
+</table>
+
+<table>
+    <thead>
+        <tr>
+            <th>Language</th>
+            <th>Missing translations</th>
+            <th>Syntax errors in JSON</th>
+        </tr>
+    </thead>
+    <tbody>
+{% for lang_check in language_check.results %} {% for lang_validjson in language_check_validjson.results %}
+        <tr>
+            <td>{{ lang_check.item.name }}: {{ lang_check.item.file }}</td>
+            <td>
+              {% for stdout_line_check in lang_check.stdout_lines %}
+              {{ stdout_line_check }}<br>
+              {% endfor %}
+            </td>
+            <td>
+              {% for stdout_line_validjson in lang_validjson.stdout_lines %}
+              {{ stdout_line_validjson }}<br>
+              {% endfor %}
+            </td>
+          </tr>
+{% endfor %} {% endfor %}
+    </tbody>
+</table>
+
+</body>
+</html>

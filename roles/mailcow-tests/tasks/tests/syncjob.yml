@@ -1,0 +1,68 @@
+---
+
+- name: Create syncjob
+  uri:
+    url: "https://{{ mailcow__hostname }}/api/v1/add/syncjob"
+    method: POST
+    body_format: json
+    return_content: yes
+    status_code: 200
+    body: "{{ mailcow__demo_syncjob_json | to_json }}"
+    headers:
+      X-API-Key: "{{ mailcow__api_key }}"
+  register: result_syncjob
+  until: ('json' in result_syncjob)
+  retries: 10
+  delay: 10
+
+- name: Debug Creation
+  debug:
+    var: result_syncjob.json[0].msg
+
+- name: Wait 2 minutes before grabbing the syncjob logs
+  wait_for:
+    timeout: 120
+  delegate_to: localhost
+
+- name: Get syncjob logs
+  uri:
+    url: "https://{{ mailcow__hostname }}/api/v1/get/syncjobs/all"
+    method: GET
+    body_format: json
+    return_content: yes
+    status_code: 200
+    headers:
+      X-API-Key: "{{ mailcow__api_key }}"
+  register: result_syncjob_get_logs
+  until:
+    - ('json' in result_syncjob_get_logs) and ("result_syncjob_get_logs.json[0].id == '1'")
+    - ('json' in result_syncjob_get_logs) and ("result_syncjob_get_logs.json[0].log|length>5")
+  retries: 20
+  delay: 10
+
+- set_fact:
+    result_syncjob_log_success: success
+  when: ('json' in result_syncjob_get_logs) and ("The sync looks good" in result_syncjob_get_logs.json[0].log)
+
+- set_fact:
+    result_syncjob_log_success: failed
+  when: ('json' in result_syncjob_get_logs) and ("The sync looks good" not in result_syncjob_get_logs.json[0].log)
+
+- name: Delete syncjob
+  uri:
+    url: "https://{{ mailcow__hostname }}/api/v1/delete/syncjob"
+    method: POST
+    body_format: json
+    return_content: yes
+    status_code: 200
+    body: ["1"]
+    headers:
+      X-API-Key: "{{ mailcow__api_key }}"
+  register: result_syncjob_delete
+  until: ('json' in result_syncjob_delete)
+  retries: 10
+  delay: 10
+
+- name: Debug Deletion
+  debug:
+    var: result_syncjob_delete.json[0].msg

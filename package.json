@@ -1,0 +1,8 @@
+{
+    "name": "main",
+    "version": "1.0.0",
+    "scripts": {
+        "install:galaxy": "ansible-galaxy install -r requirements.yml --force",
+        "vault": "EDITOR=nano ansible-vault edit --vault-password-file=./.vault-pw ./group_vars/all/secrets.yml"
+    }
+}

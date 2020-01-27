@@ -1,0 +1,24 @@
+---
+- name: Setup Server
+  hosts: all
+  gather_facts: true
+  become: yes
+  roles:
+    - role: cloud-init
+      tags: [ 'cloud-init' ]
+    - role: apt-updates
+      tags: [ 'apt-updates' ]
+    - role: pip-requierments
+      tags: [ 'pip-requierments' ]
+    - role: npm-requierments
+      tags: [ 'npm-requierments' ]
+    - role: cloudflare-dns
+      tags: [ 'cloudflare-dns' ]
+    - role: netplan
+      tags: [ 'netplan' ]
+    - role: docker-ce
+      tags: [ 'docker-ce' ]
+    - role: docker-compose
+      tags: [ 'docker-compose' ]
+    - role: mailcow
+      tags: [ 'mailcow' ]

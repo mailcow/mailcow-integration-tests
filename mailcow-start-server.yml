@@ -1,0 +1,48 @@
+---
+- name: Start Server
+  gather_facts: false
+  connection: local
+  hosts: 127.0.0.1
+  tasks:
+
+  - name: Install hcloud pip library
+    pip:
+      name: hcloud
+      state: present
+
+  - name: Generate SSH Key
+    become: yes
+    openssh_keypair:
+      path: "{{ playbook_dir }}/id_ssh_rsa"
+      mode: 0600
+      owner: root
+      group: root
+      force: yes
+    register: ssh_key_result
+
+  - name: Add SSH Key to hcloud
+    hcloud_ssh_key:
+      name: "{{ hcloud_server_name }}"
+      public_key: "{{ ssh_key_result.public_key }}"
+      api_token: "{{ vault__hcloud__token }}"
+      state: present
+
+  - name: Create mailcow integration test server
+    hcloud_server:
+      name: "{{ hcloud_server_name }}"
+      server_type: cx21
+      image: ubuntu-18.04
+      location: fsn1
+      ssh_keys:
+        - "{{ hcloud_server_name }}"
+        - servercow
+        - timo@nowitzki.me
+      state: present
+      api_token: "{{ vault__hcloud__token }}"
+    register: hcloud_created
+
+  - name: Create inventory template
+    template:
+      src: "{{ playbook_dir }}/templates/hostvars.yml.j2"
+      dest: "{{ playbook_dir }}/hostvars.yml"
+    no_log: true

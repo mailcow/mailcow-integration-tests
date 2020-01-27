@@ -1,0 +1,204 @@
+---
+mailcow__timezone: Europe/Berlin
+
+mailcow__api_key: 390448-22B69F-FA37D9-19701B-6F033F
+mailcow__api_key_allow_from: "172.22.1.1,127.0.0.1,{{ ansible_default_ipv4.address }},{{ ansible_default_ipv6.address }}"
+
+mailcow__config_use_watchdog: y
+mailcow__config_watchdog_notify_email: null@hosted.mailcow.de
+
+mailcow__lang_files:
+  - name: CA
+    file: lang.ca.json
+  - name: CS
+    file: lang.cs.json
+  - name: DE
+    file: lang.de.json
+  - name: ES
+    file: lang.es.json
+  - name: FI
+    file: lang.fi.json
+  - name: FR
+    file: lang.fr.json
+  - name: IT
+    file: lang.it.json
+  - name: LV
+    file: lang.lv.json
+  - name: NL
+    file: lang.nl.json
+  - name: PL
+    file: lang.pl.json
+  - name: PT
+    file: lang.pt.json
+  - name: RU
+    file: lang.ru.json
+
+mailcow__build_images:
+    - unbound-mailcow
+    - clamd-mailcow
+#     - rspamd-mailcow
+    - php-fpm-mailcow
+#     - sogo-mailcow
+    - dovecot-mailcow
+    - postfix-mailcow
+    - acme-mailcow
+    - netfilter-mailcow
+    - watchdog-mailcow
+    - dockerapi-mailcow
+    - solr-mailcow
+    - olefy-mailcow
+
+mailcow__pull_images:
+    - mysql-mailcow
+    - redis-mailcow
+    - memcached-mailcow
+    - nginx-mailcow
+#####
+    - rspamd-mailcow
+    - sogo-mailcow
+
+
+mailcow__hostname_local_part: "mail-{{ drone_commit_hash }}"
+mailcow__hostname: "{{ mailcow__hostname_local_part }}.{{ mailcow__dns_zone }}"
+mailcow__test_domain: "mailtest-{{ drone_commit_hash }}.{{ mailcow__dns_zone }}"
+mailcow__test_domain_local_part: "mailtest-{{ drone_commit_hash }}"
+
+mailcow__dev_null_email: null@hosted.mailcow.de
+
+mailcow__demo_admin_json:
+  items: ["admin"]
+  active: ["0","1"]
+  username_new: "admin"
+  password: "{{ vault__mailcow__admin_password }}"
+  password2: "{{ vault__mailcow__admin_password }}"
+
+mailcow__demo_mailbox_json:
+  local_part: "{{ mailcow__mailbox_user_one }}"
+  domain: "{{ mailcow__test_domain }}"
+  name: "Test User"
+  quota: "1024"
+  password: "{{ mailcow_mailbox_pw }}"
+  password2: "{{ mailcow_mailbox_pw }}"
+  active: "1"
+
+mailcow__demo_domain_json:
+  domain: "{{ mailcow__test_domain }}"
+  description: "demo domain"
+  aliases: "10"
+  mailboxes: "5"
+  defquota: "512"
+  maxquota: "5120"
+  quota: "5120"
+  active: "1"
+  rl_value: "10"
+  rl_frame: "s"
+  backupmx: "0"
+  relay_all_recipients: "0"
+  lang: "cs"
+
+mailcow__demo_domain_admin_json:
+  username: "domainadminuser"
+  domains: "{{ mailcow__test_domain }}"
+  password: "{{ vault__mailcow__admin_password }}"
+  password2: "{{ vault__mailcow__admin_password }}"
+  active: "1"
+
+mailcow__demo_alias_json:
+  address: "{{ mailcow__mailbox_user_alias }}@{{ mailcow__test_domain }}"
+  goto: "{{ mailcow__mailbox_user_one }}@{{ mailcow__test_domain }}"
+  active: "1"
+
+mailcow__demo_dkim_json:
+  domains: "{{ mailcow__test_domain }}"
+  dkim_selector: "dkim"
+  key_size: "2048"
+
+mailcow__demo_dkim_duplicate_json:
+  from_domain: "{{ mailcow__test_domain }}"
+  to_domain: "mailcow.tld"
+
+mailcow__demo_app_passwords_json:
+  username: "{{ mailcow__mailbox_user_one }}@{{ mailcow__test_domain }}"
+  app_name: "emclient"
+  app_passwd: "{{ mailcow_mailbox_pw_app }}"
+  app_passwd2: "{{ mailcow_mailbox_pw_app }}"
+  active: "1"
+
+mailcow__demo_syncjob_json:
+   username: "{{ mailcow__mailbox_user_one }}@{{ mailcow__test_domain }}"
+   host1: "{{ vault__mailcow__syncjob_host }}"
+   port1: "993"
+   user1: "{{ vault__mailcow__syncjob_email }}"
+   password1: "{{ vault__mailcow__syncjob_password }}"
+   enc1: "SSL"
+   mins_interval: "1"
+   subfolder2: "External"
+   maxage: "0"
+   maxbytespersecond: "0"
+   timeout1: "600"
+   timeout2: "600"
+   exclude: "(?i)spam|(?i)junk"
+   custom_params: ""
+   delete2duplicates: "1"
+   delete1: "0"
+   delete2: "0"
+   automap: "1"
+   skipcrossduplicates: "0"
+   subscribeall: "1"
+   active: "1"
+
+mailcow__demo_domain_policy_json:
+  domain: "{{ mailcow__test_domain }}"
+  object_list: "bl"
+  object_from: "*@google.com"
+
+mailcow__demo_oauth_app_json:
+  redirect_uri: "https://mailcow.tld"
+
+mailcow__demo_update_ratelimit_json:
+  items: [
+     "{{ mailcow__mailbox_user_one }}@{{ mailcow__test_domain }}"
+  ]
+  attr:
+    rl_value: "-1"
+    rl_frame: "s"
+
+mailcow__demo_fowading_host_json:
+  hostname: "hosted.mailcow.de"
+  filter_spam: "1"
+
+mailcow__demo_sieve_filter_mailbox_json:
+  local_part: "{{ mailcow__mailbox_user_two }}"
+  domain: "{{ mailcow__test_domain }}"
+  name: "Sieve Test User"
+  quota: "1024"
+  password: "{{ mailcow_mailbox_pw }}"
+  password2: "{{ mailcow_mailbox_pw }}"
+  active: "1"
+
+mailcow__demo_sieve_filter_json:
+    username: "{{ mailcow__mailbox_user_one }}@{{ mailcow__test_domain }}"
+    filter_type: "prefilter"
+    script_desc: "Reject test"
+    script_data: "require [\"reject\"];\r\nreject \"No\";"
+    active: "1"
+
+mailcow__demo_sieve_redirect_filter_json:
+   username: "{{ mailcow__mailbox_user_one }}@{{ mailcow__test_domain }}"
+   filter_type: "prefilter"
+   script_desc: "redirect_test"
+   script_data: "redirect \"null@hosted.mailcow.de\";\r\nkeep;"
+   active: "1"
+
+mailcow__demo_netfilter_json:
+  items: [
+      "none"
+  ]
+  attr:
+    ban_time: "172800"
+    max_attempts: "5"
+    retry_window: "600"
+    netban_ipv4: "24"
+    netban_ipv6: "64"
+    whitelist: ""
+    blacklist: ""

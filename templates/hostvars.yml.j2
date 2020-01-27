@@ -1,0 +1,7 @@
+---
+all:
+  hosts:
+    {{ hcloud_server_name }}:
+      ansible_port: 22
+      ansible_host: {{ hcloud_created.hcloud_server.ipv4_address }}
+      ansible_user: root

@@ -1,0 +1,12 @@
+---
+- hosts: containers
+  roles:
+    - docker
+  tasks:
+    - name: Get Docker version
+      shell: docker -v
+      register: docker_version_result
+    - name: Assert Docker version
+      assert:
+        that: docker_version_result.stdout_lines[0] | regex_search('^Docker version [\d.]+-ce') != ''
+        msg: "Failure on Docker installation"

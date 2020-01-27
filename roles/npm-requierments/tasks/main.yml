@@ -1,0 +1,20 @@
+---
+
+- name: Install nodejs
+  become: yes
+  apt:
+    name: nodejs
+    state: present
+
+- name: Install npm
+  become: yes
+  apt:
+    name: npm
+    state: present
+
+- name: Install jsonlint
+  become: yes
+  npm:
+      name: jsonlint
+      global: true
+      state: present

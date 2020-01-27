@@ -1,0 +1,65 @@
+---
+
+- name: Create oAuth app
+  uri:
+    url: "https://{{ mailcow__hostname }}/api/v1/add/oauth2-client"
+    method: POST
+    body_format: json
+    return_content: yes
+    status_code: 200
+    body: "{{ mailcow__demo_oauth_app_json | to_json }}"
+    headers:
+      X-API-Key: "{{ mailcow__api_key }}"
+  register: result_oauth_app
+  until: ('json' in result_oauth_app)
+  retries: 10
+  delay: 10
+
+- name: Debug Creation
+  debug:
+    var: result_oauth_app.json
+
+- name: Get oAuth app
+  uri:
+    url: "https://{{ mailcow__hostname }}/api/v1/get/oauth2-client/all"
+    method: GET
+    body_format: json
+    return_content: yes
+    status_code: 200
+    headers:
+      X-API-Key: "{{ mailcow__api_key }}"
+  register: result_oauth_app_get
+  until: ('json' in result_oauth_app_get)
+  retries: 10
+  delay: 10
+
+- name: Debug Get
+  debug:
+    var: result_oauth_app_get.json
+
+- set_fact:
+    result_oauth_app_get_success: success
+  when: ('json' in result_oauth_app_get) and (result_oauth_app_get.json[0] is defined)
+
+- set_fact:
+    result_oauth_app_get_success: failed
+  when: ('json' in result_oauth_app_get) and (result_oauth_app_get.json[0] is not defined)
+
+- name: Delete oAuth app
+  uri:
+    url: "https://{{ mailcow__hostname }}/api/v1/delete/oauth2-client"
+    method: POST
+    body_format: json
+    return_content: yes
+    status_code: 200
+    body: ["1"]
+    headers:
+      X-API-Key: "{{ mailcow__api_key }}"
+  register: result_oauth_app_delete
+  until: ('json' in result_oauth_app_delete)
+  retries: 10
+  delay: 10
+
+- name: Debug Deletion
+  debug:
+    var: result_oauth_app_delete.json

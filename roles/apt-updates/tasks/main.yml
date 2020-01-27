@@ -1,0 +1,24 @@
+---
+
+- name: Update and upgrade apt packages
+  become: yes
+  apt:
+    upgrade: yes
+    update_cache: yes
+    cache_valid_time: 86400
+
+- name: Check if reboot is requiered
+  become: yes
+  stat:
+    path: /var/run/reboot-required
+  register: reboot_requiered
+
+- name: Reboot if needed
+  become: yes
+  reboot:
+  when: reboot_requiered.stat.exists
+
+- name: Apt autoremove not needed packages
+  become: yes
+  apt:
+    autoremove: yes

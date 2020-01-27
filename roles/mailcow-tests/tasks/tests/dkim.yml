@@ -1,0 +1,60 @@
+---
+
+- name: Create DKIM key
+  uri:
+    url: "https://{{ mailcow__hostname }}/api/v1/add/dkim"
+    method: POST
+    body_format: json
+    return_content: yes
+    status_code: 200
+    body: "{{ mailcow__demo_dkim_json | to_json }}"
+    headers:
+      X-API-Key: "{{ mailcow__api_key }}"
+  register: result_dkim
+  until:
+    - ('json' in result_dkim)
+  retries: 10
+  delay: 10
+
+- name: Debug Creation
+  debug:
+    var: result_dkim.json
+
+- name: Duplicate DKIM key
+  uri:
+    url: "https://{{ mailcow__hostname }}/api/v1/add/dkim_duplicate"
+    method: POST
+    body_format: json
+    return_content: yes
+    status_code: 200
+    body: "{{ mailcow__demo_dkim_duplicate_json | to_json }}"
+    headers:
+      X-API-Key: "{{ mailcow__api_key }}"
+  register: result_dkim_duplicate
+  until:
+    - ('json' in result_dkim_duplicate)
+  retries: 10
+  delay: 10
+
+- name: Debug Duplication
+  debug:
+    var: result_dkim_duplicate.json
+
+- name: Delete DKIM key
+  uri:
+    url: "https://{{ mailcow__hostname }}/api/v1/delete/dkim"
+    method: POST
+    body_format: json
+    return_content: yes
+    status_code: 200
+    body: ["mailcow.tld"]
+    headers:
+      X-API-Key: "{{ mailcow__api_key }}"
+  register: result_dkim_deletion
+  until: ('json' in result_dkim_deletion)
+  retries: 10
+  delay: 10
+
+- name: Debug Deletion
+  debug:
+    var: result_dkim_deletion.json

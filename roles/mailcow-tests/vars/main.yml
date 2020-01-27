@@ -1,0 +1,191 @@
+---
+
+mailcow_test_results:
+  - admin_password:
+    name: "Edit: Change admin password"
+    result: "{{ result_change_admin_password.json[0].type | default('default_value') }}"
+    log: "{{ result_change_admin_password.json[0].msg | default('default_value') }}"
+  - domain:
+    name: "Create: Domain"
+    result: "{{ result_domain.json[1].type | default('default_value') }}"
+    log: "{{ result_domain.json[1].msg | default('default_value') }}"
+  - mailbox:
+    name: "Create: Mailbox"
+    result: "{{ result_mailbox.json[0].type | default('default_value') }}"
+    log: "{{ result_mailbox.json[0].msg | default('default_value') }}"
+  - send_mail_no_tls:
+    name: "Function: Do not allow unencrypted mail sending"
+    result: "{{ result_sendmail_no_tls_sucess | default('default_value') }}"
+    log: "{{ result_sendmail_no_tls.msg | default('default_value') }}"
+  - send_mail_tls:
+    name: "Function: Send mail TLS encrypted"
+    result: "{{ result_sendmail_tls_sucess | default('default_value') }}"
+    log: "{{ result_sendmail_tls.msg | default('default_value') }}"
+  - send_mail_non_allowed_alias:
+    name: "Function: Sending email from not allowed alias"
+    result: "{{ result_sendmail_not_allowed_alias_sucess | default('default_value') }}"
+    log: "{{ result_sendmai_not_allowed_alias.msg | default('default_value') }}"
+  - send_mail_authed_symbol_mailcow_auth:
+    name: "Function: Check if SYMBOL 'MAILCOW_AUTH' is present when mail is send from authenticated user"
+    result: "{{ result_sendmail_rspamd_symbols_mailcow_auth_sucess | default('default_value') }}"
+    log: "{{ result_sendmail_rspamd_symbols_list | default('default_value') }}"
+  - send_mail_authed_symbol_dyn_rl_check:
+    name: "Function: Check if SYMBOL 'DYN_RL_CHECK' is present when mail is send from authenticated user"
+    result: "{{ result_sendmail_rspamd_symbols_dyn_rl_check_sucess | default('default_value') }}"
+    log: "{{ result_sendmail_rspamd_symbols_list | default('default_value') }}"
+  - send_mail_authed_symbol_dyn_rl_check:
+    name: "Function: Check if SYMBOL 'DKIM_SIGNED' is present when mail is send from authenticated user"
+    result: "{{ result_sendmail_rspamd_symbols_dkim_signed_sucess | default('default_value') }}"
+    log: "{{ result_sendmail_rspamd_symbols_list | default('default_value') }}"
+  - dkim:
+    name: "Create: DKIM key"
+    result: "{{ result_dkim.json[0].type | default('default_value') }}"
+    log: "{{ result_dkim.json[0].msg | default('default_value') }}"
+  - dkim_duplication:
+    name: "Create: Duplicate DKIM key"
+    result: "{{ result_dkim_duplicate.json[0].type | default('default_value') }}"
+    log: "{{ result_dkim_duplicate.json[0].msg | default('default_value') }}"
+  - dkim_deletion:
+    name: "Delete: DKIM key"
+    result: "{{ result_dkim_deletion.json[0].type | default('default_value') }}"
+    log: "{{ result_dkim_deletion.json[0].msg | default('default_value') }}"
+  - app_password_creation:
+    name: "Create: App password"
+    result: "{{ result_app_password.json[0].type | default('default_value') }}"
+    log: "{{ result_dkim.json[0].msg | default('default_value') }}"
+  - app_password_sending:
+    name: "Function: Send mail using app password"
+    result: "{{ result_app_password_sending_sucess | default('default_value') }}"
+    log: "{{ result_app_password_sending.msg | default('default_value') }}"
+  - app_password_deletion:
+    name: "Delete: App password"
+    result: "{{ result_app_password_deletion.json[0].type | default('default_value') }}"
+    log: "{{ result_app_password_deletion.json[0].msg | default('default_value') }}"
+  - syncjobs_creation:
+    name: "Create: Syncjob"
+    result: "{{ result_syncjob.json[0].type | default('default_value') }}"
+    log: "{{ result_syncjob.json[0].msg | default('default_value') }}"
+  - syncjobs_function:
+    name: "Function: Syncjob"
+    result: "{{ result_syncjob_log_success | default('default_value') }}"
+    log: ""
+  - syncjobs_delte:
+    name: "Delete: Syncjob"
+    result: "{{ result_syncjob_delete.json[0].type | default('default_value') }}"
+    log: "{{ result_syncjob.json[0].msg | default('default_value') }}"
+  - domain_policy_create:
+    name: "Create: Domain Policy"
+    result: "{{ result_domain_policy.json[0].type | default('default_value') }}"
+    log: "{{ result_domain_policy.json[0].msg | default('default_value') }}"
+  - domain_policy_delete:
+    name: "Delete: Domain Policy"
+    result: "{{ result_domain_policy_delete.json[0].type | default('default_value') }}"
+    log: "{{ result_domain_policy_delete.json[0].msg | default('default_value') }}"
+  - oauth_app_create:
+    name: "Create: oAuth app"
+    result: "{{ result_oauth_app.json[0].type | default('default_value') }}"
+    log: "{{ result_oauth_app.json[0].msg | default('default_value') }}"
+  - oauth_app_get:
+    name: "Get: oAuth app"
+    result: "{{ result_oauth_app_get_success | default('default_value') }}"
+    log: "{{ result_oauth_app_get.json[0] | default('default_value') }}"
+  - oauth_app_delete:
+    name: "Delete: oAuth app"
+    result: "{{ result_oauth_app_delete.json[0].type | default('default_value') }}"
+    log: "{{ result_oauth_app_delete.json[0].msg | default('default_value') }}"
+  - ratelimit_update:
+    name: "Update: Ratelimit of mailbox"
+    result: "{{ result_update_ratelimit.json[0].type | default('default_value') }}"
+    log: "{{ result_update_ratelimit.json[0].msg | default('default_value') }}"
+  - ratelimit_get_ratelimit:
+    name: "Get: Ratelimit"
+    result: "{{ result_get_ratelimit_success | default('default_value') }}"
+    log: "{{ result_get_ratelimit.json[0] | default('default_value') }}"
+  - ratelimit_sendmail:
+    name: "Function: Block sending mail if ratelimit is reached"
+    result: "{{ result_sendmail_tls_ratelimit_sucess | default('default_value') }}"
+    log: "{{ result_sendmail_tls_ratelimit.msg | default('default_value') }}"
+  - ratelimit_api_check_listed:
+    name: "API: Check if blocked mail is listed"
+    result: "{{ result_ratelimit_log_success | default('default_value') }}"
+    log: "{{ result_ratelimit_log.json[0] | default('default_value') }}"
+  - fowarding_hosts_create:
+    name: "Create: Forwarding Host"
+    result: "{{ result_fowarding_hosts.json[0].type | default('default_value') }}"
+    log: "{{ result_fowarding_hosts.json[0].msg | default('default_value') }}"
+  - fowarding_hosts_get:
+    name: "Get: Forwarding Host"
+    result: "{{ result_fowarding_hosts_get_success | default('default_value') }}"
+    log: "{{ result_fowarding_hosts_get.json[0] | default('default_value') }}"
+  - fowwarding_hosts_function_symbol:
+    name: "Function: Check if SYMBOLs 'WHITELISTED_FWD_HOST' is present if mail gets send by Forwarding host"
+    result: "{{ result_forwarding_hosts_sendmail_rspamd_list_success | default('default_value') }}"
+    log: "{{ result_forwarding_hosts_sendmail_rspamd_list | default('default_value') }}"
+  - fowarding_hosts_delete:
+    name: "Delete: Forwarding Host"
+    result: "{{ result_fowarding_hosts_delete.json[0].type | default('default_value') }}"
+    log: "{{ result_fowarding_hosts_delete.json[0].msg | default('default_value') }}"
+  - alias_create:
+    name: "Create: Alias"
+    result: "{{ result_alias.json[0].type | default('default_value') }}"
+    log: "{{ result_alias.json[0].msg | default('default_value') }}"
+  - alias_get:
+    name: "Get: Alias"
+    result: "{{ result_alias_get_success | default('default_value') }}"
+    log: "{{ result_alias_get.json[0] | default('default_value') }}"
+  - alias_delete:
+    name: "Delete: Alias"
+    result: "{{ result_alias_delete.json[0].type | default('default_value') }}"
+    log: "{{ result_alias_delete.json[0].msg | default('default_value') }}"
+  - domain_admin_create:
+    name: "Create: Domain Admin"
+    result: "{{ result_domain_admin.json[0].type | default('default_value') }}"
+    log: "{{ result_domain_admin.json[0].msg | default('default_value') }}"
+  - domain_admin_get:
+    name: "Get: Domain Admin"
+    result: "{{ result_domain_admin_get_success | default('default_value') }}"
+    log: "{{ result_domain_admin_get.json[0] | default('default_value') }}"
+  - domain_admin_delete:
+    name: "Delete: Domain Admin"
+    result: "{{ result_domain_admin_delete.json[0].type | default('default_value') }}"
+    log: "{{ result_domain_admin_delete.json[0].msg | default('default_value') }}"
+  - sieve_prefilter_create:
+    name: "Create: Sieve filter"
+    result: "{{ result_sieve_prefilter.json[0].type | default('default_value') }}"
+    log: "{{ result_sieve_prefilter.json[0].msg | default('default_value') }}"
+  - sieve_prefilter_get:
+    name: "Get: Sieve filter"
+    result: "{{ result_sieve_prefilter_get_success | default('default_value') }}"
+    log: "{{ result_sieve_prefilter_get.json[0] | default('default_value') }}"
+  - sieve_prefilter_reject_function:
+    name: "Function: Check if SYMBOLs 'SIEVE_HOST','MAILCOW_DOMAIN_HEADER_FROM','DKIM_SIGNED','FROM_NEQ_ENVFROM' are on sieve_reject_processing"
+    result: "{{ result_sieve_prefilter_rspamd_symbols_list_sucess | default('default_value') }}"
+    log: "{{ result_sieve_prefilter_rspamd_symbols_list | default('default_value') }}"
+  - sieve_prefilter_redirect_function_inbound:
+    name: "Function: Check if SYMBOLs 'ARC_SIGNED' are set for sive_redirect_processing (inbound mail)"
+    result: "{{ result_sieve_prefilter_redirect_rspamd_symbols_list_1_sucess | default('default_value') }}"
+    log: "{{ result_sieve_prefilter_redirect_rspamd_symbols_list_1 | default('default_value') }}"
+  - sieve_prefilter_redirect_function_outbound:
+    name: "Function: Check if SYMBOLs (not in 'DKIM_SIGNED','ARC_SIGNED'),'FROM_NEQ_ENVFROM','SIEVE_HOST' are set for sive_redirect_processing (forwarded mail)"
+    result: "{{ result_sieve_prefilter_redirect_rspamd_symbols_list_0_sucess | default('default_value') }}"
+    log: "{{ result_sieve_prefilter_redirect_rspamd_symbols_list_0 | default('default_value') }}"
+  - sieve_prefilter_delete:
+    name: "Delete: Sieve filter"
+    result: "{{ result_sieve_prefilter_delete.json[0].type | default('default_value') }}"
+    log: "{{ result_sieve_prefilter_delete.json[0].msg | default('default_value') }}"
+  - netfilter_get:
+    name: "Get: Netfilter config"
+    result: "{{ result_netfilter_get_success | default('default_value') }}"
+    log: "{{ result_netfilter_get.json | default('default_value') }}"
+  - netfilter_create:
+    name: "Update: Netfilter config"
+    result: "{{ result_netfilter.json[0].type | default('default_value') }}"
+    log: "{{ result_netfilter.json[0].msg | default('default_value') }}"
+  - watchdog_api:
+    name: "API: Check if watchdog postfix health is degraded"
+    result: "{{ result_watchdog_log_success | default('default_value') }}"
+    log: "{{ result_watchdog_log_success_log | default('default_value') }}"
+  - watchdog_container_restart:
+    name: "Function: Watchdog restart stopped container"
+    result: "{{ result_watchdog_container_state_success | default('default_value') }}"
+    log: "{{ result_watchdog_container_state.stdout | default('default_value') }}"

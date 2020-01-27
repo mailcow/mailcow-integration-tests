@@ -1,0 +1,101 @@
+---
+
+- name: Update ratelimit using api
+  uri:
+    url: "https://{{ mailcow__hostname }}/api/v1/edit/rl-mbox"
+    method: POST
+    body_format: json
+    return_content: yes
+    status_code: 200
+    body: "{{ mailcow__demo_update_ratelimit_json | to_json }}"
+    headers:
+      X-API-Key: "{{ mailcow__api_key }}"
+  register: result_update_ratelimit
+  until: ('json' in result_update_ratelimit)
+  retries: 10
+  delay: 10
+
+- name: Debug Update
+  debug:
+    var: result_update_ratelimit.json[0].msg
+
+- name: Check if ratelimit is correctly set
+  uri:
+    url: "https://{{ mailcow__hostname }}/api/v1/get/rl-mbox/all"
+    method: GET
+    body_format: json
+    return_content: yes
+    status_code: 200
+    headers:
+      X-API-Key: "{{ mailcow__api_key }}"
+  register: result_get_ratelimit
+  until:
+    - ('json' in result_get_ratelimit)
+  retries: 10
+  delay: 10
+
+- name: Debug set ratelimit
+  debug:
+    var: result_get_ratelimit.json
+
+- set_fact:
+    result_get_ratelimit_success: success
+  when: ('json' in result_get_ratelimit) and (result_get_ratelimit.json[0] is defined)
+
+- set_fact:
+    result_get_ratelimit_success: failed
+  when: ('json' in result_get_ratelimit) and (result_get_ratelimit.json[0] is not defined)
+
+- name: "Sending a email to {{ mailcow__dev_null_email }}"
+  mail:
+    host: "{{ mailcow__hostname }}"
+    port: 587
+    from: "{{ mailcow__mailbox_user_one }}@{{ mailcow__test_domain }}"
+    username: "{{ mailcow__mailbox_user_one }}@{{ mailcow__test_domain }}"
+    password: "{{ mailcow_mailbox_pw }}"
+    to:
+      - "{{ mailcow__dev_null_email }}"
+    subject: "Mailcow is amazing"
+    body: System {{ ansible_hostname }} says hello
+    secure: starttls
+  register: result_sendmail_tls_ratelimit
+  ignore_errors: yes
+  until:
+    - ('msg' in result_sendmail_tls_ratelimit) and ("Mail sent successfully" not in result_sendmail_tls_ratelimit.msg)
+  retries: 20
+  delay: 2
+
+- set_fact:
+    result_sendmail_tls_ratelimit_sucess: success
+  when: ('msg' in result_sendmail_tls_ratelimit) and ("Mail sent successfully" not in result_sendmail_tls_ratelimit.msg)
+
+- set_fact:
+    result_sendmail_tls_ratelimit_sucess: failed
+  when: ('msg' in result_sendmail_tls_ratelimit) and ("Mail sent successfully" in result_sendmail_tls_ratelimit.msg)
+
+- name: Get ratelimit log using API
+  uri:
+    url: "https://{{ mailcow__hostname }}/api/v1/get/logs/ratelimited/1"
+    method: GET
+    body_format: json
+    return_content: yes
+    status_code: 200
+    headers:
+      X-API-Key: "{{ mailcow__api_key }}"
+  register: result_ratelimit_log
+
+- name: Debug ratelimit log
+  debug:
+    var: result_ratelimit_log.json
+
+- set_fact:
+    result_ratelimit_log_success: success
+  when: 
+    - ('json' in result_ratelimit_log) and ("mailcow" in result_ratelimit_log.json[0].rl_name)
+    - ('json' in result_ratelimit_log) and ("Mailcow is amazing" in result_ratelimit_log.json[0].header_subject)
+
+- set_fact:
+    result_ratelimit_log_success: failed
+  when:
+    - ('json' in result_ratelimit_log) and ("mailcow" not in result_ratelimit_log.json[0].rl_name)
+    - ('json' in result_ratelimit_log) and ("Mailcow is amazing" not in result_ratelimit_log.json[0].header_subject)

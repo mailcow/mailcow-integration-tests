@@ -1,0 +1,20 @@
+---
+
+- name: Create domain
+  uri:
+    url: "https://{{ mailcow__hostname }}/api/v1/add/domain"
+    method: POST
+    body_format: json
+    return_content: yes
+    status_code: 200
+    body: "{{ mailcow__demo_domain_json | to_json }}"
+    headers:
+      X-API-Key: "{{ mailcow__api_key }}"
+  register: result_domain
+  until: ('json' in result_domain)
+  retries: 10
+  delay: 10
+
+- name: Debug Creation
+  debug:
+    var: result_domain.json

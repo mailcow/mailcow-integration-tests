@@ -1,0 +1,47 @@
+---
+
+- name: Update netfilter config
+  uri:
+    url: "https://{{ mailcow__hostname }}/api/v1/edit/fail2ban"
+    method: POST
+    body_format: json
+    return_content: yes
+    status_code: 200
+    body: "{{ mailcow__demo_netfilter_json | to_json }}"
+    headers:
+      X-API-Key: "{{ mailcow__api_key }}"
+  register: result_netfilter
+  until: ('json' in result_netfilter)
+  retries: 10
+  delay: 10
+
+- name: Debug Creation
+  debug:
+    var: result_netfilter.json
+
+- name: Get netfilter config
+  uri:
+    url: "https://{{ mailcow__hostname }}/api/v1/get/fail2ban"
+    method: GET
+    body_format: json
+    return_content: yes
+    status_code: 200
+    headers:
+      X-API-Key: "{{ mailcow__api_key }}"
+  register: result_netfilter_get
+  until:
+    - ('json' in result_netfilter_get)
+  retries: 10
+  delay: 10
+
+- name: Debug Get
+  debug:
+    var: result_netfilter_get.json
+
+- set_fact:
+    result_netfilter_get_success: success
+  when: ('json' in result_netfilter_get) and (result_netfilter_get.json.ban_time is defined)
+
+- set_fact:
+    result_netfilter_get_success: failed
+  when: ('json' not in result_netfilter_get)

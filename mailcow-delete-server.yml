@@ -1,0 +1,54 @@
+---
+- name: Delete Server
+  gather_facts: false
+  connection: local
+  hosts: 127.0.0.1
+  tasks:
+  - name: Install hcloud pip library
+    pip:
+      name: hcloud
+      state: present
+
+  - name: Delete mailcow integration test server
+    hcloud_server:
+      name: "{{ hcloud_server_name }}"
+      server_type: cx21
+      image: ubuntu-18.04
+      location: fsn1
+      state: absent
+      api_token: "{{ vault__hcloud__token }}"
+
+  - name: Delete SSH Key from hcloud
+    hcloud_ssh_key:
+      name: "{{ hcloud_server_name }}"
+      state: absent
+      api_token: "{{ vault__hcloud__token }}"
+
+  - name: "Delete a record for {{ mailcow__hostname }}"
+    cloudflare_dns:
+      state: absent
+      zone: "{{ mailcow__dns_zone }}"
+      record: "{{ mailcow__hostname_local_part }}"
+      type: A
+      account_email: "{{ vault__cloudflare__email }}"
+      account_api_token: "{{ vault__cloudflare__apikey }}"
+
+  - name: "Delete aaaa record for {{ mailcow__hostname }}"
+    cloudflare_dns:
+      state: absent
+      zone: "{{ mailcow__dns_zone }}"
+      record: "{{ mailcow__hostname_local_part }}"
+      type: AAAA
+      account_email: "{{ vault__cloudflare__email }}"
+      account_api_token: "{{ vault__cloudflare__apikey }}"
+
+  - name: "Delete mx record for {{ mailcow__hostname }}"
+    cloudflare_dns:
+      state: absent
+      zone: "{{ mailcow__dns_zone }}"
+      record: "{{ mailcow__test_domain_local_part }}"
+      priority: 10
+      type: MX
+      value: "{{ mailcow__hostname }}"
+      account_email: "{{ vault__cloudflare__email }}"
+      account_api_token: "{{ vault__cloudflare__apikey }}"

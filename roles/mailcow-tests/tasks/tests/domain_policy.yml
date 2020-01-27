@@ -1,0 +1,39 @@
+---
+
+- name: Create domain policy
+  uri:
+    url: "https://{{ mailcow__hostname }}/api/v1/add/domain-policy"
+    method: POST
+    body_format: json
+    return_content: yes
+    status_code: 200
+    body: "{{ mailcow__demo_domain_policy_json | to_json }}"
+    headers:
+      X-API-Key: "{{ mailcow__api_key }}"
+  register: result_domain_policy
+  until: ('json' in result_domain_policy)
+  retries: 10
+  delay: 10
+
+- name: Debug Creation
+  debug:
+    var: result_domain_policy.json
+
+- name: Delete domain policy
+  uri:
+    url: "https://{{ mailcow__hostname }}/api/v1/delete/domain-policy"
+    method: POST
+    body_format: json
+    return_content: yes
+    status_code: 200
+    body: ["1"]
+    headers:
+      X-API-Key: "{{ mailcow__api_key }}"
+  register: result_domain_policy_delete
+  until: ('json' in result_domain_policy_delete)
+  retries: 10
+  delay: 10
+
+- name: Debug Deletion
+  debug:
+    var: result_domain_policy_delete.json

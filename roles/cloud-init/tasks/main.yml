@@ -1,0 +1,10 @@
+---
+
+- name: Wait for cloud init to finish
+  become: yes
+  stat:
+    path: /var/lib/cloud/instance/boot-finished 
+  register: cloud_init
+  until: cloud_init.stat.exists
+  retries: 50
+  delay: 5

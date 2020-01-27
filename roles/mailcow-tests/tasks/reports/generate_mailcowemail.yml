@@ -1,0 +1,15 @@
+---
+
+- name: Set timestamp var
+  set_fact:
+    mailcow__report_filename: "{{ ansible_date_time.iso8601_basic_short }}_{{ drone_commit_hash }}.html"
+
+- name: Generate report
+  template:
+    src: "{{ playbook_dir }}/roles/mailcow-tests/templates/report.html.j2"
+    dest: "/opt/{{ mailcow__report_filename }}"
+  no_log: true
+
+- name: Upload report to mailcow.email
+  command: "curl https://int-test.mailcow.email/upload -X POST -Ftoken={{ vault__ailcow__reports_upload_token }} -Ffilename=@/opt/{{ mailcow__report_filename }}"
+  no_log: true

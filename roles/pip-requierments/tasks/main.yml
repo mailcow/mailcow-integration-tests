@@ -1,0 +1,31 @@
+---
+
+- name: Install python3
+  become: yes
+  apt:
+    name: python3
+    state: present
+
+- name: Install pip3
+  become: yes
+  apt:
+    name: python3-pip
+    state: present
+
+- name: Install setuptools
+  become: yes
+  pip:
+    name: setuptools
+    state: present
+
+- name: Install docker
+  become: yes
+  pip:
+    name: docker
+    state: present
+
+- name: Install jmespath
+  become: yes
+  pip:
+    name: jmespath
+    state: present

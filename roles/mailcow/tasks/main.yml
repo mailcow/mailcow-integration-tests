@@ -1,0 +1,132 @@
+---
+
+- name: Install requiered apt packages
+  become: yes
+  apt:
+    name: git
+    state: present
+
+- name: Install requiered pip packages
+  become: yes
+  pip:
+    name: docker
+    state: present
+
+- name: Check if mailcow installation directory exists
+  become: yes
+  stat:
+    path: /opt/mailcow-dockerized
+  register: mailcow_installed
+
+- name: Clone mailcow git repo
+  become: yes
+  git:
+    repo: "{{ mailcow__git_repo }}"
+    version: "{{ mailcow__git_version }}"
+    umask: '022'
+    update: false
+    dest: /opt/mailcow-dockerized
+  when: not mailcow_installed.stat.exists
+
+- name: Download original generate_config.sh
+  become: yes
+  get_url:
+    url: https://raw.githubusercontent.com/mailcow/mailcow-dockerized/master/generate_config.sh
+    dest: /opt/mailcow-dockerized/generate_config.sh
+    force: yes
+
+- name: Generate mailcow.conf file
+  shell: ./generate_config.sh
+  environment:
+    MAILCOW_HOSTNAME: "{{ mailcow__hostname }}"
+    MAILCOW_TZ: "{{ timezone_selection }}"
+  args:
+    executable: /bin/bash
+    chdir: /opt/mailcow-dockerized
+    creates: mailcow.conf
+  tags:
+    - skip_ansible_lint
+
+- name: Template settings for mailcow.conf
+  become: yes
+  import_tasks: mailcowconf.yml
+
+- name: Change default password
+  become: yes
+  replace:
+    path: "/opt/mailcow-dockerized/data/web/inc/init_db.inc.php"
+    regexp: '({SSHA256}K8eVJ6YsZbQCfuJvSUbaQRLr0HPLz5rC9IAp0PAFl0tmNDBkMDc0NDAyOTAxN2Rk)'
+    replace: "{{ vault__malcow__new_ui_password }}"
+  no_log: true
+
+- name: Copy compose override file for builds
+  become: yes
+  copy:
+    src: /opt/mailcow-dockerized/helper-scripts/docker-compose.override.yml.d/BUILD_FLAGS/docker-compose.override.yml
+    dest: /opt/mailcow-dockerized/docker-compose.override.yml
+    remote_src: yes
+
+- name: Build mailcow images
+  become: yes
+  command: docker-compose build "{{ item }}"
+  args:
+    chdir: /opt/mailcow-dockerized
+  with_list: "{{ mailcow__build_images }}"
+
+- name: Pull mailcow images
+  become: yes
+  command: docker-compose pull "{{ item }}"
+  args:
+    chdir: /opt/mailcow-dockerized
+  with_list: "{{ mailcow__pull_images }}"
+
+- name: Start mailcow container stack
+  become: yes
+  docker_compose:
+    project_src: /opt/mailcow-dockerized
+    project_name: mailcowdockerized
+    state: present
+    build: no
+    pull: no
+
+- name: Check if mailcow is up and returns status code 200
+  uri:
+    url: "https://{{ mailcow__hostname }}/"
+    method: GET
+    status_code: 200
+  retries: 40
+  delay: 10
+  register: result
+  until: "result.status == 200"
+
+- name: Check if mailcow is up and ready using API
+  uri:
+    url: "https://{{ mailcow__hostname }}/api/v1/get/status/containers"
+    method: GET
+    body_format: json
+    return_content: yes
+    status_code: 200
+    headers:
+      X-API-Key: "{{ mailcow__api_key }}"
+  register: result
+  retries: 40
+  delay: 10
+  until:
+    - ('json' in result) and ("result.json['ipv6nat-mailcow'].state == 'running'")
+    - ('json' in result) and ("result.json['acme-mailcow'].state == 'running'")
+    - ('json' in result) and ("result.json['rspamd-mailcow'].state == 'running'")
+    - ('json' in result) and ("result.json['netfilter-mailcow'].state == 'running'")
+    - ('json' in result) and ("result.json['nginx-mailcow'].state == 'running'")
+    - ('json' in result) and ("result.json['postfix-mailcow'].state == 'running'")
+    - ('json' in result) and ("result.json['dovecot-mailcow'].state == 'running'")
+    - ('json' in result) and ("result.json['php-fpm-mailcow'].state == 'running'")
+    - ('json' in result) and ("result.json['mysql-mailcow'].state == 'running'")
+    - ('json' in result) and ("result.json['redis-mailcow'].state == 'running'")
+    - ('json' in result) and ("result.json['watchdog-mailcow'].state == 'running'")
+    - ('json' in result) and ("result.json['unbound-mailcow'].state == 'running'")
+    - ('json' in result) and ("result.json['memcached-mailcow'].state == 'running'")
+    - ('json' in result) and ("result.json['solr-mailcow'].state == 'running'")
+    - ('json' in result) and ("result.json['sogo-mailcow'].state == 'running'")
+    - ('json' in result) and ("result.json['dockerapi-mailcow'].state == 'running'")
+    - ('json' in result) and ("result.json['olefy-mailcow'].state == 'running'")
+    - ('json' in result) and ("result.json['clamd-mailcow'].state == 'running'")

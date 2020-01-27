@@ -1,0 +1,11 @@
+---
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    eth0:
+      dhcp4: yes
+      dhcp6: no
+      addresses:
+        - {{ ansible_default_ipv6.address }}/64
+      gateway6: fe80::1
