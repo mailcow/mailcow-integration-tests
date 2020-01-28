@@ -11,5 +11,5 @@
   no_log: true
 
 - name: Upload report to mailcow.email
-  command: "curl https://int-test.mailcow.email/upload -X POST -Ftoken={{ vault__ailcow__reports_upload_token }} -Ffilename=@/opt/{{ mailcow__report_filename }}"
+  command: "curl https://int-test.mailcow.email/upload -X POST -Ftoken={{ vault__mailcow__reports_upload_token }} -Ffilename=@/opt/{{ mailcow__report_filename }}"
   no_log: true
