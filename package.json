@@ -4,7 +4,7 @@
     "scripts": {
         "install:galaxy": "ansible-galaxy install -r requirements.yml --force",
         "vault": "EDITOR=nano ansible-vault edit --vault-password-file=./.vault-pw ./group_vars/all/secrets.yml",
-        "version": "auto-changelog -p"
+        "version": "auto-changelog -p --commit-limit false"
     },
     "devDependencies": {
         "auto-changelog": "^1.16.2"
