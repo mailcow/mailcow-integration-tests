@@ -41,6 +41,7 @@
 
 - set_fact:
     result_watchdog_log_success: failed
+    result_watchdog_log_success_log: ""
   when:
     - result_watchdog_log_success is not defined
 
