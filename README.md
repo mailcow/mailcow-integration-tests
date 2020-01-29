@@ -1,7 +1,7 @@
 # mailcow-integration-test-suite
 
-Latest test result from mailcow:  
-[![Build Status](https://drone.mailcow.email/api/badges/mailcow/mailcow-dockerized/status.svg)](https://drone.mailcow.email/mailcow/mailcow-dockerized)
+Latest test result from mailcow: [![Build Status](https://drone.mailcow.email/api/badges/mailcow/mailcow-dockerized/status.svg)](https://drone.mailcow.email/mailcow/mailcow-dockerized)  
+HTML reports: [https://int-test.mailcow.email/results/](https://int-test.mailcow.email/results/)
 
 ## About this project
 
