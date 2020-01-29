@@ -1,0 +1,7 @@
+---
+
+- name: Make sure curl is present
+  become: yes
+  apt:
+    name: curl
+    state: present

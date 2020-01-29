@@ -8,6 +8,8 @@
       tags: [ 'cloud-init' ]
     - role: apt-updates
       tags: [ 'apt-updates' ]
+    - role: apt-requierments
+      tags: [ 'apt-requierments' ]
     - role: pip-requierments
       tags: [ 'pip-requierments' ]
     - role: npm-requierments
