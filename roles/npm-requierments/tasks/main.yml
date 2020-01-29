@@ -18,3 +18,10 @@
       name: jsonlint
       global: true
       state: present
+
+- name: Install html-minifier
+  become: yes
+  npm:
+      name: html-minifier
+      global: true
+      state: present
