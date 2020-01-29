@@ -118,12 +118,32 @@
     <thead>
         <tr>
             <th>Language</th>
-            <th>Missing translations</th>
             <th>Syntax errors in JSON</th>
         </tr>
     </thead>
     <tbody>
-{% for lang_check in language_check.results %} {% for lang_validjson in language_check_validjson.results %}
+{% for lang_validjson in language_check_validjson.results %}
+        <tr>
+            <td>{{ lang_validjson.item.name }}: {{ lang_validjson.item.file }}</td>
+            <td>
+              {% for stdout_line_validjson in lang_validjson.stdout_lines %}
+              {{ stdout_line_validjson }}<br>
+              {% endfor %}
+            </td>
+          </tr>
+{% endfor %}
+    </tbody>
+</table>
+
+<table>
+    <thead>
+        <tr>
+            <th>Language</th>
+            <th>Missing translations</th>
+        </tr>
+    </thead>
+    <tbody>
+{% for lang_check in language_check.results %}
         <tr>
             <td>{{ lang_check.item.name }}: {{ lang_check.item.file }}</td>
             <td>
@@ -131,13 +151,8 @@
               {{ stdout_line_check }}<br>
               {% endfor %}
             </td>
-            <td>
-              {% for stdout_line_validjson in lang_validjson.stdout_lines %}
-              {{ stdout_line_validjson }}<br>
-              {% endfor %}
-            </td>
           </tr>
-{% endfor %} {% endfor %}
+{% endfor %}
     </tbody>
 </table>
 
