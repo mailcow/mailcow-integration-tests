@@ -19,4 +19,4 @@
   register: mailcow__upload_log
   retries: 5
   delay: 1
-  until: ('{"upload_ok":"{{ {{ mailcow__report_filename }} }}"}' in mailcow__upload_log.stdout)
+  until: ('{"upload_ok":"{{ mailcow__report_filename }}"}' in mailcow__upload_log.stdout)
