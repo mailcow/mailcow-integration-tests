@@ -1,0 +1,163 @@
+---
+
+- name: Get Postfix logs
+  uri:
+    url: "https://{{ mailcow__hostname }}/api/v1/get/logs/postfix/2"
+    method: GET
+    body_format: json
+    return_content: yes
+    status_code: 200
+    headers:
+      X-API-Key: "{{ mailcow__api_key }}"
+  register: result_postfix_logs_get
+  until:
+    - ('json' in result_postfix_logs_get)
+  retries: 10
+  delay: 10
+
+- name: Debug Get
+  debug:
+    var: result_postfix_logs_get.json
+
+- set_fact:
+    result_postfix_logs_get_success: success
+  when: ('json' in result_postfix_logs_get) and (result_postfix_logs_get | length > 0)
+
+- set_fact:
+    result_postfix_logs_get_success: failed
+  when: ('json' not in result_postfix_logs_get)
+
+- name: Get Dovecot logs
+  uri:
+    url: "https://{{ mailcow__hostname }}/api/v1/get/logs/dovecot/2"
+    method: GET
+    body_format: json
+    return_content: yes
+    status_code: 200
+    headers:
+      X-API-Key: "{{ mailcow__api_key }}"
+  register: result_dovecot_logs_get
+  until:
+    - ('json' in result_dovecot_logs_get)
+  retries: 10
+  delay: 10
+
+- name: Debug Get
+  debug:
+    var: result_dovecot_logs_get.json
+
+- set_fact:
+    result_dovecot_logs_get_success: success
+  when: ('json' in result_dovecot_logs_get) and (result_dovecot_logs_get | length > 0)
+
+- set_fact:
+    result_dovecot_logs_get_success: failed
+  when: ('json' not in result_dovecot_logs_get)
+
+- name: Get ACME logs
+  uri:
+    url: "https://{{ mailcow__hostname }}/api/v1/get/logs/acme/2"
+    method: GET
+    body_format: json
+    return_content: yes
+    status_code: 200
+    headers:
+      X-API-Key: "{{ mailcow__api_key }}"
+  register: result_acme_logs_get
+  until:
+    - ('json' in result_acme_logs_get)
+  retries: 10
+  delay: 10
+
+- name: Debug Get
+  debug:
+    var: result_acme_logs_get.json
+
+- set_fact:
+    result_acme_logs_get_success: success
+  when: ('json' in result_acme_logs_get) and (result_acme_logs_get | length > 0)
+
+- set_fact:
+    result_acme_logs_get_success: failed
+  when: ('json' not in result_acme_logs_get)
+
+- name: Get Sogo logs
+  uri:
+    url: "https://{{ mailcow__hostname }}/api/v1/get/logs/sogo/2"
+    method: GET
+    body_format: json
+    return_content: yes
+    status_code: 200
+    headers:
+      X-API-Key: "{{ mailcow__api_key }}"
+  register: result_sogo_logs_get
+  until:
+    - ('json' in result_sogo_logs_get)
+  retries: 10
+  delay: 10
+
+- name: Debug Get
+  debug:
+    var: result_sogo_logs_get.json
+
+- set_fact:
+    result_sogo_logs_get_success: success
+  when: ('json' in result_sogo_logs_get) and (result_sogo_logs_get | length > 0)
+
+- set_fact:
+    result_sogo_logs_get_success: failed
+  when: ('json' not in result_sogo_logs_get)
+
+- name: Get Watchdog logs
+  uri:
+    url: "https://{{ mailcow__hostname }}/api/v1/get/logs/watchdog/2"
+    method: GET
+    body_format: json
+    return_content: yes
+    status_code: 200
+    headers:
+      X-API-Key: "{{ mailcow__api_key }}"
+  register: result_watchdog_logs_get
+  until:
+    - ('json' in result_watchdog_logs_get)
+  retries: 10
+  delay: 10
+
+- name: Debug Get
+  debug:
+    var: result_watchdog_logs_get.json
+
+- set_fact:
+    result_watchdog_logs_get_success: success
+  when: ('json' in result_watchdog_logs_get) and (result_watchdog_logs_get | length > 0)
+
+- set_fact:
+    result_watchdog_logs_get_success: failed
+  when: ('json' not in result_watchdog_logs_get)
+
+- name: Get API logs
+  uri:
+    url: "https://{{ mailcow__hostname }}/api/v1/get/logs/api/2"
+    method: GET
+    body_format: json
+    return_content: yes
+    status_code: 200
+    headers:
+      X-API-Key: "{{ mailcow__api_key }}"
+  register: result_api_logs_get
+  until:
+    - ('json' in result_api_logs_get)
+  retries: 10
+  delay: 10
+
+- name: Debug Get
+  debug:
+    var: result_api_logs_get.json
+
+- set_fact:
+    result_api_logs_get_success: success
+  when: ('json' in result_api_logs_get) and (result_api_logs_get | length > 0)
+
+- set_fact:
+    result_api_logs_get_success: failed
+  when: ('json' not in result_api_logs_get)

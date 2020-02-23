@@ -189,3 +189,27 @@ mailcow_test_results:
 #    name: "Function: Watchdog restart stopped container"
 #    result: "{{ result_watchdog_container_state_success | default('default_value') }}"
 #    log: "{{ result_watchdog_container_state.stdout | default('default_value') }}"
+  - logs_postfix:
+    name: "Get: Postfix logs"
+    result: "{{ result_postfix_logs_get_success | default('default_value') }}"
+    log: "{{ result_postfix_logs_get.json[0] | default('default_value') }}"
+  - logs_dovecot:
+    name: "Get: Dovecot logs"
+    result: "{{ result_dovecot_logs_get_success | default('default_value') }}"
+    log: "{{ result_dovecot_logs_get.json[0] | default('default_value') }}"
+  - logs_acme:
+    name: "Get: ACME logs"
+    result: "{{ result_acme_logs_get_success | default('default_value') }}"
+    log: "{{ result_acme_logs_get.json[0] | default('default_value') }}"
+  - logs_sogo:
+    name: "Get: SoGo logs"
+    result: "{{ result_sogo_logs_get_success | default('default_value') }}"
+    log: "{{ result_sogo_logs_get.json[0] | default('default_value') }}"
+  - logs_watchdog:
+    name: "Get: Watchdog logs"
+    result: "{{ result_watchdog_logs_get_success | default('default_value') }}"
+    log: "{{ result_watchdog_logs_get.json[0] | default('default_value') }}"
+  - logs_api:
+    name: "Get: API logs"
+    result: "{{ result_api_logs_get_success | default('default_value') }}"
+    log: "{{ result_api_logs_get.json[0] | default('default_value') }}"

@@ -57,6 +57,9 @@
 - name: Run watchdog tests
   import_tasks: tests/watchdog.yml
 
+- name: Run logs tests
+  import_tasks: tests/logs.yml
+
 - name: Generate report mailcow.email
   import_tasks: reports/generate_mailcowemail.yml
 
