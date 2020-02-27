@@ -32,6 +32,8 @@ mailcow__lang_files:
     file: lang.pt.json
   - name: RU
     file: lang.ru.json
+  - name: SV
+    file: lang.sv.json
 
 mailcow__build_images:
     - unbound-mailcow
