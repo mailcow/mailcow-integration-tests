@@ -58,6 +58,7 @@
     - (result_sieve_prefilter_redirect_rspamd.json[0].subject is defined) and ("Ansible-redirect-test" in result_sieve_prefilter_redirect_rspamd.json[0].subject)
     - (result_sieve_prefilter_redirect_rspamd.json[1].user is defined) and ("unknown" in result_sieve_prefilter_redirect_rspamd.json[1].user)
     - (result_sieve_prefilter_redirect_rspamd.json[1].subject is defined) and ("Ansible-redirect-test" in result_sieve_prefilter_redirect_rspamd.json[1].subject)
+  ignore_errors: yes
 
 - set_fact:
     result_sieve_prefilter_redirect_rspamd_symbols_list_0: "{{ result_sieve_prefilter_redirect_rspamd.json[0].symbols | list }}"
