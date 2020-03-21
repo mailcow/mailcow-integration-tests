@@ -29,3 +29,9 @@
   pip:
     name: jmespath
     state: present
+
+- name: Install htmlmin
+  become: yes
+  pip:
+    name: htmlmin
+    state: present
