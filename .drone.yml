@@ -28,14 +28,30 @@ trigger:
   - tag
 
 steps:
-- name: create-server
+- name: prepare-tests
   pull: default
   image: timovibritannia/ansible
   commands:
   - chmod +x ci.sh
+  - chmod +x ci-tag.sh
   - export DRONE_COMMIT=$(curl -sL https://api.github.com/repos/mailcow/mailcow-dockerized/commits/master | jq -r '.sha')
   - export DRONE_GIT_HTTP_URL=https://github.com/mailcow/mailcow-dockerized.git
   - ./ci.sh
+  - ./ci-tag.sh
+  - wget -O group_vars/all/secrets.yml $SECRETS_DOWNLOAD_URL --quiet
+  environment:
+    SECRETS_DOWNLOAD_URL:
+      from_secret: SECRETS_DOWNLOAD_URL
+  when:
+    branch:
+    - master
+    event:
+    - tag
+
+- name: create-server
+  pull: default
+  image: timovibritannia/ansible
+  commands:
   - ansible-playbook mailcow-start-server.yml --diff
   environment:
     ANSIBLE_HOST_KEY_CHECKING: false
@@ -52,10 +68,6 @@ steps:
   pull: default
   image: timovibritannia/ansible
   commands:
-  - chmod +x ci.sh
-  - export DRONE_COMMIT=$(curl -sL https://api.github.com/repos/mailcow/mailcow-dockerized/commits/master | jq -r '.sha')
-  - export DRONE_GIT_HTTP_URL=https://github.com/mailcow/mailcow-dockerized.git
-  - ./ci.sh
   - sleep 120
   - ansible-playbook mailcow-setup-server.yml --private-key /drone/src/id_ssh_rsa --diff
   environment:
@@ -73,12 +85,6 @@ steps:
   pull: default
   image: timovibritannia/ansible
   commands:
-  - chmod +x ci.sh
-  - chmod +x ci-tag.sh
-  - export DRONE_COMMIT=$(curl -sL https://api.github.com/repos/mailcow/mailcow-dockerized/commits/master | jq -r '.sha')
-  - export DRONE_GIT_HTTP_URL=https://github.com/mailcow/mailcow-dockerized.git
-  - ./ci.sh
-  - ./ci-tag.sh
   - ansible-playbook mailcow-integration-tests.yml --private-key /drone/src/id_ssh_rsa --diff
   environment:
     ANSIBLE_HOST_KEY_CHECKING: false
@@ -95,10 +101,6 @@ steps:
   pull: default
   image: timovibritannia/ansible
   commands:
-  - chmod +x ci.sh
-  - export DRONE_COMMIT=$(curl -sL https://api.github.com/repos/mailcow/mailcow-dockerized/commits/master | jq -r '.sha')
-  - export DRONE_GIT_HTTP_URL=https://github.com/mailcow/mailcow-dockerized.git
-  - ./ci.sh
   - ansible-playbook mailcow-delete-server.yml --diff
   environment:
     ANSIBLE_HOST_KEY_CHECKING: false
@@ -142,6 +144,6 @@ steps:
 
 ---
 kind: signature
-hmac: 28ef3aed05ae7503a2e7f99ceedbc896d965b8803639dffc2f03bfd86ab45f90
+hmac: 3e7fb424b83015131511f4598701799fab27c179f2b0e5e637ef74030beb5e51
 
 ...
