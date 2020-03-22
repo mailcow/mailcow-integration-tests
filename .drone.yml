@@ -34,6 +34,7 @@ steps:
   commands:
   - chmod +x ci.sh
   - chmod +x ci-tag.sh
+  - chmod +x ci-ssh.sh
   - export DRONE_COMMIT=$(curl -sL https://api.github.com/repos/mailcow/mailcow-dockerized/commits/master | jq -r '.sha')
   - export DRONE_GIT_HTTP_URL=https://github.com/mailcow/mailcow-dockerized.git
   - ./ci.sh
@@ -42,6 +43,8 @@ steps:
   environment:
     SECRETS_DOWNLOAD_URL:
       from_secret: SECRETS_DOWNLOAD_URL
+    VAULT_PW:
+      from_secret: VAULT_PW
   when:
     branch:
     - master
@@ -53,11 +56,10 @@ steps:
   image: timovibritannia/ansible
   commands:
   - ansible-playbook mailcow-start-server.yml --diff
+  - ./ci-ssh.sh
   environment:
     ANSIBLE_HOST_KEY_CHECKING: false
     ANSIBLE_FORCE_COLOR: true
-    VAULT_PW:
-      from_secret: VAULT_PW
   when:
     branch:
     - master
@@ -73,8 +75,6 @@ steps:
   environment:
     ANSIBLE_HOST_KEY_CHECKING: false
     ANSIBLE_FORCE_COLOR: true
-    VAULT_PW:
-      from_secret: VAULT_PW
   when:
     branch:
     - master
@@ -89,8 +89,6 @@ steps:
   environment:
     ANSIBLE_HOST_KEY_CHECKING: false
     ANSIBLE_FORCE_COLOR: true
-    VAULT_PW:
-      from_secret: VAULT_PW
   when:
     branch:
     - master
@@ -105,8 +103,6 @@ steps:
   environment:
     ANSIBLE_HOST_KEY_CHECKING: false
     ANSIBLE_FORCE_COLOR: true
-    VAULT_PW:
-      from_secret: VAULT_PW
   when:
     branch:
     - master
