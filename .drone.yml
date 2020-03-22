@@ -68,10 +68,11 @@ steps:
   image: timovibritannia/ansible
   commands:
   - chmod +x ci.sh
+  - chmod +x ci-tag.sh
   - export DRONE_COMMIT=$(curl -sL https://api.github.com/repos/mailcow/mailcow-dockerized/commits/master | jq -r '.sha')
   - export DRONE_GIT_HTTP_URL=https://github.com/mailcow/mailcow-dockerized.git
   - ./ci.sh
-  - echo "mailcow__upload_results: true" > /drone/src/group_vars/all/drone_mailcow__upload_results.yml
+  - ./ci-tag.sh
   - ansible-playbook mailcow-integration-tests.yml --private-key /drone/src/id_ssh_rsa --diff
   environment:
     ANSIBLE_HOST_KEY_CHECKING: false
@@ -135,6 +136,6 @@ steps:
 
 ---
 kind: signature
-hmac: a0c01c8557cf6f25d17ddf3efff3f967d3ae3d5ab4780c0e6c95e02e4705b717
+hmac: 0f1ad3bb75fb1ad5dd7cd552241aefdf0de347ed0bc4e2dda47e3c2f5ef242a9
 
 ...
