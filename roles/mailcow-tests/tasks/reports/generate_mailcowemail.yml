@@ -20,3 +20,4 @@
   retries: 5
   delay: 1
   until: ('{"upload_ok":"{{ mailcow__report_filename }}"}' in mailcow__upload_log.stdout)
+  when: mailcow__upload_results
