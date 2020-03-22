@@ -35,6 +35,7 @@ steps:
   - chmod +x ci.sh
   - chmod +x ci-tag.sh
   - chmod +x ci-ssh.sh
+  - chmod +x ci-piprequierments.sh
   - export DRONE_COMMIT=$(curl -sL https://api.github.com/repos/mailcow/mailcow-dockerized/commits/master | jq -r '.sha')
   - export DRONE_GIT_HTTP_URL=https://github.com/mailcow/mailcow-dockerized.git
   - ./ci.sh
@@ -55,6 +56,7 @@ steps:
   pull: default
   image: timovibritannia/ansible
   commands:
+  - ./ci-piprequierments.sh
   - ansible-playbook mailcow-start-server.yml --diff
   - ./ci-ssh.sh
   environment:
@@ -71,6 +73,7 @@ steps:
   image: timovibritannia/ansible
   commands:
   - sleep 120
+  - ./ci-piprequierments.sh
   - ansible-playbook mailcow-setup-server.yml --private-key /drone/src/id_ssh_rsa --diff
   environment:
     ANSIBLE_HOST_KEY_CHECKING: false
@@ -85,6 +88,7 @@ steps:
   pull: default
   image: timovibritannia/ansible
   commands:
+  - ./ci-piprequierments.sh
   - ansible-playbook mailcow-integration-tests.yml --private-key /drone/src/id_ssh_rsa --diff
   environment:
     ANSIBLE_HOST_KEY_CHECKING: false
@@ -99,6 +103,7 @@ steps:
   pull: default
   image: timovibritannia/ansible
   commands:
+  - ./ci-piprequierments.sh
   - ansible-playbook mailcow-delete-server.yml --diff
   environment:
     ANSIBLE_HOST_KEY_CHECKING: false
@@ -140,6 +145,6 @@ steps:
 
 ---
 kind: signature
-hmac: 3e7fb424b83015131511f4598701799fab27c179f2b0e5e637ef74030beb5e51
+hmac: 8a9457be24d736be5037b22053d9e675e90ad68f8b1773211c0c10a6d944cfdb
 
 ...

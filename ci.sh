@@ -36,8 +36,3 @@ echo "mailcow__dns_zone: ${domains[$domains_index]}" > /drone/src/group_vars/all
 echo "mailcow__git_repo: ${DRONE_GIT_HTTP_URL}" > /drone/src/group_vars/all/drone_mailcow__git_repo.yml
 echo "mailcow__git_http_url: ${DRONE_GIT_HTTP_URL:: -4}" > /drone/src/group_vars/all/drone_mailcow__git_http_url.yml
 echo "mailcow__git_version: ${DRONE_COMMIT}" > /drone/src/group_vars/all/drone_mailcow__git_version.yml
-
-# Install requierments
-pip3 install hcloud > /dev/null
-pip3 install jmespath > /dev/null
-pip3 install docker > /dev/null
