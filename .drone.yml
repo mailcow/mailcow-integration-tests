@@ -12,8 +12,129 @@ steps:
   image: timovibritannia/ansible
   commands:
   - ansible-lint ./
+
+---
+kind: pipeline
+name: publish
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: create-server
+  pull: default
+  image: timovibritannia/ansible
+  commands:
+  - chmod +x ci.sh
+  - export DRONE_COMMIT=$(curl -sL https://api.github.com/repos/mailcow/mailcow-dockerized/commits/master | jq -r '.sha')
+  - export DRONE_GIT_HTTP_URL=https://github.com/mailcow/mailcow-dockerized.git
+  - ./ci.sh
+  - ansible-playbook mailcow-start-server.yml --diff
+  environment:
+    ANSIBLE_HOST_KEY_CHECKING: false
+    ANSIBLE_FORCE_COLOR: true
+    VAULT_PW:
+      from_secret: VAULT_PW
+  when:
+    branch:
+    - master
+    event:
+    - tag
+
+- name: setup-server
+  pull: default
+  image: timovibritannia/ansible
+  commands:
+  - chmod +x ci.sh
+  - export DRONE_COMMIT=$(curl -sL https://api.github.com/repos/mailcow/mailcow-dockerized/commits/master | jq -r '.sha')
+  - export DRONE_GIT_HTTP_URL=https://github.com/mailcow/mailcow-dockerized.git
+  - ./ci.sh
+  - sleep 120
+  - ansible-playbook mailcow-setup-server.yml --private-key /drone/src/id_ssh_rsa --diff
+  environment:
+    ANSIBLE_HOST_KEY_CHECKING: false
+    ANSIBLE_FORCE_COLOR: true
+    VAULT_PW:
+      from_secret: VAULT_PW
+  when:
+    branch:
+    - master
+    event:
+    - tag
+
+- name: run-tests
+  pull: default
+  image: timovibritannia/ansible
+  commands:
+  - chmod +x ci.sh
+  - export DRONE_COMMIT=$(curl -sL https://api.github.com/repos/mailcow/mailcow-dockerized/commits/master | jq -r '.sha')
+  - export DRONE_GIT_HTTP_URL=https://github.com/mailcow/mailcow-dockerized.git
+  - ./ci.sh
+  - echo "mailcow__upload_results: true" > /drone/src/group_vars/all/drone_mailcow__upload_results.yml
+  - ansible-playbook mailcow-integration-tests.yml --private-key /drone/src/id_ssh_rsa --diff
+  environment:
+    ANSIBLE_HOST_KEY_CHECKING: false
+    ANSIBLE_FORCE_COLOR: true
+    VAULT_PW:
+      from_secret: VAULT_PW
+  when:
+    branch:
+    - master
+    event:
+    - tag
+
+- name: delete-server
+  pull: default
+  image: timovibritannia/ansible
+  commands:
+  - chmod +x ci.sh
+  - export DRONE_COMMIT=$(curl -sL https://api.github.com/repos/mailcow/mailcow-dockerized/commits/master | jq -r '.sha')
+  - export DRONE_GIT_HTTP_URL=https://github.com/mailcow/mailcow-dockerized.git
+  - ./ci.sh
+  - ansible-playbook mailcow-delete-server.yml --diff
+  environment:
+    ANSIBLE_HOST_KEY_CHECKING: false
+    ANSIBLE_FORCE_COLOR: true
+    VAULT_PW:
+      from_secret: VAULT_PW
+  when:
+    branch:
+    - master
+    event:
+    - tag
+    status:
+    - failure
+    - success
+
+- name: update-changelog
+  pull: default
+  image: node:latest
+  commands:
+  - npm ci
+  - npm run verion
+  when:
+    branch:
+    - master
+    event:
+    - tag
+
+- name: create-release
+  image: plugins/github-release
+  settings:
+    api_key:
+      from_secret: GITHUB_API_KEY
+    title: ${DRONE_TAG}
+    note: CHANGELOG.md
+    overwrite: true
+  when:
+    branch:
+    - master
+    event:
+    - tag
+
 ---
 kind: signature
-hmac: 2f4e1b168b4e7553a83df0e9d7227c256dc7db20af5142a9199749f58b1db361
+hmac: a0c01c8557cf6f25d17ddf3efff3f967d3ae3d5ab4780c0e6c95e02e4705b717
 
 ...
