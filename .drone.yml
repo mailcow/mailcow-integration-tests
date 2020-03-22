@@ -117,12 +117,12 @@ steps:
     - failure
     - success
 
-- name: update-changelog
-  pull: default
-  image: node:latest
-  commands:
-  - npm install
-  - npm run version
+- name: create-changelog
+  image: naorlivne/drone-github-changelog-generator
+  settings:
+    github_user: mailcow
+    github_project: mailcow-integration-tests
+    output_path: CHANGELOG.md
   when:
     branch:
     - master
@@ -145,6 +145,6 @@ steps:
 
 ---
 kind: signature
-hmac: 8eab4b24780114e53999af55c5463cfdc42168deae29de6f25b19f4299cf2452
+hmac: a61e919c5fe08199ce7321c55c74b733847977ec61fde11fdf0faebac54fd589
 
 ...
