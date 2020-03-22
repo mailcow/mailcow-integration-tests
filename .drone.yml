@@ -121,7 +121,7 @@ steps:
   pull: default
   image: node:latest
   commands:
-  - npm ci
+  - npm install
   - npm run verion
   when:
     branch:
@@ -145,6 +145,6 @@ steps:
 
 ---
 kind: signature
-hmac: 8a9457be24d736be5037b22053d9e675e90ad68f8b1773211c0c10a6d944cfdb
+hmac: 8eab4b24780114e53999af55c5463cfdc42168deae29de6f25b19f4299cf2452
 
 ...
