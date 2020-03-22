@@ -10,7 +10,12 @@ if [ -f "$SSHKEYFILE" ]; then
   chmod 0600 $SSHKEYFILE
 fi
 
-echo "$VAULT_PW" > /drone/src/.vault-pw
+if [ -z "$VAULT_PW" ]; then
+  echo "VAULT_PW is not set"
+  exit 1
+else
+  echo "$VAULT_PW" > /drone/src/.vault-pw
+fi
 
 # Set global ansible variables
 echo "hcloud_server_name: cowintg${DRONE_COMMIT:0:10}" > /drone/src/group_vars/all/drone_servername.yml
