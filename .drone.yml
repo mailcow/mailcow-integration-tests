@@ -21,6 +21,12 @@ platform:
   os: linux
   arch: amd64
 
+trigger:
+  branch:
+  - master
+  event:
+  - tag
+
 steps:
 - name: create-server
   pull: default
@@ -136,6 +142,6 @@ steps:
 
 ---
 kind: signature
-hmac: 0f1ad3bb75fb1ad5dd7cd552241aefdf0de347ed0bc4e2dda47e3c2f5ef242a9
+hmac: 28ef3aed05ae7503a2e7f99ceedbc896d965b8803639dffc2f03bfd86ab45f90
 
 ...
