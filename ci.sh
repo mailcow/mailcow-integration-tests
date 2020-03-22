@@ -21,6 +21,8 @@ echo "mailcow__mailbox_user_two: $(./namegenerator.sh)" > /drone/src/group_vars/
 echo "mailcow__mailbox_user_alias: $(./namegenerator.sh)" > /drone/src/group_vars/all/drone_mailcow__mailbox_user_alias.yml
 
 domains[0]="010111010.xyz"
+domains[0]="4884884.xyz"
+domains[0]="8448448.xyz"
 domains_size=${#domains[@]}
 domains_index=$(($RANDOM % $domains_size))
 
