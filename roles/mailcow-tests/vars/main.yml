@@ -185,10 +185,10 @@ mailcow_test_results:
     name: "API: Check if watchdog postfix health is degraded"
     result: "{{ result_watchdog_log_success | default('default_value') }}"
     log: "{{ result_watchdog_log_success_log | default('default_value') }}"
-#  - watchdog_container_restart:
-#    name: "Function: Watchdog restart stopped container"
-#    result: "{{ result_watchdog_container_state_success | default('default_value') }}"
-#    log: "{{ result_watchdog_container_state.stdout | default('default_value') }}"
+  - watchdog_container_restart:
+    name: "Function: Watchdog restart stopped container"
+    result: "{{ result_watchdog_container_state_success | default('default_value') }}"
+    log: "{{ result_watchdog_container_state.stdout | default('default_value') }}"
   - logs_postfix:
     name: "Get: Postfix logs"
     result: "{{ result_postfix_logs_get_success | default('default_value') }}"

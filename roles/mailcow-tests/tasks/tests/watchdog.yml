@@ -45,9 +45,9 @@
   when:
     - result_watchdog_log_success is not defined
 
-- name: Wait 30 seconds
+- name: Wait 240 seconds
   wait_for:
-    timeout: 30
+    timeout: 240
   delegate_to: localhost
 
 - name: Check if container is running again
