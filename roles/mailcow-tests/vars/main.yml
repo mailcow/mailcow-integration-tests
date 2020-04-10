@@ -213,3 +213,7 @@ mailcow_test_results:
     name: "Get: API logs"
     result: "{{ result_api_logs_get_success | default('default_value') }}"
     log: "{{ result_api_logs_get.json[0] | default('default_value') }}"
+  - backup_creation:
+    name: "Function: Backup creation"
+    result: "{{ result_backup_created_success | default('default_value') }}"
+    log: "{{ result_backup_creation.stdout_lines | default('default_value') }}"

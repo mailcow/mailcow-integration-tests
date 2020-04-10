@@ -1,0 +1,29 @@
+---
+
+- name: Create Backup
+  become: yes
+  shell: echo 'y' | ./helper-scripts/backup_and_restore.sh backup all
+  environment:
+    MAILCOW_BACKUP_LOCATION: "/opt/backup"
+  args:
+    executable: /bin/bash
+    chdir: /opt/mailcow-dockerized
+  register: result_backup_creation
+
+- name: Debug
+  debug:
+    var: result_backup_creation.stdout_lines
+
+- name: Check if backup exists
+  become: yes
+  stat:
+    path: /opt/backup/
+  register: result_backup_exists
+
+- set_fact:
+    result_backup_created_success: success
+  when: result_backup_exists.stat.exists
+
+- set_fact:
+    result_backup_created_success: failed
+  when: not result_backup_exists.stat.exists
