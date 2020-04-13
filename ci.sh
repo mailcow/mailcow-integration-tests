@@ -24,6 +24,8 @@ echo "drone_commit_hash_long: ${DRONE_COMMIT}" > /drone/src/group_vars/all/drone
 echo "mailcow__mailbox_user_one: $(./namegenerator.sh)" > /drone/src/group_vars/all/drone_mailcow__mailbox_user_one.yml
 echo "mailcow__mailbox_user_two: $(./namegenerator.sh)" > /drone/src/group_vars/all/drone_mailcow_mailcow__mailbox_user_two.yml
 echo "mailcow__mailbox_user_alias: $(./namegenerator.sh)" > /drone/src/group_vars/all/drone_mailcow__mailbox_user_alias.yml
+echo "mailcow__api_key: $(openssl rand -hex 25)"  > /drone/src/group_vars/all/drone_mailcow__api_key.yml
+echo "mailcow__api_key_read_only: $(openssl rand -hex 25)"  > /drone/src/group_vars/all/drone_mailcow__api_key_read_only.yml
 
 domains[0]="010111010.xyz"
 domains[0]="4884884.xyz"
