@@ -140,6 +140,13 @@
     replace: "API_KEY={{ mailcow__api_key }}"
   no_log: true
 
+- name: Uncomment API_KEY_READ_ONLY line
+  replace:
+    path: /opt/mailcow-dockerized/mailcow.conf
+    regexp: '^#(API_KEY_READ_ONLY=)$'
+    replace: '\1'
+  no_log: true
+
 - name: Configure API_KEY_READ_ONLY
   replace:
     path: /opt/mailcow-dockerized/mailcow.conf
