@@ -22,11 +22,10 @@
 
 - set_fact:
     result_alias_read_only_success: success
-  when: ('json' in result_alias_read_only) and ("API read/write access denied" in result_alias_read_only.json[0].msg)
-
+  when: ('json' in result_alias_read_only) and ('API read/write access denied' in result_alias_read_only.json.msg)
 - set_fact:
     result_alias_read_only_success: failed
-  when: ('json' in result_alias_read_only) and ("API read/write access denied" not in result_alias_read_only.json[0].msg)
+  when: ('json' in result_alias_read_only) and ('API read/write access denied' not in result_alias_read_only.json.msg)
 
 - name: Get Alias
   uri:

@@ -224,4 +224,4 @@ mailcow_test_results:
   - read_only_api_write_op:
     name: "Function: Read only API Key deny write operations"
     result: "{{ result_alias_read_only_success | default('default_value') }}"
-    log: "{{ result_alias_read_only.json[0].msg | default('default_value') }}"
+    log: "{{ result_alias_read_only.json.msg | default('default_value') }}"
