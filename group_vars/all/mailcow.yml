@@ -205,3 +205,8 @@ mailcow__demo_netfilter_json:
     netban_ipv6: "64"
     whitelist: ""
     blacklist: ""
+
+mailcow__demo_alias__read_only_json:
+  address: "readonlytest@{{ mailcow__test_domain }}"
+  goto: "{{ mailcow__mailbox_user_one }}@{{ mailcow__test_domain }}"
+  active: "1"
