@@ -8,7 +8,7 @@
 
 - name: Wait 120 seconds
   wait_for:
-    timeout: 120
+    timeout: 300
   delegate_to: localhost
 
 - name: Get watchdog log using API
@@ -45,9 +45,9 @@
   when:
     - result_watchdog_log_success is not defined
 
-- name: Wait 240 seconds
+- name: Wait 300 seconds
   wait_for:
-    timeout: 240
+    timeout: 300
   delegate_to: localhost
 
 - name: Check if container is running again
