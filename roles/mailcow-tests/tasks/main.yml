@@ -63,6 +63,9 @@
 - name: Run backup and restore tests
   import_tasks: tests/backup_and_restore.yml
 
+- name: Run read only API tests
+  import_tasks: tests/read_only_api.yml.yml
+
 - name: Generate report mailcow.email
   import_tasks: reports/generate_mailcowemail.yml
 
