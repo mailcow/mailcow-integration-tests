@@ -8,7 +8,7 @@
 
 - name: Wait 120 seconds
   wait_for:
-    timeout: 300
+    timeout: 120
   delegate_to: localhost
 
 - name: Get watchdog log using API
@@ -51,10 +51,15 @@
   delegate_to: localhost
 
 - name: Check if container is running again
-  command: "docker inspect -f {% raw %}'{{.State.Running}}'{% endraw %} mailcowdockerized_postfix-mailcow_1"
+  become: yes
+  command: docker inspect -f {% raw %}'{{.State.Running}}'{% endraw %} mailcowdockerized_postfix-mailcow_1
   args:
     chdir: /opt/mailcow-dockerized
   register: result_watchdog_container_state
+
+- name: Debug watchdog container state
+  debug:
+    var: result_watchdog_container_state.stdout
 
 - set_fact:
     result_watchdog_container_state_success: success
