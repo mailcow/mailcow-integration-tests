@@ -219,8 +219,8 @@ mailcow_test_results:
     log: "{{ result_backup_creation.stdout_lines | default('default_value') }}"
   - read_only_api_read_op:
     name: "Function: Read only API Key read operations"
-    result: "{{ result_alias_read_only_get_success | default('default_value') }}"
-    log: "{{ result_alias_get_read_only.json[0] | default('default_value') }}"
+    result: "{{ result_domain_get_read_only_success | default('default_value') }}"
+    log: "{{ result_domain_get_read_only.json[0] | default('default_value') }}"
   - read_only_api_write_op:
     name: "Function: Read only API Key deny write operations"
     result: "{{ result_alias_read_only_success | default('default_value') }}"
