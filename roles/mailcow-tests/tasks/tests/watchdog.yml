@@ -64,9 +64,9 @@
 - set_fact:
     result_watchdog_container_state_success: success
   when:
-    - ('false' in result_watchdog_container_state.stdout)
+    - ('true' in result_watchdog_container_state.stdout)
 
 - set_fact:
     result_watchdog_container_state_success: failed
   when:
-    - ('true' in result_watchdog_container_state.stdout)
+    - ('false' in result_watchdog_container_state.stdout)
