@@ -5,12 +5,14 @@
   apt:
     name: python3
     state: present
+    update_cache: yes
 
 - name: Install pip3
   become: yes
   apt:
     name: python3-pip
     state: present
+    update_cache: yes
 
 - name: Install setuptools
   become: yes
