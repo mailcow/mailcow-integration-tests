@@ -29,6 +29,8 @@ mailcow__lang_files:
     file: lang.pl.json
   - name: PT
     file: lang.pt.json
+  - name: RO
+    file: lang.ro.json
   - name: RU
     file: lang.ru.json
   - name: SV
