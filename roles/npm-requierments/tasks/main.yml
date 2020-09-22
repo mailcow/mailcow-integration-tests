@@ -15,6 +15,6 @@
 - name: Install jsonlint
   become: yes
   npm:
-      name: jsonlint
-      global: true
-      state: present
+    name: jsonlint
+    global: true
+    state: present
