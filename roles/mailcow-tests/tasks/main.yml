@@ -54,6 +54,9 @@
 - name: Run sieve prefilter redirect tests
   import_tasks: tests/sieve_prefilter_redirect.yml
 
+- name: Run word doc macro tests
+  import_tasks: tests/doc_macro.yml
+
 - name: Run watchdog tests
   import_tasks: tests/watchdog.yml
 

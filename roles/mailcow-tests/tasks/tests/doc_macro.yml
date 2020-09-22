@@ -1,0 +1,64 @@
+---
+# Description: This test evaluates if office documents containing macros are
+# correctly blocked by rspamd in combination with olefy.
+
+- name: Download macro testing document
+  get_url:
+    url: "{{ mailcow__macro_test_url }}"
+    dest: "{{ mailcow__macro_test_file }}"
+
+# Send mail
+- name: Send email with macro document attached
+  mail:
+    host: "{{ mailcow__hostname }}"
+    port: 587
+    from: "{{ mailcow__mailbox_user_two }}@{{ mailcow__test_domain }}"
+    username: "{{ mailcow__mailbox_user_two }}@{{ mailcow__test_domain }}"
+    password: "{{ mailcow_mailbox_pw }}"
+    to:
+      - "{{ mailcow__mailbox_user_one }}@{{ mailcow__test_domain }}"
+    subject: "WORD TEST"
+    body: System {{ ansible_hostname }} says hello
+    secure: starttls
+    attach: "{{ mailcow__macro_test_file }}"
+  register: result_marco_doc_sendmail
+  ignore_errors: yes
+
+# Get Rspamd Symbols
+- name: Get Rspamd log using API
+  uri:
+    url: "https://{{ mailcow__hostname }}/api/v1/get/logs/rspamd-history/1"
+    method: GET
+    body_format: json
+    return_content: yes
+    status_code: 200
+    headers:
+      X-API-Key: "{{ mailcow__api_key }}"
+  register: result_marco_doc_rspamd
+  retries: 20
+  delay: 2
+  until:
+    - ('json' in result_marco_doc_rspamd) and (result_marco_doc_rspamd.json[0].subject is defined) and ("WORD TEST" in result_marco_doc_rspamd.json[0].subject)
+
+- set_fact:
+    result_marco_doc_rspamd_symbols_list: "{{ result_marco_doc_rspamd.json[0].symbols | list }}"
+
+- name: Debug Rspamd symbols as list
+  debug:
+    var: result_marco_doc_rspamd_symbols_list
+
+## Symbol Checks
+- set_fact:
+    result_marco_doc_rspamd_symbols_list_sucess: success
+  when:
+    - "'VIRUS_FOUND' in result_marco_doc_rspamd_symbols_list"
+    - "'MIME_BAD_ATTACHMENT' in result_marco_doc_rspamd_symbols_list"
+    - result_marco_doc_sendmail is failed
+
+- set_fact:
+    result_marco_doc_rspamd_symbols_list_sucess: failed
+  when:
+    - "'VIRUS_FOUND' not in result_marco_doc_rspamd_symbols_list"
+    - "'MIME_BAD_ATTACHMENT' not in result_marco_doc_rspamd_symbols_list"
+    - result_marco_doc_sendmail is succeeded
+# End Rspamd Symbols

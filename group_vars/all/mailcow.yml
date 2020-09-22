@@ -62,6 +62,8 @@ mailcow__pull_images:
     - rspamd-mailcow
     - sogo-mailcow
 
+mailcow__macro_test_file: "/opt/HTTPMacro.doc"
+mailcow__macro_test_url: "https://www3.safenet-inc.com/csrt/esafe-demo/HTTPMacro/HTTPMacro.doc"
 
 mailcow__hostname_local_part: "mail-{{ drone_commit_hash }}"
 mailcow__hostname: "{{ mailcow__hostname_local_part }}.{{ mailcow__dns_zone }}"

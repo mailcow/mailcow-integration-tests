@@ -225,3 +225,7 @@ mailcow_test_results:
     name: "Function: Read only API Key deny write operations"
     result: "{{ result_alias_read_only_success | default('Test result could not be determiend') }}"
     log: "{{ result_alias_read_only.json.msg | default('Test result could not be determiend') }}"
+  - doc_macro:
+    name: "Function: Block marco office documents"
+    result: "{{ result_marco_doc_rspamd_symbols_list_sucess | default('Test result could not be determiend') }}"
+    log: "{{ result_marco_doc_rspamd_symbols_list | default('Test result could not be determiend') }}"
