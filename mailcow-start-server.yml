@@ -11,12 +11,9 @@
       state: present
 
   - name: Generate SSH Key
-    become: yes
     openssh_keypair:
       path: "{{ playbook_dir }}/id_ssh_rsa"
       mode: 0600
-      owner: root
-      group: root
       force: yes
     register: ssh_key_result
 
