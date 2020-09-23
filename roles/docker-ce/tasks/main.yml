@@ -8,11 +8,11 @@
 
 - name: Add the Docker apt key
   apt_key:
-    url: https://download.docker.com/linux/ubuntu/gpg
+    url: http://download.docker.com/linux/ubuntu/gpg
 
 - name: Add the Docker apt repository
   apt_repository:
-    repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+    repo: "deb [arch=amd64] http://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
 
 - name: Install Docker
   apt:

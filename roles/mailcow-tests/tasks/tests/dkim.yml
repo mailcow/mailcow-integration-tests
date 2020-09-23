@@ -2,7 +2,7 @@
 
 - name: Create DKIM key
   uri:
-    url: "https://{{ mailcow__hostname }}/api/v1/add/dkim"
+    url: "http://{{ mailcow__hostname }}/api/v1/add/dkim"
     method: POST
     body_format: json
     return_content: yes
@@ -22,7 +22,7 @@
 
 - name: Duplicate DKIM key
   uri:
-    url: "https://{{ mailcow__hostname }}/api/v1/add/dkim_duplicate"
+    url: "http://{{ mailcow__hostname }}/api/v1/add/dkim_duplicate"
     method: POST
     body_format: json
     return_content: yes
@@ -42,7 +42,7 @@
 
 - name: Delete DKIM key
   uri:
-    url: "https://{{ mailcow__hostname }}/api/v1/delete/dkim"
+    url: "http://{{ mailcow__hostname }}/api/v1/delete/dkim"
     method: POST
     body_format: json
     return_content: yes

@@ -2,5 +2,7 @@
 
 - name: Exit if one test failed
   command: exit 1
-  when: ("success" not in item.result)
+  when:
+    - ("success" not in item.result)
+    - item.enabled | default('true')
   loop: "{{ mailcow_test_results }}"

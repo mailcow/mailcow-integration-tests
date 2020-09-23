@@ -14,7 +14,7 @@
   command: "htmlmin /opt/{{ mailcow__report_filename }} /opt/{{ mailcow__report_filename }}"
 
 - name: Upload report to mailcow.email
-  command: "curl https://int-test.mailcow.email/upload -X POST -Ftoken={{ vault__mailcow__reports_upload_token }} -Ffilename=@/opt/{{ mailcow__report_filename }}"
+  command: "curl http://int-test.mailcow.email/upload -X POST -Ftoken={{ vault__mailcow__reports_upload_token }} -Ffilename=@/opt/{{ mailcow__report_filename }}"
   no_log: true
   register: mailcow__upload_log
   retries: 5

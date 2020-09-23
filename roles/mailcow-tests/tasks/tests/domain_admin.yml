@@ -2,7 +2,7 @@
 
 - name: Create domain admin
   uri:
-    url: "https://{{ mailcow__hostname }}/api/v1/add/domain-admin"
+    url: "http://{{ mailcow__hostname }}/api/v1/add/domain-admin"
     method: POST
     body_format: json
     return_content: yes
@@ -21,7 +21,7 @@
 
 - name: Get domain admin
   uri:
-    url: "https://{{ mailcow__hostname }}/api/v1/get/domain-admin/all"
+    url: "http://{{ mailcow__hostname }}/api/v1/get/domain-admin/all"
     method: GET
     body_format: json
     return_content: yes
@@ -48,7 +48,7 @@
 
 - name: Delete domain admin
   uri:
-    url: "https://{{ mailcow__hostname }}/api/v1/delete/domain-admin"
+    url: "http://{{ mailcow__hostname }}/api/v1/delete/domain-admin"
     method: POST
     body_format: json
     return_content: yes

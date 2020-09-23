@@ -2,7 +2,7 @@
 
 - name: Create oAuth app
   uri:
-    url: "https://{{ mailcow__hostname }}/api/v1/add/oauth2-client"
+    url: "http://{{ mailcow__hostname }}/api/v1/add/oauth2-client"
     method: POST
     body_format: json
     return_content: yes
@@ -21,7 +21,7 @@
 
 - name: Get oAuth app
   uri:
-    url: "https://{{ mailcow__hostname }}/api/v1/get/oauth2-client/all"
+    url: "http://{{ mailcow__hostname }}/api/v1/get/oauth2-client/all"
     method: GET
     body_format: json
     return_content: yes
@@ -47,7 +47,7 @@
 
 - name: Delete oAuth app
   uri:
-    url: "https://{{ mailcow__hostname }}/api/v1/delete/oauth2-client"
+    url: "http://{{ mailcow__hostname }}/api/v1/delete/oauth2-client"
     method: POST
     body_format: json
     return_content: yes

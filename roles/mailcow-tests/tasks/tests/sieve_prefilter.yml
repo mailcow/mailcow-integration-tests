@@ -2,7 +2,7 @@
 
 - name: Create mailbox for sieve test
   uri:
-    url: "https://{{ mailcow__hostname }}/api/v1/add/mailbox"
+    url: "http://{{ mailcow__hostname }}/api/v1/add/mailbox"
     method: POST
     body_format: json
     return_content: yes
@@ -17,7 +17,7 @@
 
 - name: Create sieve prefilter
   uri:
-    url: "https://{{ mailcow__hostname }}/api/v1/add/filter"
+    url: "http://{{ mailcow__hostname }}/api/v1/add/filter"
     method: POST
     body_format: json
     return_content: yes
@@ -36,7 +36,7 @@
 
 - name: Get sieve prefilter
   uri:
-    url: "https://{{ mailcow__hostname }}/api/v1/get/filters/all"
+    url: "http://{{ mailcow__hostname }}/api/v1/get/filters/all"
     method: GET
     body_format: json
     return_content: yes
@@ -79,7 +79,7 @@
 # Get Rspamd Symbols
 - name: Get Rspamd log using API
   uri:
-    url: "https://{{ mailcow__hostname }}/api/v1/get/logs/rspamd-history/1"
+    url: "http://{{ mailcow__hostname }}/api/v1/get/logs/rspamd-history/1"
     method: GET
     body_format: json
     return_content: yes
@@ -119,7 +119,7 @@
 
 - name: Delete sieve prefilter
   uri:
-    url: "https://{{ mailcow__hostname }}/api/v1/delete/filter"
+    url: "http://{{ mailcow__hostname }}/api/v1/delete/filter"
     method: POST
     body_format: json
     return_content: yes

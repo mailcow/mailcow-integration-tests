@@ -13,7 +13,7 @@
 
 - name: Get watchdog log using API
   uri:
-    url: "https://{{ mailcow__hostname }}/api/v1/get/logs/watchdog/200"
+    url: "http://{{ mailcow__hostname }}/api/v1/get/logs/watchdog/200"
     method: GET
     body_format: json
     return_content: yes

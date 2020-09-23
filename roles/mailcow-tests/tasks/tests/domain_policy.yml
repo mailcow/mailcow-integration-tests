@@ -2,7 +2,7 @@
 
 - name: Create domain policy
   uri:
-    url: "https://{{ mailcow__hostname }}/api/v1/add/domain-policy"
+    url: "http://{{ mailcow__hostname }}/api/v1/add/domain-policy"
     method: POST
     body_format: json
     return_content: yes
@@ -21,7 +21,7 @@
 
 - name: Delete domain policy
   uri:
-    url: "https://{{ mailcow__hostname }}/api/v1/delete/domain-policy"
+    url: "http://{{ mailcow__hostname }}/api/v1/delete/domain-policy"
     method: POST
     body_format: json
     return_content: yes

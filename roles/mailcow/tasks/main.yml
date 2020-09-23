@@ -91,7 +91,7 @@
 
 - name: Check if mailcow is up and returns status code 200
   uri:
-    url: "https://{{ mailcow__hostname }}/"
+    url: "http://{{ mailcow__hostname }}/"
     method: GET
     status_code: 200
   retries: 40
@@ -101,7 +101,7 @@
 
 - name: Check if mailcow is up and ready using API
   uri:
-    url: "https://{{ mailcow__hostname }}/api/v1/get/status/containers"
+    url: "http://{{ mailcow__hostname }}/api/v1/get/status/containers"
     method: GET
     body_format: json
     return_content: yes

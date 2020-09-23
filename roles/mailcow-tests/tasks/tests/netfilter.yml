@@ -2,7 +2,7 @@
 
 - name: Update netfilter config
   uri:
-    url: "https://{{ mailcow__hostname }}/api/v1/edit/fail2ban"
+    url: "http://{{ mailcow__hostname }}/api/v1/edit/fail2ban"
     method: POST
     body_format: json
     return_content: yes
@@ -21,7 +21,7 @@
 
 - name: Get netfilter config
   uri:
-    url: "https://{{ mailcow__hostname }}/api/v1/get/fail2ban"
+    url: "http://{{ mailcow__hostname }}/api/v1/get/fail2ban"
     method: GET
     body_format: json
     return_content: yes

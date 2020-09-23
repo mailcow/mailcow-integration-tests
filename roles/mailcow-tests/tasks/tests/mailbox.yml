@@ -2,7 +2,7 @@
 
 - name: Create mailbox
   uri:
-    url: "https://{{ mailcow__hostname }}/api/v1/add/mailbox"
+    url: "http://{{ mailcow__hostname }}/api/v1/add/mailbox"
     method: POST
     body_format: json
     return_content: yes

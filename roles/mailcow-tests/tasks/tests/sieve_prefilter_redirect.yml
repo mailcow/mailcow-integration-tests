@@ -2,7 +2,7 @@
 
 - name: Create sieve redirect prefilter
   uri:
-    url: "https://{{ mailcow__hostname }}/api/v1/add/filter"
+    url: "http://{{ mailcow__hostname }}/api/v1/add/filter"
     method: POST
     body_format: json
     return_content: yes
@@ -42,7 +42,7 @@
 # Get Rspamd Symbols
 - name: Get Rspamd log using API
   uri:
-    url: "https://{{ mailcow__hostname }}/api/v1/get/logs/rspamd-history/2"
+    url: "http://{{ mailcow__hostname }}/api/v1/get/logs/rspamd-history/2"
     method: GET
     body_format: json
     return_content: yes

@@ -2,7 +2,7 @@
 
 - name: Create Alias read only API
   uri:
-    url: "https://{{ mailcow__hostname }}/api/v1/add/alias"
+    url: "http://{{ mailcow__hostname }}/api/v1/add/alias"
     method: POST
     body_format: json
     return_content: yes
@@ -29,7 +29,7 @@
 
 - name: Get Domain read only API
   uri:
-    url: "https://{{ mailcow__hostname }}/api/v1/get/domain/all"
+    url: "http://{{ mailcow__hostname }}/api/v1/get/domain/all"
     method: GET
     body_format: json
     return_content: yes

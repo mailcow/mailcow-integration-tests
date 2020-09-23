@@ -27,7 +27,7 @@
 # Get Rspamd Symbols
 - name: Get Rspamd log using API
   uri:
-    url: "https://{{ mailcow__hostname }}/api/v1/get/logs/rspamd-history/1"
+    url: "http://{{ mailcow__hostname }}/api/v1/get/logs/rspamd-history/1"
     method: GET
     body_format: json
     return_content: yes

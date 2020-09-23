@@ -2,7 +2,7 @@
 
 - name: Create Alias
   uri:
-    url: "https://{{ mailcow__hostname }}/api/v1/add/alias"
+    url: "http://{{ mailcow__hostname }}/api/v1/add/alias"
     method: POST
     body_format: json
     return_content: yes
@@ -21,7 +21,7 @@
 
 - name: Get Alias
   uri:
-    url: "https://{{ mailcow__hostname }}/api/v1/get/alias/all"
+    url: "http://{{ mailcow__hostname }}/api/v1/get/alias/all"
     method: GET
     body_format: json
     return_content: yes
@@ -48,7 +48,7 @@
 
 - name: Delete Alias
   uri:
-    url: "https://{{ mailcow__hostname }}/api/v1/delete/alias"
+    url: "http://{{ mailcow__hostname }}/api/v1/delete/alias"
     method: POST
     body_format: json
     return_content: yes

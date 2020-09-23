@@ -2,7 +2,7 @@
 
 - name: Get Postfix logs
   uri:
-    url: "https://{{ mailcow__hostname }}/api/v1/get/logs/postfix/2"
+    url: "http://{{ mailcow__hostname }}/api/v1/get/logs/postfix/2"
     method: GET
     body_format: json
     return_content: yes
@@ -29,7 +29,7 @@
 
 - name: Get Dovecot logs
   uri:
-    url: "https://{{ mailcow__hostname }}/api/v1/get/logs/dovecot/2"
+    url: "http://{{ mailcow__hostname }}/api/v1/get/logs/dovecot/2"
     method: GET
     body_format: json
     return_content: yes
@@ -56,7 +56,7 @@
 
 - name: Get ACME logs
   uri:
-    url: "https://{{ mailcow__hostname }}/api/v1/get/logs/acme/2"
+    url: "http://{{ mailcow__hostname }}/api/v1/get/logs/acme/2"
     method: GET
     body_format: json
     return_content: yes
@@ -83,7 +83,7 @@
 
 - name: Get Sogo logs
   uri:
-    url: "https://{{ mailcow__hostname }}/api/v1/get/logs/sogo/2"
+    url: "http://{{ mailcow__hostname }}/api/v1/get/logs/sogo/2"
     method: GET
     body_format: json
     return_content: yes
@@ -110,7 +110,7 @@
 
 - name: Get Watchdog logs
   uri:
-    url: "https://{{ mailcow__hostname }}/api/v1/get/logs/watchdog/2"
+    url: "http://{{ mailcow__hostname }}/api/v1/get/logs/watchdog/2"
     method: GET
     body_format: json
     return_content: yes
@@ -137,7 +137,7 @@
 
 - name: Get API logs
   uri:
-    url: "https://{{ mailcow__hostname }}/api/v1/get/logs/api/2"
+    url: "http://{{ mailcow__hostname }}/api/v1/get/logs/api/2"
     method: GET
     body_format: json
     return_content: yes

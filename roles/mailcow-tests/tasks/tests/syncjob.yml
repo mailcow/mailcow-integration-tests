@@ -2,7 +2,7 @@
 
 - name: Create syncjob
   uri:
-    url: "https://{{ mailcow__hostname }}/api/v1/add/syncjob"
+    url: "http://{{ mailcow__hostname }}/api/v1/add/syncjob"
     method: POST
     body_format: json
     return_content: yes
@@ -26,7 +26,7 @@
 
 - name: Get syncjob logs
   uri:
-    url: "https://{{ mailcow__hostname }}/api/v1/get/syncjobs/all"
+    url: "http://{{ mailcow__hostname }}/api/v1/get/syncjobs/all"
     method: GET
     body_format: json
     return_content: yes
@@ -50,7 +50,7 @@
 
 - name: Delete syncjob
   uri:
-    url: "https://{{ mailcow__hostname }}/api/v1/delete/syncjob"
+    url: "http://{{ mailcow__hostname }}/api/v1/delete/syncjob"
     method: POST
     body_format: json
     return_content: yes

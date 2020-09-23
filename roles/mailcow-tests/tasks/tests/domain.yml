@@ -2,7 +2,7 @@
 
 - name: Create domain
   uri:
-    url: "https://{{ mailcow__hostname }}/api/v1/add/domain"
+    url: "http://{{ mailcow__hostname }}/api/v1/add/domain"
     method: POST
     body_format: json
     return_content: yes

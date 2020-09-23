@@ -2,7 +2,7 @@
 
 - name: Update ratelimit using api
   uri:
-    url: "https://{{ mailcow__hostname }}/api/v1/edit/rl-mbox"
+    url: "http://{{ mailcow__hostname }}/api/v1/edit/rl-mbox"
     method: POST
     body_format: json
     return_content: yes
@@ -21,7 +21,7 @@
 
 - name: Check if ratelimit is correctly set
   uri:
-    url: "https://{{ mailcow__hostname }}/api/v1/get/rl-mbox/all"
+    url: "http://{{ mailcow__hostname }}/api/v1/get/rl-mbox/all"
     method: GET
     body_format: json
     return_content: yes
@@ -75,7 +75,7 @@
 
 - name: Get ratelimit log using API
   uri:
-    url: "https://{{ mailcow__hostname }}/api/v1/get/logs/ratelimited/1"
+    url: "http://{{ mailcow__hostname }}/api/v1/get/logs/ratelimited/1"
     method: GET
     body_format: json
     return_content: yes
