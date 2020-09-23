@@ -56,7 +56,7 @@
     password: "{{ vault__mailcow__prefiltr_redirect_password }}"
     to:
       - "{{ mailcow__mailbox_user_one }}@{{ mailcow__test_domain }}"
-    subject: Ansible-fowarding-host-test
+    subject: "forwarding host test"
     body: System {{ ansible_hostname }} says hello
     secure: starttls
   register: result_forwarding_hosts_sendmail
@@ -76,7 +76,7 @@
   delay: 2
   until:
     - ('json' in result_forwarding_hosts_sendmail_rspamd)
-    - (result_forwarding_hosts_sendmail_rspamd.json[0].subject is defined) and ("Ansible-fowarding-host-test" in result_forwarding_hosts_sendmail_rspamd.json[0].subject)
+    - (result_forwarding_hosts_sendmail_rspamd.json[0].subject is defined) and ("forwarding host test" in result_forwarding_hosts_sendmail_rspamd.json[0].subject)
 
 - set_fact:
     result_forwarding_hosts_sendmail_rspamd_list: "{{ result_forwarding_hosts_sendmail_rspamd.json[0].symbols | list }}"

@@ -55,7 +55,7 @@
     password: "{{ mailcow_mailbox_pw }}"
     to:
       - "{{ mailcow__dev_null_email }}"
-    subject: "Mailcow is amazing"
+    subject: "ratelimit test"
     body: System {{ ansible_hostname }} says hello
     secure: starttls
   register: result_sendmail_tls_ratelimit
@@ -90,12 +90,12 @@
 
 - set_fact:
     result_ratelimit_log_success: success
-  when: 
+  when:
     - ('json' in result_ratelimit_log) and ("mailcow" in result_ratelimit_log.json[0].rl_name)
-    - ('json' in result_ratelimit_log) and ("Mailcow is amazing" in result_ratelimit_log.json[0].header_subject)
+    - ('json' in result_ratelimit_log) and ("ratelimit test" in result_ratelimit_log.json[0].header_subject)
 
 - set_fact:
     result_ratelimit_log_success: failed
   when:
     - ('json' in result_ratelimit_log) and ("mailcow" not in result_ratelimit_log.json[0].rl_name)
-    - ('json' in result_ratelimit_log) and ("Mailcow is amazing" not in result_ratelimit_log.json[0].header_subject)
+    - ('json' in result_ratelimit_log) and ("ratelimit test" not in result_ratelimit_log.json[0].header_subject)

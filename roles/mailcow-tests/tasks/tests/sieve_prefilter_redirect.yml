@@ -29,7 +29,7 @@
     password: "{{ vault__mailcow__prefiltr_redirect_password }}"
     to:
       - "{{ mailcow__mailbox_user_one }}@{{ mailcow__test_domain }}"
-    subject: Ansible-redirect-test
+    subject: "sieve prefilter redirect test"
     body: System {{ ansible_hostname }} says hello
     secure: starttls
   register: result_sieve_prefilter_redirect_sendmail
@@ -55,9 +55,9 @@
   until:
     - ('json' in result_sieve_prefilter_redirect_rspamd)
     - (result_sieve_prefilter_redirect_rspamd.json[0].user is defined) and ("unknown" in result_sieve_prefilter_redirect_rspamd.json[0].user)
-    - (result_sieve_prefilter_redirect_rspamd.json[0].subject is defined) and ("Ansible-redirect-test" in result_sieve_prefilter_redirect_rspamd.json[0].subject)
+    - (result_sieve_prefilter_redirect_rspamd.json[0].subject is defined) and ("sieve prefilter redirect test" in result_sieve_prefilter_redirect_rspamd.json[0].subject)
     - (result_sieve_prefilter_redirect_rspamd.json[1].user is defined) and ("unknown" in result_sieve_prefilter_redirect_rspamd.json[1].user)
-    - (result_sieve_prefilter_redirect_rspamd.json[1].subject is defined) and ("Ansible-redirect-test" in result_sieve_prefilter_redirect_rspamd.json[1].subject)
+    - (result_sieve_prefilter_redirect_rspamd.json[1].subject is defined) and ("sieve prefilter redirect test" in result_sieve_prefilter_redirect_rspamd.json[1].subject)
   ignore_errors: yes
 
 - set_fact:

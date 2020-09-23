@@ -17,7 +17,7 @@
     password: "{{ mailcow_mailbox_pw }}"
     to:
       - "{{ mailcow__mailbox_user_one }}@{{ mailcow__test_domain }}"
-    subject: "WORD TEST"
+    subject: "word macro test"
     body: System {{ ansible_hostname }} says hello
     secure: starttls
     attach: "{{ mailcow__macro_test_file }}"
@@ -38,7 +38,7 @@
   retries: 20
   delay: 2
   until:
-    - ('json' in result_marco_doc_rspamd) and (result_marco_doc_rspamd.json[0].subject is defined) and ("WORD TEST" in result_marco_doc_rspamd.json[0].subject)
+    - ('json' in result_marco_doc_rspamd) and (result_marco_doc_rspamd.json[0].subject is defined) and ("word macro test" in result_marco_doc_rspamd.json[0].subject)
 
 - set_fact:
     result_marco_doc_rspamd_symbols_list: "{{ result_marco_doc_rspamd.json[0].symbols | list }}"

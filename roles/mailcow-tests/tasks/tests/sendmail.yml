@@ -9,7 +9,7 @@
     password: "{{ mailcow_mailbox_pw }}"
     to:
       - "{{ mailcow__dev_null_email }}"
-    subject: Ansible-report
+    subject: "sendmail unencrypted test"
     body: "System {{ ansible_hostname }} says hello"
     secure: never
   register: result_sendmail_no_tls
@@ -32,7 +32,7 @@
     password: "{{ mailcow_mailbox_pw }}"
     to:
       - "{{ mailcow__dev_null_email }}"
-    subject: Ansible-report
+    subject: "sendmail encrypted test"
     body: System {{ ansible_hostname }} says hello
     secure: starttls
   register: result_sendmail_tls
@@ -98,7 +98,7 @@
     password: "{{ mailcow_mailbox_pw }}"
     to:
       - "{{ mailcow__dev_null_email }}"
-    subject: Ansible-report
+    subject: "sendmail non existent alias test"
     body: "System {{ ansible_hostname }} says hello"
   ignore_errors: yes
   register: result_sendmai_not_allowed_alias

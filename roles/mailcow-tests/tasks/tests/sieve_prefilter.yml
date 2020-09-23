@@ -71,7 +71,7 @@
     password: "{{ mailcow_mailbox_pw }}"
     to:
       - "{{ mailcow__mailbox_user_one }}@{{ mailcow__test_domain }}"
-    subject: Ansible-report
+    subject: "sieve prefilter test"
     body: System {{ ansible_hostname }} says hello
     secure: starttls
   register: result_sieve_prefilter_sendmail
@@ -90,7 +90,7 @@
   retries: 20
   delay: 2
   until:
-    - ('json' in result_sieve_prefilter_rspamd) and (result_sieve_prefilter_rspamd.json[0].sender_mime is defined) and ("postmaster" in result_sieve_prefilter_rspamd.json[0].sender_mime)
+    - ('json' in result_sieve_prefilter_rspamd) and (result_sieve_prefilter_rspamd.json[0].subject is defined) and ("sieve prefilter test" in result_sieve_prefilter_rspamd.json[0].subject)
 
 - set_fact:
     result_sieve_prefilter_rspamd_symbols_list: "{{ result_sieve_prefilter_rspamd.json[0].symbols | list }}"
