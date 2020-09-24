@@ -69,6 +69,9 @@
 - name: Run read only API tests
   import_tasks: tests/read_only_api.yml
 
+- name: Run acme certificate tests
+  import_tasks: tests/acme.yml
+
 - name: Generate report mailcow.email
   import_tasks: reports/generate_mailcowemail.yml
 

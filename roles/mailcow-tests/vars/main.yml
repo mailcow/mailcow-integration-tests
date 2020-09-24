@@ -230,3 +230,7 @@ mailcow_test_results:
     name: "Function: Block macro office documents"
     result: "{{ result_marco_doc_rspamd_symbols_list_sucess | default('Test result could not be determiend') }}"
     log: "{{ result_marco_doc_rspamd_symbols_list | default('Test result could not be determiend') }}"
+  - acme:
+    name: "Function: Let's Encrypt certificate issuing"
+    result: "{{ result_acme_certificate_sucess | default('Test result could not be determiend') }}"
+    log: "{{ result_acme_certificate.stdout | default('Test result could not be determiend') }}"
