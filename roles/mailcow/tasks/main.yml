@@ -72,6 +72,18 @@
   args:
     chdir: /opt/mailcow-dockerized
   with_list: "{{ mailcow__build_images }}"
+  register: result_mailcow__build_images
+  async: 600
+  poll: 0
+
+- name: Wait for image builds to finish
+  async_status:
+    jid: "{{ item.ansible_job_id }}"
+  register: _jobs
+  until: _jobs.finished
+  delay: 10
+  retries: 60
+  with_items: "{{ result_mailcow__build_images.results }}"
 
 - name: Pull mailcow images
   become: yes
@@ -79,6 +91,18 @@
   args:
     chdir: /opt/mailcow-dockerized
   with_list: "{{ mailcow__pull_images }}"
+  register: result_mailcow__pull_images
+  async: 600
+  poll: 0
+
+- name: Wait for image pulls to finish
+  async_status:
+    jid: "{{ item.ansible_job_id }}"
+  register: _jobs
+  until: _jobs.finished
+  delay: 10
+  retries: 60
+  with_items: "{{ result_mailcow__pull_images.results }}"
 
 - name: Start mailcow container stack
   become: yes
