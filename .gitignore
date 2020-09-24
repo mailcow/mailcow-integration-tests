@@ -8,3 +8,5 @@ id_ssh_rsa.pub
 group_vars/all/secrets.yml
 node_modules/*
 package-lock.json
+report.html
+report.json
