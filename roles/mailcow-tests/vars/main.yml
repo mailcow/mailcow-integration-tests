@@ -109,19 +109,20 @@ mailcow_test_results:
     name: "API: Check if blocked mail is listed"
     result: "{{ result_ratelimit_log_success | default('Test result could not be determiend') }}"
     log: "{{ result_ratelimit_log.json[0] | default('Test result could not be determiend') }}"
-  - fowarding_hosts_create:
+  - forwarding_hosts_create:
     name: "Create: Forwarding Host"
     result: "{{ result_fowarding_hosts.json[0].type | default('Test result could not be determiend') }}"
     log: "{{ result_fowarding_hosts.json[0].msg | default('Test result could not be determiend') }}"
-  - fowarding_hosts_get:
+  - forwarding_hosts_get:
     name: "Get: Forwarding Host"
     result: "{{ result_fowarding_hosts_get_success | default('Test result could not be determiend') }}"
     log: "{{ result_fowarding_hosts_get.json[0] | default('Test result could not be determiend') }}"
-  - fowwarding_hosts_function_symbol:
+  - forwarding_hosts_function_symbol:
     name: "Function: Check if SYMBOLs 'WHITELISTED_FWD_HOST' is present if mail gets send by Forwarding host"
     result: "{{ result_forwarding_hosts_sendmail_rspamd_list_success | default('Test result could not be determiend') }}"
     log: "{{ result_forwarding_hosts_sendmail_rspamd_list | default('Test result could not be determiend') }}"
-  - fowarding_hosts_delete:
+    enabled: no
+  - forwarding_hosts_delete:
     name: "Delete: Forwarding Host"
     result: "{{ result_fowarding_hosts_delete.json[0].type | default('Test result could not be determiend') }}"
     log: "{{ result_fowarding_hosts_delete.json[0].msg | default('Test result could not be determiend') }}"
