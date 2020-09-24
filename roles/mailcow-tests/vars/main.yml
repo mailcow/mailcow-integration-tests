@@ -121,7 +121,7 @@ mailcow_test_results:
     name: "Function: Check if SYMBOLs 'WHITELISTED_FWD_HOST' is present if mail gets send by Forwarding host"
     result: "{{ result_forwarding_hosts_sendmail_rspamd_list_success | default('Test result could not be determiend') }}"
     log: "{{ result_forwarding_hosts_sendmail_rspamd_list | default('Test result could not be determiend') }}"
-    enabled: no
+    allow_failure: yes
   - forwarding_hosts_delete:
     name: "Delete: Forwarding Host"
     result: "{{ result_fowarding_hosts_delete.json[0].type | default('Test result could not be determiend') }}"
