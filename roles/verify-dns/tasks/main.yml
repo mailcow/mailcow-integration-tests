@@ -1,0 +1,22 @@
+---
+
+- name: Verify A record
+  shell: "dig A {{ mailcow__hostname }} +short @{{ verify_dns__server }}"
+  retries: 10
+  delay: 60
+  until: '"{{ ansible_default_ipv4.address }}" in result.stdout'
+  register: result
+
+- name: Verify AAAA record
+  shell: "dig AAAA {{ mailcow__hostname }} +short @{{ verify_dns__server }}"
+  retries: 10
+  delay: 60
+  until: '"{{ ansible_default_ipv6.address }}" in result.stdout'
+  register: result
+
+- name: Verify MX record
+  shell: "dig MX {{ mailcow__test_domain }} +short @{{ verify_dns__server }}"
+  retries: 10
+  delay: 60
+  until: '"10 {{ mailcow__hostname }}." in result.stdout'
+  register: result

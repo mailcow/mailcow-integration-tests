@@ -22,5 +22,7 @@
       tags: [ 'docker-ce' ]
     - role: docker-compose
       tags: [ 'docker-compose' ]
+    - role: verify-dns
+      tags: [ 'verify-dns' ]
     - role: mailcow
       tags: [ 'mailcow' ]
