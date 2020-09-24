@@ -78,3 +78,5 @@ mailcow__config_log_lines: 9999
 
 # SOGo session timeout in minutes
 mailcow__config_sogo_expire_session: 480
+
+mailcow__config_le_staging: y

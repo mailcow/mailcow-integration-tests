@@ -167,3 +167,8 @@
     regexp: "^API_ALLOW_FROM=.*"
     replace: "API_ALLOW_FROM={{ mailcow__api_key_allow_from }}"
   no_log: true
+
+- name: Configure LE_STAGING
+  lineinfile:
+    path: /opt/mailcow-dockerized/mailcow.conf
+    line: "LE_STAGING={{ mailcow__config_le_staging }}"
