@@ -1,0 +1,36 @@
+{
+  "infos": {
+      "git_commit": "{{ drone_commit_hash }}",
+      "git_repo": "{{ mailcow__git_repo }}",
+      "git_repo_http": "{{ mailcow__git_http_url }}",
+      "operating_system": "{{ ansible_distribution }}",
+      "operating_system_version": "{{ ansible_distribution_version }}"
+  },
+  "integration_tests": [
+{% for tests in mailcow_test_results %}
+    {
+        "test_name": "{{ tests.name }}",
+        "status": "{{ tests.result }}",
+        "log":"{{ tests.log }}"
+    }{% if not loop.last %},{% endif %}
+{% endfor %}
+  ],
+  "language_json_valid": [
+{% for lang_validjson in language_check_validjson.results %}
+    {
+        "language_name": "{{ lang_validjson.item.name }}",
+        "file": "{{ lang_validjson.item.file }}",
+        "log": {{ lang_validjson.stdout | to_json }}
+    }{% if not loop.last %},{% endif %}
+{% endfor %}
+  ],
+  "language_coverage": [
+{% for lang_check in language_check.results %}
+    {
+        "language_name": "{{ lang_check.item.name }}",
+        "file": "{{ lang_check.item.file }}",
+        "log": {{ lang_check.stdout | to_json }}
+    }{% if not loop.last %},{% endif %}
+{% endfor %}
+  ]
+}
