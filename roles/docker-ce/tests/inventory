@@ -1,7 +1,0 @@
-[containers]
-bionic
-xenial
-
-[containers:vars]
-ansible_connection=docker
-ansible_python_interpreter=/usr/bin/python3
