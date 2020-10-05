@@ -1,4 +1,4 @@
-.galaxy/*
+.galaxy/
 .vault-pw
 *.retry
 keys/*
