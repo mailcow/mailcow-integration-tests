@@ -63,7 +63,7 @@
 
 # Send mail
 - name: Sending a email to mailcow test instance always encrypted
-  mail:
+  community.general.mail:
     host: "{{ mailcow__hostname }}"
     port: 587
     from: "{{ mailcow__mailbox_user_two }}@{{ mailcow__test_domain }}"

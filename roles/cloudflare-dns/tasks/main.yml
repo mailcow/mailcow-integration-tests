@@ -1,7 +1,7 @@
 ---
 
 - name: "Create a record for {{ mailcow__hostname }}"
-  cloudflare_dns:
+  community.general.cloudflare_dns:
     zone: "{{ mailcow__dns_zone }}"
     record: "{{ mailcow__hostname_local_part }}"
     type: A
@@ -10,7 +10,7 @@
     account_api_token: "{{ vault__cloudflare__apikey }}"
 
 - name: "Create aaaa record for {{ mailcow__hostname }}"
-  cloudflare_dns:
+  community.general.cloudflare_dns:
     zone: "{{ mailcow__dns_zone }}"
     record: "{{ mailcow__hostname_local_part }}"
     type: AAAA
@@ -19,7 +19,7 @@
     account_api_token: "{{ vault__cloudflare__apikey }}"
 
 - name: "Create mx record for {{ mailcow__hostname }}"
-  cloudflare_dns:
+  community.general.cloudflare_dns:
     zone: "{{ mailcow__dns_zone }}"
     record: "{{ mailcow__test_domain_local_part }}"
     priority: 10

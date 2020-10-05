@@ -18,14 +18,14 @@
     register: ssh_key_result
 
   - name: Add SSH Key to hcloud
-    hcloud_ssh_key:
+    hetzner.hcloud.hcloud_ssh_key:
       name: "{{ hcloud_server_name }}"
       public_key: "{{ ssh_key_result.public_key }}"
       api_token: "{{ vault__hcloud__token }}"
       state: present
 
   - name: Create mailcow integration test server
-    hcloud_server:
+    hetzner.hcloud.hcloud_server:
       name: "{{ hcloud_server_name }}"
       server_type: cx21
       image: ubuntu-18.04

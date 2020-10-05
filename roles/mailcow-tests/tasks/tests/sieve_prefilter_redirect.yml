@@ -21,7 +21,7 @@
 
 # Send mail
 - name: Sending a email to mailcow test instance always encrypted
-  mail:
+  community.general.mail:
     host: "{{ vault__mailcow__prefiltr_redirect_host }}"
     port: 587
     from: "{{ vault__mailcow__prefiltr_redirect_user }}"

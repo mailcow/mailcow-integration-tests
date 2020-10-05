@@ -47,7 +47,7 @@
   when: ('json' in result_get_ratelimit) and (result_get_ratelimit.json[0] is not defined)
 
 - name: "Sending a email to {{ mailcow__dev_null_email }}"
-  mail:
+  community.general.mail:
     host: "{{ mailcow__hostname }}"
     port: 587
     from: "{{ mailcow__mailbox_user_one }}@{{ mailcow__test_domain }}"

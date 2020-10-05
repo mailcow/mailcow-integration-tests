@@ -1,7 +1,7 @@
 ---
 
 - name: Sending a email to {{ mailcow__dev_null_email }} not encrypted
-  mail:
+  community.general.mail:
     host: "{{ mailcow__hostname }}"
     port: 587
     from: "{{ mailcow__mailbox_user_one }}@{{ mailcow__hostname }}"
@@ -24,7 +24,7 @@
   when: ('msg' in result_sendmail_no_tls) and ("No Authentication on the server" not in result_sendmail_no_tls.msg)
 
 - name: Sending a email to {{ mailcow__dev_null_email }} always encrypted
-  mail:
+  community.general.mail:
     host: "{{ mailcow__hostname }}"
     port: 587
     from: "{{ mailcow__mailbox_user_one }}@{{ mailcow__test_domain }}"
@@ -90,7 +90,7 @@
 ## End Symbol Checks
 
 - name: Sending a email from a not existing alias
-  mail:
+  community.general.mail:
     host: "{{ mailcow__hostname }}"
     port: 587
     from: "iamnull@{{ mailcow__test_domain }}"

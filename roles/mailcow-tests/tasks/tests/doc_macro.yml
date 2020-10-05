@@ -9,7 +9,7 @@
 
 # Send mail
 - name: Send email with macro document attached
-  mail:
+  community.general.mail:
     host: "{{ mailcow__hostname }}"
     port: 587
     from: "{{ mailcow__mailbox_user_two }}@{{ mailcow__test_domain }}"
