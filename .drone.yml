@@ -22,8 +22,6 @@ platform:
   arch: amd64
 
 trigger:
-  branch:
-  - master
   event:
   - tag
 
@@ -47,8 +45,6 @@ steps:
     VAULT_PW:
       from_secret: VAULT_PW
   when:
-    branch:
-    - master
     event:
     - tag
 
@@ -63,8 +59,6 @@ steps:
     ANSIBLE_HOST_KEY_CHECKING: false
     ANSIBLE_FORCE_COLOR: true
   when:
-    branch:
-    - master
     event:
     - tag
 
@@ -79,8 +73,6 @@ steps:
     ANSIBLE_HOST_KEY_CHECKING: false
     ANSIBLE_FORCE_COLOR: true
   when:
-    branch:
-    - master
     event:
     - tag
 
@@ -109,25 +101,11 @@ steps:
     ANSIBLE_HOST_KEY_CHECKING: false
     ANSIBLE_FORCE_COLOR: true
   when:
-    branch:
-    - master
     event:
     - tag
     status:
     - failure
     - success
-
-- name: create-changelog
-  image: naorlivne/drone-github-changelog-generator
-  settings:
-    github_user: mailcow
-    github_project: mailcow-integration-tests
-    output_path: CHANGELOG.md
-  when:
-    branch:
-    - master
-    event:
-    - tag
 
 - name: create-release
   image: plugins/github-release
@@ -135,16 +113,14 @@ steps:
     api_key:
       from_secret: GITHUB_API_KEY
     title: ${DRONE_TAG}
-    note: CHANGELOG.md
+    note: changelogs/${DRONE_TAG}.md
     overwrite: true
   when:
-    branch:
-    - master
     event:
     - tag
 
 ---
 kind: signature
-hmac: a61e919c5fe08199ce7321c55c74b733847977ec61fde11fdf0faebac54fd589
+hmac: 08a951c75404e71c9f34079f9e17b2999934e3a7d88dbf14d4efcbf23f03978e
 
 ...
