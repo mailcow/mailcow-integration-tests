@@ -6,7 +6,6 @@
 
 - name: Generate html report
   when:
-    - mailcow__upload_results
     - mailcow__upload_results_html
   template:
     src: "{{ playbook_dir }}/roles/mailcow-tests/templates/report.html.j2"
@@ -15,7 +14,6 @@
 
 - name: Generate json report
   when:
-    - mailcow__upload_results
     - mailcow__upload_results_json
   template:
     src: "{{ playbook_dir }}/roles/mailcow-tests/templates/report.json.j2"
