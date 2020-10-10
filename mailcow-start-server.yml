@@ -28,7 +28,7 @@
     hetzner.hcloud.hcloud_server:
       name: "{{ hcloud_server_name }}"
       server_type: cx21
-      image: ubuntu-18.04
+      image: ubuntu-20.04
       location: fsn1
       ssh_keys:
         - "{{ hcloud_server_name }}"
