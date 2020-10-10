@@ -159,7 +159,7 @@ mailcow_test_results:
     result: "{{ result_sieve_prefilter_get_success | default('Test result could not be determiend') }}"
     log: "{{ result_sieve_prefilter_get.json[0] | default('Test result could not be determiend') }}"
   - sieve_prefilter_reject_function:
-    name: "Function: Check if SYMBOLs 'SIEVE_HOST','MAILCOW_DOMAIN_HEADER_FROM','DKIM_SIGNED','FROM_NEQ_ENVFROM' are on sieve_reject_processing"
+    name: "Function: Check if SYMBOLs 'SIEVE_HOST','MAILCOW_DOMAIN_HEADER_FROM','DKIM_SIGNED','BOUNCE' are on sieve_reject_processing"
     result: "{{ result_sieve_prefilter_rspamd_symbols_list_sucess | default('Test result could not be determiend') }}"
     log: "{{ result_sieve_prefilter_rspamd_symbols_list | default('Test result could not be determiend') }}"
   - sieve_prefilter_redirect_function_inbound:
