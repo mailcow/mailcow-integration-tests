@@ -22,7 +22,6 @@
 - name: Wait 2 minutes before grabbing the syncjob logs
   wait_for:
     timeout: 120
-  delegate_to: localhost
 
 - name: Get syncjob logs
   uri:
