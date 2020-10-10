@@ -1,0 +1,28 @@
+---
+
+- name: Stop mailcow container stack
+  become: yes
+  community.general.docker_compose:
+    project_src: /opt/mailcow-dockerized
+    project_name: mailcowdockerized
+    state: absent
+    build: no
+    pull: no
+
+- name: Remove docker volumes
+  become: yes
+  community.general.docker_prune:
+    volumes: yes
+
+- name: Start mailcow container stack
+  become: yes
+  community.general.docker_compose:
+    project_src: /opt/mailcow-dockerized
+    project_name: mailcowdockerized
+    state: present
+    build: no
+    pull: no
+
+- name: Wait 180 seconds before starting tests
+  wait_for:
+    timeout: 180

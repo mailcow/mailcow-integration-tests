@@ -1,5 +1,9 @@
 ---
 
+- name: Reset instance
+  when: mailcow__local_dev | default(false)
+  import_tasks: localdev/reset_instance.yml
+
 - name: Get OS infos
   import_tasks: infos/os.yml
 
