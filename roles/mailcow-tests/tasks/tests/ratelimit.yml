@@ -90,12 +90,10 @@
 
 - set_fact:
     result_ratelimit_log_success: success
-  when:
-    - ('json' in result_ratelimit_log) and ("mailcow" in result_ratelimit_log.json[0].rl_name)
-    - ('json' in result_ratelimit_log) and ("ratelimit test" in result_ratelimit_log.json[0].header_subject)
+  when: ('json' in result_ratelimit_log) and ("mailcow" in result_ratelimit_log.json[0].rl_name) and
+        ('json' in result_ratelimit_log) and ("ratelimit test" in result_ratelimit_log.json[0].header_subject)
 
 - set_fact:
     result_ratelimit_log_success: failed
-  when:
-    - ('json' in result_ratelimit_log) and ("mailcow" not in result_ratelimit_log.json[0].rl_name)
-    - ('json' in result_ratelimit_log) and ("ratelimit test" not in result_ratelimit_log.json[0].header_subject)
+  when: ('json' in result_ratelimit_log) and ("mailcow" not in result_ratelimit_log.json[0].rl_name) or
+        ('json' in result_ratelimit_log) and ("ratelimit test" not in result_ratelimit_log.json[0].header_subject)

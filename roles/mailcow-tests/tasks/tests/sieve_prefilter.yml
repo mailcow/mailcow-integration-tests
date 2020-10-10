@@ -102,19 +102,17 @@
 ## Symbol Checks
 - set_fact:
     result_sieve_prefilter_rspamd_symbols_list_sucess: success
-  when:
-    - "'SIEVE_HOST' in result_sieve_prefilter_rspamd_symbols_list"
-    - "'MAILCOW_DOMAIN_HEADER_FROM' in result_sieve_prefilter_rspamd_symbols_list"
-    - "'DKIM_SIGNED' in result_sieve_prefilter_rspamd_symbols_list"
-    - "'FROM_NEQ_ENVFROM' in result_sieve_prefilter_rspamd_symbols_list"
+  when: ("'SIEVE_HOST' in result_sieve_prefilter_rspamd_symbols_list") and
+        ("'MAILCOW_DOMAIN_HEADER_FROM' in result_sieve_prefilter_rspamd_symbols_list") and
+        ("'DKIM_SIGNED' in result_sieve_prefilter_rspamd_symbols_list") and
+        ("'BOUNCE' in result_sieve_prefilter_rspamd_symbols_list")
 
 - set_fact:
     result_sieve_prefilter_rspamd_symbols_list_sucess: failed
-  when:
-    - "'SIEVE_HOST' not in result_sieve_prefilter_rspamd_symbols_list"
-    - "'MAILCOW_DOMAIN_HEADER_FROM' not in result_sieve_prefilter_rspamd_symbols_list"
-    - "'DKIM_SIGNED' not in result_sieve_prefilter_rspamd_symbols_list"
-    - "'FROM_NEQ_ENVFROM' not in result_sieve_prefilter_rspamd_symbols_list"
+  when: ("'SIEVE_HOST' not in result_sieve_prefilter_rspamd_symbols_list") or
+        ("'MAILCOW_DOMAIN_HEADER_FROM' not in result_sieve_prefilter_rspamd_symbols_list") or
+        ("'DKIM_SIGNED' not in result_sieve_prefilter_rspamd_symbols_list") or
+        ("'BOUNCE' not in result_sieve_prefilter_rspamd_symbols_list")
 # End Rspamd Symbols
 
 - name: Delete sieve prefilter

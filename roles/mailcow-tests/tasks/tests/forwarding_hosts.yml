@@ -89,12 +89,12 @@
 - set_fact:
     result_forwarding_hosts_sendmail_rspamd_list_success: success
   when:
-    - "'WHITELISTED_FWD_HOST' in result_forwarding_hosts_sendmail_rspamd_list"
+    - ("'WHITELISTED_FWD_HOST' in result_forwarding_hosts_sendmail_rspamd_list")
 
 - set_fact:
     result_forwarding_hosts_sendmail_rspamd_list_success: failed
   when:
-    - "'WHITELISTED_FWD_HOST' not in result_forwarding_hosts_sendmail_rspamd_list"
+    - ("'WHITELISTED_FWD_HOST' not in result_forwarding_hosts_sendmail_rspamd_list")
 # End Rspamd Symbols
 
 - name: Delete Forwarding Hosts

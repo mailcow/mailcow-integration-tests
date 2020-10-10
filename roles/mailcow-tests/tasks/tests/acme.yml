@@ -10,8 +10,10 @@
 
 - set_fact:
     result_acme_certificate_sucess: success
-  when: ('stdout' in result_acme_certificate) and ("issuer=CN = Fake LE Intermediate X1" in result_acme_certificate.stdout)
+  when: ('stdout' in result_acme_certificate) and
+        ("issuer=CN = Fake LE Intermediate X1" in result_acme_certificate.stdout)
 
 - set_fact:
     result_acme_certificate_sucess: failed
-  when: ('stdout' in result_acme_certificate) and ("issuer=CN = Fake LE Intermediate X1" not in result_acme_certificate.stdout)
+  when: ('stdout' in result_acme_certificate) and
+        ("issuer=CN = Fake LE Intermediate X1" not in result_acme_certificate.stdout)
