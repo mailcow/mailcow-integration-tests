@@ -66,27 +66,27 @@
 ## Symbol Checks
 - set_fact:
     result_sendmail_rspamd_symbols_mailcow_auth_sucess: success
-  when: "'MAILCOW_AUTH' in result_sendmail_rspamd_symbols_list"
+  when: ('MAILCOW_AUTH' in result_sendmail_rspamd_symbols_list)
 
 - set_fact:
     result_sendmail_rspamd_symbols_mailcow_auth_sucess: failed
-  when: "'MAILCOW_AUTH' not in result_sendmail_rspamd_symbols_list"
+  when: ('MAILCOW_AUTH' not in result_sendmail_rspamd_symbols_list)
 
 - set_fact:
     result_sendmail_rspamd_symbols_dyn_rl_check_sucess: success
-  when: "'DYN_RL_CHECK' in result_sendmail_rspamd_symbols_list"
+  when: ('DYN_RL_CHECK' in result_sendmail_rspamd_symbols_list)
 
 - set_fact:
     result_sendmail_rspamd_symbols_dyn_rl_check_sucess: failed
-  when: "'DYN_RL_CHECK' not in result_sendmail_rspamd_symbols_list"
+  when: ('DYN_RL_CHECK' not in result_sendmail_rspamd_symbols_list)
 
 - set_fact:
     result_sendmail_rspamd_symbols_dkim_signed_sucess: success
-  when: "'DKIM_SIGNED' in result_sendmail_rspamd_symbols_list"
+  when: ('DKIM_SIGNED' in result_sendmail_rspamd_symbols_list)
 
 - set_fact:
     result_sendmail_rspamd_symbols_dkim_signed_sucess: failed
-  when: "'DKIM_SIGNED' not in result_sendmail_rspamd_symbols_list"
+  when: ('DKIM_SIGNED' not in result_sendmail_rspamd_symbols_list)
 ## End Symbol Checks
 
 - name: Sending a email from a not existing alias
