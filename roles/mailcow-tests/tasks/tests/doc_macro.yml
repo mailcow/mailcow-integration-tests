@@ -2,9 +2,9 @@
 # Description: This test evaluates if office documents containing macros are
 # correctly blocked by rspamd in combination with olefy.
 
-- name: Download macro testing document
-  get_url:
-    url: "{{ mailcow__macro_test_url }}"
+- name: Copy macro document
+  copy:
+    src: "{{ mailcow__macro_test_filename }}"
     dest: "{{ mailcow__macro_test_file }}"
 
 # Send mail
@@ -50,13 +50,13 @@
 ## Symbol Checks
 - set_fact:
     result_marco_doc_rspamd_symbols_list_sucess: success
-  when: ("'VIRUS_FOUND' in result_marco_doc_rspamd_symbols_list") and
-        ("'MIME_BAD_ATTACHMENT' in result_marco_doc_rspamd_symbols_list") and
+  when: ('VIRUS_FOUND' in result_marco_doc_rspamd_symbols_list) and
+        ('MIME_BAD_ATTACHMENT' in result_marco_doc_rspamd_symbols_list) and
         (result_marco_doc_sendmail is failed)
 
 - set_fact:
     result_marco_doc_rspamd_symbols_list_sucess: failed
-  when: ("'VIRUS_FOUND' not in result_marco_doc_rspamd_symbols_list") or
-        ("'MIME_BAD_ATTACHMENT' not in result_marco_doc_rspamd_symbols_list") or
+  when: ('VIRUS_FOUND' not in result_marco_doc_rspamd_symbols_list) or
+        ('MIME_BAD_ATTACHMENT' not in result_marco_doc_rspamd_symbols_list) or
         (result_marco_doc_sendmail is succeeded)
 # End Rspamd Symbols
