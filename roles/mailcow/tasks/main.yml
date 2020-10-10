@@ -106,7 +106,7 @@
 
 - name: Start mailcow container stack
   become: yes
-  docker_compose:
+  community.general.docker_compose:
     project_src: /opt/mailcow-dockerized
     project_name: mailcowdockerized
     state: present
