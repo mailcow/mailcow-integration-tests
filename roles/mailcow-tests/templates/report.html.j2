@@ -107,7 +107,7 @@
 {% for tests in mailcow_test_results %}
         <tr>
             <td>{{ tests.name }}</td>
-            <td>{% if tests.result == 'success' %}<font color="green">{{ tests.result }}</font>{% else %}<font color="red">{{ tests.result }}</font>{% endif %}</td>
+            <td>{% if tests.result == 'success' %}<font color="green">{{ tests.result }}</font>{% else %}{% if tests.allow_failure %}<font color="yellow">{{ tests.result }}</font>{% else %}<font color="red">{{ tests.result }}</font>{% endif %}{% endif %}</td>
             <td>{{ tests.log }}</td>
         </tr>
 {% endfor %}
