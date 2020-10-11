@@ -14,7 +14,7 @@
 
 - name: Write logs to file
   become: yes
-  shell: "docker logs {{ item }} > {{ mailcow__docker_logs_directory }}/{{ item }}.log"
+  shell: "docker logs {{ item }} > {{ mailcow__docker_logs_directory }}/{{ item }}.log 2>&1"
   with_items: "{{ mailcow__container_names }}"
 
 - name: Create zip of logs directory
