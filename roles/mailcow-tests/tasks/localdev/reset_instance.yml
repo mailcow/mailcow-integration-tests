@@ -23,6 +23,6 @@
     build: no
     pull: no
 
-- name: Wait 180 seconds before starting tests
+- name: Wait 120 seconds before starting tests
   wait_for:
-    timeout: 180
+    timeout: 120
