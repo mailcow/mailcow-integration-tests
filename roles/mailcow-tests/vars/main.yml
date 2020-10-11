@@ -121,7 +121,6 @@ mailcow_test_results:
     name: "Function: Check if SYMBOLs 'WHITELISTED_FWD_HOST' is present if mail gets send by Forwarding host"
     result: "{{ result_forwarding_hosts_sendmail_rspamd_list_success | default('Test result could not be determiend') }}"
     log: "{{ result_forwarding_hosts_sendmail_rspamd_list | default('Test result could not be determiend') }}"
-    allow_failure: yes
   - forwarding_hosts_delete:
     name: "Delete: Forwarding Host"
     result: "{{ result_fowarding_hosts_delete.json[0].type | default('Test result could not be determiend') }}"
@@ -162,6 +161,7 @@ mailcow_test_results:
     name: "Function: Check if SYMBOLs 'SIEVE_HOST','MAILCOW_DOMAIN_HEADER_FROM','DKIM_SIGNED','FROM_EQ_ENVFROM or BOUNCE' are on sieve_reject_processing"
     result: "{{ result_sieve_prefilter_rspamd_symbols_list_sucess | default('Test result could not be determiend') }}"
     log: "{{ result_sieve_prefilter_rspamd_symbols_list | default('Test result could not be determiend') }}"
+    allow_failure: yes
   - sieve_prefilter_redirect_function_inbound:
     name: "Function: Check if SYMBOLs 'ARC_SIGNED' are set for sive_redirect_processing (inbound mail)"
     result: "{{ result_sieve_prefilter_redirect_rspamd_symbols_list_1_sucess | default('Test result could not be determiend') }}"
