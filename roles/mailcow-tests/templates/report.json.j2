@@ -11,6 +11,7 @@
     {
         "test_name": "{{ tests.name }}",
         "status": "{{ tests.result }}",
+        "colour": "{% if tests.result == 'success' %}green{% else %}{% if tests.allow_failure %}yellow{% else %}red{% endif %}{% endif %}",
         "log":"{{ tests.log }}"
     }{% if not loop.last %},{% endif %}
 {% endfor %}
