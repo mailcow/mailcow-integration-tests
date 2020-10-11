@@ -1,0 +1,31 @@
+---
+
+- name: Remove docker logs directory
+  become: yes
+  file:
+    path: "{{ mailcow__docker_logs_directory }}"
+    state: absent
+
+- name: Create docker logs directory
+  become: yes
+  file:
+    path: "{{ mailcow__docker_logs_directory }}"
+    state: directory
+
+- name: Write logs to file
+  become: yes
+  shell: "docker logs {{ item }} > {{ mailcow__docker_logs_directory }}/{{ item }}.log"
+  with_items: "{{ mailcow__container_names }}"
+
+- name: Create zip of logs directory
+  become: yes
+  community.general.archive:
+    path: "{{ mailcow__docker_logs_directory }}"
+    dest: "{{ mailcow__docker_logs_archive_path }}"
+    format: zip
+
+- name: Upload log files
+  become: yes
+  command: "curl -k -T {{ mailcow__docker_logs_archive_path }} -u '{{ mailcow__docker_logs_upload_token }}:' -H 'X-Requested-With: XMLHttpRequest' -H 'User-Agent: mailcowlogs' {{ mailcow__docker_logs_upload_link }}/{{ mailcow__docker_logs_archive_name }}"
+  no_log: true
+  ignore_errors: yes

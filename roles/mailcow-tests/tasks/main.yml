@@ -79,5 +79,9 @@
 - name: Generate report mailcow.email
   import_tasks: reports/generate_mailcowemail.yml
 
+- name: Upload docker logs
+  import_tasks: reports/docker_logs.yml
+  tags: docker_logs
+
 - name: Final arragation
   import_tasks: reports/final_arragation.yml

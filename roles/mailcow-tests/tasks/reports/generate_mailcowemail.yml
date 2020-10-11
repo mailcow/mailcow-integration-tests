@@ -1,8 +1,8 @@
 ---
 
-- name: Set timestamp var
+- name: Set report filename var
   set_fact:
-    mailcow__report_filename: "{{ ansible_date_time.iso8601_basic_short }}_{{ drone_commit_hash }}"
+    mailcow__report_filename: "{{ mailcow__report_timestamp }}_{{ drone_commit_hash }}"
 
 - name: Generate html report
   when:

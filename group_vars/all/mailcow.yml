@@ -68,6 +68,31 @@ mailcow__pull_images:
 mailcow__macro_test_file: "/opt/{{ mailcow__macro_test_filename }}"
 mailcow__macro_test_filename: HTTPMacro.doc
 
+mailcow__report_timestamp: "{{ ansible_date_time.iso8601_basic_short }}"
+
+mailcow__docker_logs_directory: /opt/mailcow-logs
+mailcow__docker_logs_archive_path: "/opt/{{ mailcow__docker_logs_archive_name }}"
+mailcow__docker_logs_archive_name: logs-{{ drone_commit_hash }}-{{ mailcow__report_timestamp }}.zip
+mailcow__container_names:
+  - mailcowdockerized_acme-mailcow_1
+  - mailcowdockerized_clamd-mailcow_1
+  - mailcowdockerized_dockerapi-mailcow_1
+  - mailcowdockerized_dovecot-mailcow_1
+  - mailcowdockerized_ipv6nat-mailcow_1
+  - mailcowdockerized_memcached-mailcow_1
+  - mailcowdockerized_mysql-mailcow_1
+  - mailcowdockerized_netfilter-mailcow_1
+  - mailcowdockerized_nginx-mailcow_1
+  - mailcowdockerized_olefy-mailcow_1
+  - mailcowdockerized_php-fpm-mailcow_1
+  - mailcowdockerized_postfix-mailcow_1
+  - mailcowdockerized_redis-mailcow_1
+  - mailcowdockerized_rspamd-mailcow_1
+  - mailcowdockerized_sogo-mailcow_1
+  - mailcowdockerized_solr-mailcow_1
+  - mailcowdockerized_unbound-mailcow_1
+  - mailcowdockerized_watchdog-mailcow_1
+
 mailcow__hostname_local_part: "mail-{{ drone_commit_hash }}"
 mailcow__hostname: "{{ mailcow__hostname_local_part }}.{{ mailcow__dns_zone }}"
 mailcow__test_domain: "mailtest-{{ drone_commit_hash }}.{{ mailcow__dns_zone }}"
