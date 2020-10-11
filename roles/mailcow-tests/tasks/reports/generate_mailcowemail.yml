@@ -30,7 +30,7 @@
   when:
     - mailcow__upload_results
     - mailcow__upload_results_html
-  command: "curl http://int-test.mailcow.email/upload -X POST -Ftoken={{ vault__mailcow__reports_upload_token }} -Ffilename=@/opt/{{ mailcow__report_filename }}.html"
+  command: "curl https://int-test.mailcow.email/upload -X POST -Ftoken={{ vault__mailcow__reports_upload_token }} -Ffilename=@/opt/{{ mailcow__report_filename }}.html"
   no_log: true
   register: mailcow__upload_log
   retries: 5
@@ -41,7 +41,7 @@
   when:
     - mailcow__upload_results
     - mailcow__upload_results_json
-  command: "curl http://int-test.mailcow.email/upload -X POST -Ftoken={{ vault__mailcow__reports_upload_token }} -Ffilename=@/opt/{{ mailcow__report_filename }}.json"
+  command: "curl https://int-test.mailcow.email/upload -X POST -Ftoken={{ vault__mailcow__reports_upload_token }} -Ffilename=@/opt/{{ mailcow__report_filename }}.json"
   no_log: true
   register: mailcow__upload_log
   retries: 5
