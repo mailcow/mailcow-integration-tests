@@ -48,15 +48,15 @@
     var: result_marco_doc_rspamd_symbols_list
 
 ## Symbol Checks
-- set_fact:
+- name: Eval test success
+  set_fact:
     result_marco_doc_rspamd_symbols_list_sucess: success
   when: ('VIRUS_FOUND' in result_marco_doc_rspamd_symbols_list) and
         ('MIME_BAD_ATTACHMENT' in result_marco_doc_rspamd_symbols_list) and
         (result_marco_doc_sendmail is failed)
 
-- set_fact:
+- name: Eval test failure
+  set_fact:
     result_marco_doc_rspamd_symbols_list_sucess: failed
-  when: ('VIRUS_FOUND' not in result_marco_doc_rspamd_symbols_list) or
-        ('MIME_BAD_ATTACHMENT' not in result_marco_doc_rspamd_symbols_list) or
-        (result_marco_doc_sendmail is succeeded)
+  when: (result_marco_doc_rspamd_symbols_list_sucess is undefined)
 # End Rspamd Symbols

@@ -19,13 +19,15 @@
   debug:
     var: result_postfix_logs_get.json
 
-- set_fact:
+- name: Eval test success
+  set_fact:
     result_postfix_logs_get_success: success
   when: ('json' in result_postfix_logs_get) and (result_postfix_logs_get | length > 0)
 
-- set_fact:
+- name: Eval test failure
+  set_fact:
     result_postfix_logs_get_success: failed
-  when: ('json' not in result_postfix_logs_get)
+  when: (result_postfix_logs_get_success is undefined)
 
 - name: Get Dovecot logs
   uri:
@@ -46,13 +48,15 @@
   debug:
     var: result_dovecot_logs_get.json
 
-- set_fact:
+- name: Eval test success
+  set_fact:
     result_dovecot_logs_get_success: success
   when: ('json' in result_dovecot_logs_get) and (result_dovecot_logs_get | length > 0)
 
-- set_fact:
+- name: Eval test success
+  set_fact:
     result_dovecot_logs_get_success: failed
-  when: ('json' not in result_dovecot_logs_get)
+  when: (result_dovecot_logs_get_success is undefined)
 
 - name: Get ACME logs
   uri:
@@ -73,13 +77,15 @@
   debug:
     var: result_acme_logs_get.json
 
-- set_fact:
+- name: Eval test success
+  set_fact:
     result_acme_logs_get_success: success
   when: ('json' in result_acme_logs_get) and (result_acme_logs_get | length > 0)
 
-- set_fact:
+- name: Eval test failure
+  set_fact:
     result_acme_logs_get_success: failed
-  when: ('json' not in result_acme_logs_get)
+  when: (result_acme_logs_get_success is undefined)
 
 - name: Get Sogo logs
   uri:
@@ -100,13 +106,15 @@
   debug:
     var: result_sogo_logs_get.json
 
-- set_fact:
+- name: Eval test success
+  set_fact:
     result_sogo_logs_get_success: success
   when: ('json' in result_sogo_logs_get) and (result_sogo_logs_get | length > 0)
 
-- set_fact:
+- name: Eval test failure
+  set_fact:
     result_sogo_logs_get_success: failed
-  when: ('json' not in result_sogo_logs_get)
+  when: (result_sogo_logs_get_success is undefined)
 
 - name: Get Watchdog logs
   uri:
@@ -127,13 +135,15 @@
   debug:
     var: result_watchdog_logs_get.json
 
-- set_fact:
+- name: Eval test success
+  set_fact:
     result_watchdog_logs_get_success: success
   when: ('json' in result_watchdog_logs_get) and (result_watchdog_logs_get | length > 0)
 
-- set_fact:
+- name: Eval test failure
+  set_fact:
     result_watchdog_logs_get_success: failed
-  when: ('json' not in result_watchdog_logs_get)
+  when: (result_watchdog_logs_get_success is undefined)
 
 - name: Get API logs
   uri:
@@ -154,10 +164,12 @@
   debug:
     var: result_api_logs_get.json
 
-- set_fact:
+- name: Eval test success
+  set_fact:
     result_api_logs_get_success: success
   when: ('json' in result_api_logs_get) and (result_api_logs_get | length > 0)
 
-- set_fact:
+- name: Eval test failure
+  set_fact:
     result_api_logs_get_success: failed
-  when: ('json' not in result_api_logs_get)
+  when: (result_api_logs_get_success is undefined)

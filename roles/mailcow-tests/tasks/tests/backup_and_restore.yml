@@ -20,10 +20,12 @@
     path: /opt/backup/
   register: result_backup_exists
 
-- set_fact:
+- name: Eval test success
+  set_fact:
     result_backup_created_success: success
   when: result_backup_exists.stat.exists
 
-- set_fact:
+- name: Eval test failure
+  set_fact:
     result_backup_created_success: failed
   when: not result_backup_exists.stat.exists

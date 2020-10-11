@@ -90,13 +90,15 @@
     var: result_sieve_prefilter_redirect_rspamd_symbols_list_1
 
 ## Symbol Checks
-- set_fact:
+- name: Eval test success
+  set_fact:
     result_sieve_prefilter_redirect_rspamd_symbols_list_1_sucess: success
   when:
     - "'ARC_SIGNED' in result_sieve_prefilter_redirect_rspamd_symbols_list_1"
 
-- set_fact:
+- name: Eval test failure
+  set_fact:
     result_sieve_prefilter_redirect_rspamd_symbols_list_1_sucess: failed
   when:
-    - "'ARC_SIGNED' not in result_sieve_prefilter_redirect_rspamd_symbols_list_1"
+    - (result_sieve_prefilter_redirect_rspamd_symbols_list_1_sucess is undefined)
 # End Rspamd Symbols

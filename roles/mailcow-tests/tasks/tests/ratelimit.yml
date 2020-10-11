@@ -65,13 +65,15 @@
   retries: 20
   delay: 2
 
-- set_fact:
+- name: Eval test success
+  set_fact:
     result_sendmail_tls_ratelimit_sucess: success
   when: ('msg' in result_sendmail_tls_ratelimit) and ("Mail sent successfully" not in result_sendmail_tls_ratelimit.msg)
 
-- set_fact:
+- name: Eval test failure
+  set_fact:
     result_sendmail_tls_ratelimit_sucess: failed
-  when: ('msg' in result_sendmail_tls_ratelimit) and ("Mail sent successfully" in result_sendmail_tls_ratelimit.msg)
+  when: (result_sendmail_tls_ratelimit_sucess is undefined)
 
 - name: Get ratelimit log using API
   uri:
@@ -88,12 +90,13 @@
   debug:
     var: result_ratelimit_log.json
 
-- set_fact:
+- name: Eval test success
+  set_fact:
     result_ratelimit_log_success: success
   when: ('json' in result_ratelimit_log) and ("mailcow" in result_ratelimit_log.json[0].rl_name) and
         ('json' in result_ratelimit_log) and ("ratelimit test" in result_ratelimit_log.json[0].header_subject)
 
-- set_fact:
+- name: Eval test failure
+  set_fact:
     result_ratelimit_log_success: failed
-  when: ('json' in result_ratelimit_log) and ("mailcow" not in result_ratelimit_log.json[0].rl_name) or
-        ('json' in result_ratelimit_log) and ("ratelimit test" not in result_ratelimit_log.json[0].header_subject)
+  when: (result_ratelimit_log_success is undefined)

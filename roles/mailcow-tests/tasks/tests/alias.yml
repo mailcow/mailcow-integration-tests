@@ -38,13 +38,15 @@
   debug:
     var: result_alias_get.json
 
-- set_fact:
+- name: Eval test success
+  set_fact:
     result_alias_get_success: success
   when: ('json' in result_alias_get) and (result_alias_get.json[0] is defined)
 
-- set_fact:
+- name: Eval test failure
+  set_fact:
     result_alias_get_success: failed
-  when: ('json' in result_alias_get) and (result_alias_get.json[0] is not defined)
+  when: (result_alias_get_success is undefined)
 
 - name: Delete Alias
   uri:

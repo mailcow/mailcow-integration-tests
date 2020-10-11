@@ -38,13 +38,15 @@
   debug:
     var: result_fowarding_hosts_get.json
 
-- set_fact:
+- name: Eval test success
+  set_fact:
     result_fowarding_hosts_get_success: success
   when: ('json' in result_fowarding_hosts_get) and (result_fowarding_hosts_get.json[0] is defined)
 
-- set_fact:
+- name: Eval test failure
+  set_fact:
     result_fowarding_hosts_get_success: failed
-  when: ('json' in result_fowarding_hosts_get) and (result_fowarding_hosts_get.json[0] is not defined)
+  when: (result_fowarding_hosts_get_success is undefined)
 
 # Send mail
 - name: Sending a email to mailcow test instance always encrypted
@@ -86,13 +88,15 @@
     var: result_forwarding_hosts_sendmail_rspamd_list
 
 ## Symbol Checks
-- set_fact:
+- name: Eval test success
+  set_fact:
     result_forwarding_hosts_sendmail_rspamd_list_success: success
   when: ('WHITELISTED_FWD_HOST' in result_forwarding_hosts_sendmail_rspamd_list)
 
-- set_fact:
+- name: Eval test failure
+  set_fact:
     result_forwarding_hosts_sendmail_rspamd_list_success: failed
-  when: ('WHITELISTED_FWD_HOST' not in result_forwarding_hosts_sendmail_rspamd_list)
+  when: (result_forwarding_hosts_sendmail_rspamd_list_success is undefined)
 # End Rspamd Symbols
 
 - name: Delete Forwarding Hosts

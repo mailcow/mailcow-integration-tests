@@ -39,13 +39,15 @@
   retries: 20
   delay: 10
 
-- set_fact:
+- name: Eval test success
+  set_fact:
     result_syncjob_log_success: success
   when: ('json' in result_syncjob_get_logs) and ("The sync looks good" in result_syncjob_get_logs.json[0].log)
 
-- set_fact:
+- name: Eval test failure
+  set_fact:
     result_syncjob_log_success: failed
-  when: ('json' in result_syncjob_get_logs) and ("The sync looks good" not in result_syncjob_get_logs.json[0].log)
+  when: (result_syncjob_log_success is undefined)
 
 - name: Delete syncjob
   uri:

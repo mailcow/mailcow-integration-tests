@@ -38,13 +38,15 @@
   debug:
     var: result_domain_admin_get.json
 
-- set_fact:
+- name: Eval test success
+  set_fact:
     result_domain_admin_get_success: success
   when: ('json' in result_domain_admin_get) and (result_domain_admin_get.json[0] is defined)
 
-- set_fact:
+- name: Eval test success
+  set_fact:
     result_domain_admin_get_success: failed
-  when: ('json' in result_domain_admin_get) and (result_domain_admin_get.json[0] is not defined)
+  when: (result_domain_admin_get_success is undefined)
 
 - name: Delete domain admin
   uri:

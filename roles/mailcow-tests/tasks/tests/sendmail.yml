@@ -15,13 +15,15 @@
   register: result_sendmail_no_tls
   ignore_errors: yes
 
-- set_fact:
+- name: Eval test success
+  set_fact:
     result_sendmail_no_tls_sucess: success
   when: ('msg' in result_sendmail_no_tls) and ("No Authentication on the server" in result_sendmail_no_tls.msg)
 
-- set_fact:
+- name: Eval test failure
+  set_fact:
     result_sendmail_no_tls_sucess: failed
-  when: ('msg' in result_sendmail_no_tls) and ("No Authentication on the server" not in result_sendmail_no_tls.msg)
+  when: (result_sendmail_no_tls_sucess is undefined)
 
 - name: Sending a email to {{ mailcow__dev_null_email }} always encrypted
   community.general.mail:
@@ -37,13 +39,15 @@
     secure: starttls
   register: result_sendmail_tls
 
-- set_fact:
+- name: Eval test success
+  set_fact:
     result_sendmail_tls_sucess: success
   when: ('msg' in result_sendmail_tls) and ("Mail sent successfully" in result_sendmail_tls.msg)
 
-- set_fact:
+- name: Eval test failure
+  set_fact:
     result_sendmail_tls_sucess: failed
-  when: ('msg' in result_sendmail_tls) and ("Mail sent successfully" not in result_sendmail_tls.msg)
+  when: (result_sendmail_tls_sucess is undefined)
 
 - name: Get Rspamd log using API
   uri:
@@ -64,29 +68,35 @@
     var: result_sendmail_rspamd_symbols_list
 
 ## Symbol Checks
-- set_fact:
+- name: Eval test success
+  set_fact:
     result_sendmail_rspamd_symbols_mailcow_auth_sucess: success
   when: ('MAILCOW_AUTH' in result_sendmail_rspamd_symbols_list)
 
-- set_fact:
+- name: Eval test failure
+  set_fact:
     result_sendmail_rspamd_symbols_mailcow_auth_sucess: failed
-  when: ('MAILCOW_AUTH' not in result_sendmail_rspamd_symbols_list)
+  when: (result_sendmail_rspamd_symbols_mailcow_auth_sucess is undefined)
 
-- set_fact:
+- name: Eval test success
+  set_fact:
     result_sendmail_rspamd_symbols_dyn_rl_check_sucess: success
   when: ('DYN_RL_CHECK' in result_sendmail_rspamd_symbols_list)
 
-- set_fact:
+- name: Eval test failure
+  set_fact:
     result_sendmail_rspamd_symbols_dyn_rl_check_sucess: failed
-  when: ('DYN_RL_CHECK' not in result_sendmail_rspamd_symbols_list)
+  when: (result_sendmail_rspamd_symbols_dyn_rl_check_sucess is undefined)
 
-- set_fact:
+- name: Eval test success
+  set_fact:
     result_sendmail_rspamd_symbols_dkim_signed_sucess: success
   when: ('DKIM_SIGNED' in result_sendmail_rspamd_symbols_list)
 
-- set_fact:
+- name: Eval test failure
+  set_fact:
     result_sendmail_rspamd_symbols_dkim_signed_sucess: failed
-  when: ('DKIM_SIGNED' not in result_sendmail_rspamd_symbols_list)
+  when: (result_sendmail_rspamd_symbols_dkim_signed_sucess is undefined)
 ## End Symbol Checks
 
 - name: Sending a email from a not existing alias
@@ -107,10 +117,12 @@
   debug:
     var: result_sendmai_not_allowed_alias.msg
 
-- set_fact:
+- name: Eval test success
+  set_fact:
     result_sendmail_not_allowed_alias_sucess: success
   when: "'Sender address rejected: not owned by user' in result_sendmai_not_allowed_alias.msg"
 
-- set_fact:
+- name: Eval test success
+  set_fact:
     result_sendmail_not_allowed_alias_sucess: failed
-  when: "'Sender address rejected: not owned by user' not in result_sendmai_not_allowed_alias.msg"
+  when: (result_sendmail_not_allowed_alias_sucess is undefined)

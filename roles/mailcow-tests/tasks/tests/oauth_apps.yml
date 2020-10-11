@@ -37,13 +37,15 @@
   debug:
     var: result_oauth_app_get.json
 
-- set_fact:
+- name: Eval test success
+  set_fact:
     result_oauth_app_get_success: success
   when: ('json' in result_oauth_app_get) and (result_oauth_app_get.json[0] is defined)
 
-- set_fact:
+- name: Eval test failure
+  set_fact:
     result_oauth_app_get_success: failed
-  when: ('json' in result_oauth_app_get) and (result_oauth_app_get.json[0] is not defined)
+  when: (result_oauth_app_get_success is undefined)
 
 - name: Delete oAuth app
   uri:

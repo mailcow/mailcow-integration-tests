@@ -59,12 +59,14 @@
   debug:
     var: result_watchdog_container_state.stdout
 
-- set_fact:
+- name: Eval test success
+  set_fact:
     result_watchdog_container_state_success: success
   when:
     - ('true' in result_watchdog_container_state.stdout)
 
-- set_fact:
+- name: Eval test failure
+  set_fact:
     result_watchdog_container_state_success: failed
   when:
-    - ('false' in result_watchdog_container_state.stdout)
+    - (result_watchdog_container_state_success is undefined)
