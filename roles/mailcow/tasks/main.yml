@@ -154,3 +154,4 @@
     - ('json' in result) and ("result.json['dockerapi-mailcow'].state == 'running'")
     - ('json' in result) and ("result.json['olefy-mailcow'].state == 'running'")
     - ('json' in result) and ("result.json['clamd-mailcow'].state == 'running'")
+    - ('json' in result) and ("result.json['ejabberd-mailcow'].state == 'running'")

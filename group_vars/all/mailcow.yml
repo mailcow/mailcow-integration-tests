@@ -55,13 +55,13 @@ mailcow__build_images:
     - dockerapi-mailcow
     - solr-mailcow
     - olefy-mailcow
+    - ejabberd-mailcow
 
 mailcow__pull_images:
     - mysql-mailcow
     - redis-mailcow
     - memcached-mailcow
     - nginx-mailcow
-#####
     - rspamd-mailcow
     - sogo-mailcow
 
@@ -92,6 +92,7 @@ mailcow__container_names:
   - mailcowdockerized_solr-mailcow_1
   - mailcowdockerized_unbound-mailcow_1
   - mailcowdockerized_watchdog-mailcow_1
+  - mailcowdockerized_ejabberd-mailcow_1
 
 mailcow__hostname_local_part: "mail-{{ drone_commit_hash }}"
 mailcow__hostname: "{{ mailcow__hostname_local_part }}.{{ mailcow__dns_zone }}"
