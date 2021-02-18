@@ -13,23 +13,24 @@ Tests are run on Hetzner Cloud servers using Drone CI.
 The project is structured like a normal ansible-playbook, it contains roles which contain all the logic.  
 The most important is the mailcow-tests role since it contains all the test logic.
 
-|       Role       |                      Description                      |
-| :--------------: | :---------------------------------------------------: |
-|   apt-updates    | Installs apt-updates and reboots the server if needed |
-|    cloud-init    |            Waits for cloud init to finish             |
-|  cloudflare-dns  |  Created the needed dns records for the test mailcow  |
-|    docker-ce     |                    Installs docker                    |
-|  docker-compose  |                Installs docker-compose                |
-|     mailcow      | Sets up mailcow and buids the containers from source  |
-|     netplan      |        Fixes the Hetzner Cloud network config         |
-| npm-requierments |             Installs needed npm packages              |
-| pip-requierments |             Installs needed pip packages              |
-
+|       Role       |                         Description                         |
+|:----------------:|:-----------------------------------------------------------:|
+|   apt-updates    |    Installs apt-updates and reboots the server if needed    |
+|    cloud-init    |               Waits for cloud init to finish                |
+|  cloudflare-dns  |     Created the needed dns records for the test mailcow     |
+|    docker-ce     |                       Installs docker                       |
+|  docker-compose  |                   Installs docker-compose                   |
+|     mailcow      |    Sets up mailcow and buids the containers from source     |
+|     netplan      |           Fixes the Hetzner Cloud network config            |
+| npm-requierments |                Installs needed npm packages                 |
+| pip-requierments |                Installs needed pip packages                 |
+|    verify-dns    |        Verifies that the DNS records are resolvable         |
+|  self-shutdown   | Will make sure the server is shutdown after a given timeout |
 
 Shell Scripts used by the project:
 
 |     .sh file     |                  Description                   |
-| :--------------: | :--------------------------------------------: |
+|:----------------:|:----------------------------------------------:|
 |      ci.sh       | Used to create on demand variables for ansible |
 | namegenerator.sh |             Generates random names             |
 
