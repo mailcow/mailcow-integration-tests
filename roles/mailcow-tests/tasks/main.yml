@@ -104,5 +104,8 @@
   import_tasks: reports/docker_logs.yml
   tags: docker_logs
 
-- name: Final arragation
-  import_tasks: reports/final_arragation.yml
+- name: Touch /opt/shutdown_flag
+  become: yes
+  file:
+    path: /opt/shutdown_flag
+    state: touch
