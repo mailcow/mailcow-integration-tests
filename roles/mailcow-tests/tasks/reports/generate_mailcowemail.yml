@@ -1,12 +1,12 @@
 ---
 
-- name: Set report filename var
+- name: Set report filename variable
   set_fact:
     mailcow__report_filename: "{{ mailcow__report_timestamp }}_{{ drone_commit_hash }}"
 
 - name: Generate html report
   when:
-    - mailcow__upload_results_html
+    - mailcow__upload_results_html|bool
   template:
     src: "{{ playbook_dir }}/roles/mailcow-tests/templates/report.html.j2"
     dest: "/opt/{{ mailcow__report_filename }}.html"
@@ -14,7 +14,7 @@
 
 - name: Generate json report
   when:
-    - mailcow__upload_results_json
+    - mailcow__upload_results_json|bool
   template:
     src: "{{ playbook_dir }}/roles/mailcow-tests/templates/report.json.j2"
     dest: "/opt/{{ mailcow__report_filename }}.json"
@@ -22,14 +22,14 @@
 
 - name: Optimize html report size
   when:
-    - mailcow__upload_results
-    - mailcow__upload_results_html
+    - mailcow__upload_results|bool
+    - mailcow__upload_results_html|bool
   command: "htmlmin /opt/{{ mailcow__report_filename }}.html /opt/{{ mailcow__report_filename }}.html"
 
 - name: Upload html report to mailcow.email
   when:
-    - mailcow__upload_results
-    - mailcow__upload_results_html
+    - mailcow__upload_results|bool
+    - mailcow__upload_results_html|bool
   command: "curl https://int-test.mailcow.email/upload -X POST -Ftoken={{ vault__mailcow__reports_upload_token }} -Ffilename=@/opt/{{ mailcow__report_filename }}.html"
   no_log: yes
   register: mailcow__upload_log
@@ -37,10 +37,27 @@
   delay: 1
   until: ('{"upload_ok":"{{ mailcow__report_filename }}.html"}' in mailcow__upload_log.stdout)
 
+- name: Copy report as latest report.html
+  copy:
+    src: /opt/{{ mailcow__report_filename }}.html
+    dest: /opt/latest.html
+    remote_src: yes
+
+- name: Upload latest.html report to mailcow.email
+  when:
+    - mailcow__upload_results|bool
+    - mailcow__upload_results_html|bool
+  command: "curl https://int-test.mailcow.email/upload -X POST -Ftoken={{ vault__mailcow__reports_upload_token }} -Ffilename=@/opt/latest.html"
+  no_log: yes
+  register: mailcow__upload_log
+  retries: 5
+  delay: 1
+  until: ('{"upload_ok":"latest.html"}' in mailcow__upload_log.stdout)
+
 - name: Upload json report to mailcow.email
   when:
-    - mailcow__upload_results
-    - mailcow__upload_results_json
+    - mailcow__upload_results|bool
+    - mailcow__upload_results_json|bool
   command: "curl https://int-test.mailcow.email/upload -X POST -Ftoken={{ vault__mailcow__reports_upload_token }} -Ffilename=@/opt/{{ mailcow__report_filename }}.json"
   no_log: yes
   register: mailcow__upload_log
@@ -50,8 +67,8 @@
 
 - name: Download html report to ansible host
   when:
-    - not mailcow__upload_results
-    - mailcow__upload_results_html
+    - not mailcow__upload_results|bool
+    - mailcow__upload_results_html|bool
   fetch:
     src: "/opt/{{ mailcow__report_filename }}.html"
     dest: "{{ playbook_dir }}/report.html"
@@ -59,8 +76,8 @@
 
 - name: Download json report to ansible host
   when:
-    - not mailcow__upload_results
-    - mailcow__upload_results_json
+    - not mailcow__upload_results|bool
+    - mailcow__upload_results_json|bool
   fetch:
     src: "/opt/{{ mailcow__report_filename }}.json"
     dest: "{{ playbook_dir }}/report.json"
