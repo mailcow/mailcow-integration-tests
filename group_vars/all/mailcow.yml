@@ -43,11 +43,11 @@ mailcow__lang_files:
   - name: SK
     file: lang.sk.json
   - name: HU
-    name: lang.hu.json
+    file: lang.hu.json
   - name: KO
-    name: lang.ko.json
+    file: lang.ko.json
   - name: ZH
-    name: lang.zh.json
+    file: lang.zh.json
 
 mailcow__build_images:
     - unbound-mailcow
