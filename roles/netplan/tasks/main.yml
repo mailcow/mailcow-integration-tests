@@ -11,7 +11,7 @@
   template:
     src: 01-netcfg.yaml.j2
     dest: /etc/netplan/01-netcfg.yaml
-  no_log: true
+  no_log: yes
 
 - name: Run netplan apply
   become: yes

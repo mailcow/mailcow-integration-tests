@@ -5,7 +5,7 @@
   copy:
     src: "{{ playbook_dir }}/roles/mailcow-tests/files/diff.js"
     dest: /opt/mailcow-dockerized/data/web/lang/diff.js
-  no_log: true
+  no_log: yes
 
 - name: Run coverage test for languages
   command: "node diff.js lang.en.json {{ item.file }}"

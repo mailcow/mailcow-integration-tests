@@ -131,42 +131,42 @@
     path: /opt/mailcow-dockerized/mailcow.conf
     regexp: '^#(API_KEY=)$'
     replace: '\1'
-  no_log: true
+  no_log: yes
 
 - name: Configure API_KEY
   replace:
     path: /opt/mailcow-dockerized/mailcow.conf
     regexp: "^API_KEY=.*"
     replace: "API_KEY={{ mailcow__api_key }}"
-  no_log: true
+  no_log: yes
 
 - name: Uncomment API_KEY_READ_ONLY line
   replace:
     path: /opt/mailcow-dockerized/mailcow.conf
     regexp: '^#(API_KEY_READ_ONLY=)$'
     replace: '\1'
-  no_log: true
+  no_log: yes
 
 - name: Configure API_KEY_READ_ONLY
   replace:
     path: /opt/mailcow-dockerized/mailcow.conf
     regexp: "^API_KEY_READ_ONLY=.*"
     replace: "API_KEY_READ_ONLY={{ mailcow__api_key_read_only }}"
-  no_log: true
+  no_log: yes
 
 - name: Uncomment API_ALLOW_FROM line
   replace:
     path: /opt/mailcow-dockerized/mailcow.conf
     regexp: '^#(API_ALLOW_FROM=172.22.1.1,127.0.0.1)$'
     replace: '\1'
-  no_log: true
+  no_log: yes
 
 - name: Configure API_ALLOW_FROM
   replace:
     path: /opt/mailcow-dockerized/mailcow.conf
     regexp: "^API_ALLOW_FROM=.*"
     replace: "API_ALLOW_FROM={{ mailcow__api_key_allow_from }}"
-  no_log: true
+  no_log: yes
 
 - name: Configure LE_STAGING
   lineinfile:

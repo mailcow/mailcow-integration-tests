@@ -27,5 +27,5 @@
 - name: Upload log files
   become: yes
   command: "curl -k -T {{ mailcow__docker_logs_archive_path }} -u '{{ mailcow__docker_logs_upload_token }}:' -H 'X-Requested-With: XMLHttpRequest' -H 'User-Agent: mailcowlogs' {{ mailcow__docker_logs_upload_link }}/{{ mailcow__docker_logs_archive_name }}"
-  no_log: true
+  no_log: yes
   ignore_errors: yes

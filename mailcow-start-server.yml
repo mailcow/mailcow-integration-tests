@@ -56,4 +56,4 @@
     template:
       src: "{{ playbook_dir }}/templates/hostvars.yml.j2"
       dest: "{{ playbook_dir }}/hostvars.yml"
-    no_log: true
+    no_log: yes

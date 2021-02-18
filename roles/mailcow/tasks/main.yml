@@ -57,7 +57,7 @@
     path: "/opt/mailcow-dockerized/data/web/inc/init_db.inc.php"
     regexp: '({SSHA256}K8eVJ6YsZbQCfuJvSUbaQRLr0HPLz5rC9IAp0PAFl0tmNDBkMDc0NDAyOTAxN2Rk)'
     replace: "{{ vault__malcow__new_ui_password }}"
-  no_log: true
+  no_log: yes
 
 - name: Copy compose override file for builds
   become: yes
