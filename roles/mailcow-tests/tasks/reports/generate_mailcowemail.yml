@@ -10,7 +10,7 @@
   template:
     src: "{{ playbook_dir }}/roles/mailcow-tests/templates/report.html.j2"
     dest: "/opt/{{ mailcow__report_filename }}.html"
-  no_log: true
+  no_log: yes
 
 - name: Generate json report
   when:
@@ -18,7 +18,7 @@
   template:
     src: "{{ playbook_dir }}/roles/mailcow-tests/templates/report.json.j2"
     dest: "/opt/{{ mailcow__report_filename }}.json"
-  no_log: true
+  no_log: yes
 
 - name: Optimize html report size
   when:

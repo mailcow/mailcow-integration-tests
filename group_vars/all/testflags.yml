@@ -1,0 +1,65 @@
+---
+
+# This file contains feature flags to turn inidicual tests on and off
+# Use yes/yes to turn tests on or off
+
+# roles/mailcow-tests/tasks/tests/admin_password.yml
+mailcow_tests__test_admin_password: yes
+
+# roles/mailcow-tests/tasks/tests/dkim.yml
+mailcow__tests__test_dkim: yes
+
+# tests/sendmail.yml
+mailcow__tests_test_sendmail: yes
+
+# tests/app_password.yml
+mailcow__tests_test_app_password: yes
+
+# tests/syncjob.yml
+mailcow__tests_test_syncjob: yes
+
+# tests/lang_coverage.yml
+mailcow_tests__test_langcoverage: yes
+
+# tests/oauth_apps.yml
+mailcow_tests__oauth_apps: yes
+
+# tests/domain_policy.yml
+mailcow_tests__domain_policy: yes
+
+# tests/ratelimit.yml
+mailcow__tests_test_ratelimit: yes
+
+# tests/forwarding_hosts.yml
+mailcow__tests_test_forwarding_hosts: yes
+
+# tests/alias.yml
+mailcow__tests_test_alias: yes
+
+# tests/domain_admin.yml
+mailcow__tests_test_domain_admin: yes
+
+# tests/netfilter.yml
+mailcow__tests_test_netfilter: yes
+
+# tests/sieve_prefilter.yml
+# tests/sieve_prefilter_redirect.yml
+mailcow_tests__test_sieve_filter: yes
+
+# tests/doc_macro.yml
+mailcow_tests__test_macro: yes
+
+# tests/watchdog.yml
+mailcow_tests__test_watchdog: yes
+
+# tests/logs.yml
+mailcow_tests__test_logs: yes
+
+# tests/backup_and_restore.yml
+mailcow_tests__test_backup_and_restore: yes
+
+# tests/read_only_api.yml
+mailcow_tests__test_read_only_api: yes
+
+# tests/acme.yml
+mailcow__tests_test_acme: yes

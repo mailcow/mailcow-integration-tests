@@ -9,6 +9,7 @@
 
 - name: Run admin password change tests
   import_tasks: tests/admin_password.yml
+  when: mailcow_tests__test_admin_password
 
 - name: Run domain creation tests
   import_tasks: tests/domain.yml
@@ -18,63 +19,83 @@
 
 - name: Run DKIM creation tests
   import_tasks: tests/dkim.yml
+  when: mailcow__tests__test_dkim
 
 - name: Run email sending and rspamd tests
   import_tasks: tests/sendmail.yml
+  when: mailcow__tests_test_sendmail
 
 - name: Run app password tests
   import_tasks: tests/app_password.yml
+  when: mailcow__tests_test_app_password
 
 - name: Run syncjob tests
   import_tasks: tests/syncjob.yml
+  when: mailcow__tests_test_syncjob
 
 - name: Run langauge coverage tests
   import_tasks: tests/lang_coverage.yml
+  when: mailcow_tests__test_langcoverage
 
 - name: Run oAuth apps tests
   import_tasks: tests/oauth_apps.yml
+  when: mailcow_tests__oauth_apps
 
 - name: Run domain policy tests
   import_tasks: tests/domain_policy.yml
+  when: mailcow_tests__domain_policy
 
 - name: Run ratelimit tests
   import_tasks: tests/ratelimit.yml
+  when: mailcow__tests_test_ratelimit
 
 - name: Run fowarding hosts tests
   import_tasks: tests/forwarding_hosts.yml
+  when: mailcow__tests_test_forwarding_hosts
 
 - name: Run alias tests
   import_tasks: tests/alias.yml
+  when: mailcow__tests_test_alias
 
 - name: Run domain admin tests
   import_tasks: tests/domain_admin.yml
+  when: mailcow__tests_test_domain_admin
 
 - name: Run netfilter tests
   import_tasks: tests/netfilter.yml
+  when: mailcow__tests_test_netfilter
 
 - name: Run sieve prefilter tests
   import_tasks: tests/sieve_prefilter.yml
+  when: mailcow_tests__test_sieve_filter
 
 - name: Run sieve prefilter redirect tests
   import_tasks: tests/sieve_prefilter_redirect.yml
+  when: mailcow_tests__test_sieve_filter
 
 - name: Run word doc macro tests
   import_tasks: tests/doc_macro.yml
+  when: mailcow_tests__test_macro
 
 - name: Run watchdog tests
   import_tasks: tests/watchdog.yml
+  when: mailcow_tests__test_watchdog
 
 - name: Run logs tests
   import_tasks: tests/logs.yml
+  when: mailcow_tests__test_logs
 
 - name: Run backup and restore tests
   import_tasks: tests/backup_and_restore.yml
+  when: mailcow_tests__test_backup_and_restore
 
 - name: Run read only API tests
   import_tasks: tests/read_only_api.yml
+  when: mailcow_tests__test_read_only_api
 
 - name: Run acme certificate tests
   import_tasks: tests/acme.yml
+  when: mailcow__tests_test_acme
 
 - name: Generate report mailcow.email
   import_tasks: reports/generate_mailcowemail.yml

@@ -33,7 +33,7 @@
       ssh_keys:
         - "{{ hcloud_server_name }}"
         - servercow
-        - timo@nowitzki.me
+        - timo
       state: present
       api_token: "{{ vault__hcloud__token }}"
     register: hcloud_created

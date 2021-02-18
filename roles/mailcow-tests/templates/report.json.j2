@@ -15,6 +15,7 @@
         "log":"{{ tests.log }}"
     }{% if not loop.last %},{% endif %}
 {% endfor %}
+{% if mailcow_tests__test_langcoverage %}
   ],
   "language_json_valid": [
 {% for lang_validjson in language_check_validjson.results %}
@@ -34,4 +35,7 @@
     }{% if not loop.last %},{% endif %}
 {% endfor %}
   ]
+{% else %}
+  ]
+{% endif %}
 }
