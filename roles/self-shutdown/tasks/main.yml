@@ -1,0 +1,19 @@
+---
+
+- name: Copy selfshutdown.sh
+  become: yes
+  template:
+    src: selfshutdown.sh
+    dest: /opt/selfshutdown.sh
+    mode: "a+x"
+
+- name: Create check cronjob
+  become: yes
+  cron:
+    name: selfshutdown
+    weekday: "*"
+    minute: "*"
+    hour: "*"
+    user: root
+    job: "/opt/selfshutdown.sh"
+    cron_file: ansible_selfshutdown

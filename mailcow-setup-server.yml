@@ -6,6 +6,8 @@
   roles:
     - role: cloud-init
       tags: [ 'cloud-init' ]
+    - role: self-shutdown
+      tags: [ 'self-shutdown' ]
     - role: apt-updates
       tags: [ 'apt-updates' ]
     - role: apt-requierments
