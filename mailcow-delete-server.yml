@@ -9,14 +9,19 @@
       name: hcloud
       state: present
 
+  - name: Gather hcloud server infos
+    hcloud_server_info:
+      api_token: "{{ vault__hcloud__token }}"
+    register: hetzner_cloud_stats
+
   - name: Delete mailcow integration test server
     hetzner.hcloud.hcloud_server:
-      name: "{{ hcloud_server_name }}"
-      server_type: cx21
-      image: ubuntu-18.04
-      location: fsn1
+      name: "{{ item.name }}"
+      location: "{{ item.datacenter }}"
       state: absent
       api_token: "{{ vault__hcloud__token }}"
+    loop: "{{ hetzner_cloud_stats.hcloud_server_info }}"
+    no_log: yes
 
   - name: Delete SSH Key from hcloud
     hetzner.hcloud.hcloud_ssh_key:
