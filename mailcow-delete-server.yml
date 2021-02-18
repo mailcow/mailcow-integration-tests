@@ -25,9 +25,10 @@
 
   - name: Delete SSH Key from hcloud
     hetzner.hcloud.hcloud_ssh_key:
-      name: "{{ hcloud_server_name }}"
+      name: "{{ item.name }}"
       state: absent
       api_token: "{{ vault__hcloud__token }}"
+    loop: "{{ hetzner_cloud_stats.hcloud_server_info }}"
 
   - name: "Delete a record for {{ mailcow__hostname }}"
     community.general.cloudflare_dns:
