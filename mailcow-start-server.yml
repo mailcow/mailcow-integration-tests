@@ -24,6 +24,13 @@
     loop: "{{ hetzner_cloud_stats.hcloud_server_info }}"
     no_log: yes
 
+  - name: Delete SSH Key from hcloud
+    hetzner.hcloud.hcloud_ssh_key:
+      name: "{{ item.name }}"
+      state: absent
+      api_token: "{{ vault__hcloud__token }}"
+    loop: "{{ hetzner_cloud_stats.hcloud_server_info }}"
+
   - name: Generate SSH Key
     openssh_keypair:
       path: "{{ playbook_dir }}/id_ssh_rsa"
