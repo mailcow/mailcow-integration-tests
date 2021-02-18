@@ -9,3 +9,7 @@ network:
       addresses:
         - {{ ansible_default_ipv6.address }}/64
       gateway6: fe80::1
+      nameservers:
+        addresses:
+            - "1.1.1.1"
+            - "1.0.0.1"
