@@ -49,12 +49,16 @@ mailcow__lang_files:
   - name: ZH
     file: lang.zh.json
 
-mailcow__build_images:
+mailcow__pull_images:
+    - mysql-mailcow
+    - redis-mailcow
+    - memcached-mailcow
+    - nginx-mailcow
+    - rspamd-mailcow
+    - sogo-mailcow
     - unbound-mailcow
     - clamd-mailcow
-#     - rspamd-mailcow
     - php-fpm-mailcow
-#     - sogo-mailcow
     - dovecot-mailcow
     - postfix-mailcow
     - acme-mailcow
@@ -64,14 +68,6 @@ mailcow__build_images:
     - solr-mailcow
     - olefy-mailcow
     - ejabberd-mailcow
-
-mailcow__pull_images:
-    - mysql-mailcow
-    - redis-mailcow
-    - memcached-mailcow
-    - nginx-mailcow
-    - rspamd-mailcow
-    - sogo-mailcow
 
 mailcow__macro_test_file: "/opt/{{ mailcow__macro_test_filename }}"
 mailcow__macro_test_filename: HTTPMacro.doc
