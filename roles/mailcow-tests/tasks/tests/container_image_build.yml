@@ -1,0 +1,350 @@
+---
+
+- name: Stop mailcow container stack
+  become: yes
+  community.general.docker_compose:
+    project_src: /opt/mailcow-dockerized
+    project_name: mailcowdockerized
+    state: absent
+    build: no
+    pull: no
+
+- name: Remove docker images and containers
+  become: yes
+  community.general.docker_prune:
+    images: yes
+    volumes: no
+    containers: yes
+    builder_cache: yes
+
+# begin unbound
+- name: Build unbound-mailcow image
+  become: yes
+  command: docker-compose build unbound-mailcow
+  args:
+    chdir: /opt/mailcow-dockerized
+  register: result_mailcow__build_unbound
+  ignore_errors: yes
+
+- name: Print build output
+  debug:
+    var: result_mailcow__build_unbound
+
+- name: Eval test success
+  set_fact:
+    result_mailcow__build_unbound_success: success
+  when: result_mailcow__build_unbound.rc == 0
+
+- name: Eval test failure
+  set_fact:
+    result_mailcow__build_unbound_success: failed
+  when: (result_mailcow__build_unbound_success is undefined)
+# end unbound
+
+# begin clamd
+- name: Build clamd-mailcow image
+  become: yes
+  command: docker-compose build clamd-mailcow
+  args:
+    chdir: /opt/mailcow-dockerized
+  register: result_mailcow__build_clamd
+  ignore_errors: yes
+
+- name: Print build output
+  debug:
+    var: result_mailcow__build_clamd
+
+- name: Eval test success
+  set_fact:
+    result_mailcow__build_clamd_success: success
+  when: result_mailcow__build_clamd.rc == 0
+
+- name: Eval test failure
+  set_fact:
+    result_mailcow__build_clamd_success: failed
+  when: (result_mailcow__build_clamd_success is undefined)
+# end clamd
+
+# begin php-fpm
+- name: Build php-fpm-mailcow image
+  become: yes
+  command: docker-compose build php-fpm-mailcow
+  args:
+    chdir: /opt/mailcow-dockerized
+  register: result_mailcow__build_php_fpm
+  ignore_errors: yes
+
+- name: Print build output
+  debug:
+    var: result_mailcow__build_php_fpm
+
+- name: Eval test success
+  set_fact:
+    result_mailcow__build_php_fpm_success: success
+  when: result_mailcow__build_php_fpm.rc == 0
+
+- name: Eval test failure
+  set_fact:
+    result_mailcow__build_php_fpm_success: failed
+  when: (result_mailcow__build_php_fpm_success is undefined)
+# end php-fpm
+
+# begin dovecot
+- name: Build dovecot-mailcow image
+  become: yes
+  command: docker-compose build dovecot-mailcow
+  args:
+    chdir: /opt/mailcow-dockerized
+  register: result_mailcow__build_dovecot
+  ignore_errors: yes
+
+- name: Print build output
+  debug:
+    var: result_mailcow__build_dovecot
+
+- name: Eval test success
+  set_fact:
+    result_mailcow__build_dovecot_success: success
+  when: result_mailcow__build_dovecot.rc == 0
+
+- name: Eval test failure
+  set_fact:
+    result_mailcow__build_dovecot_success: failed
+  when: (result_mailcow__build_dovecot_success is undefined)
+# end dovecot
+
+# begin postfix
+- name: Build postfix-mailcow image
+  become: yes
+  command: docker-compose build postfix-mailcow
+  args:
+    chdir: /opt/mailcow-dockerized
+  register: result_mailcow__build_postfix
+  ignore_errors: yes
+
+- name: Print build output
+  debug:
+    var: result_mailcow__build_postfix
+
+- name: Eval test success
+  set_fact:
+    result_mailcow__build_postfix_success: success
+  when: result_mailcow__build_postfix.rc == 0
+
+- name: Eval test failure
+  set_fact:
+    result_mailcow__build_postfix_success: failed
+  when: (result_mailcow__build_postfix_success is undefined)
+# end postfix
+
+# begin acme
+- name: Build acme-mailcow image
+  become: yes
+  command: docker-compose build acme-mailcow
+  args:
+    chdir: /opt/mailcow-dockerized
+  register: result_mailcow__build_acme
+  ignore_errors: yes
+
+- name: Print build output
+  debug:
+    var: result_mailcow__build_acme
+
+- name: Eval test success
+  set_fact:
+    result_mailcow__build_acme_success: success
+  when: result_mailcow__build_acme.rc == 0
+
+- name: Eval test failure
+  set_fact:
+    result_mailcow__build_acme_success: failed
+  when: (result_mailcow__build_acme_success is undefined)
+# end acme
+
+# begin netfilter
+- name: Build netfilter-mailcow image
+  become: yes
+  command: docker-compose build netfilter-mailcow
+  args:
+    chdir: /opt/mailcow-dockerized
+  register: result_mailcow__build_netfilter
+  ignore_errors: yes
+
+- name: Eval test success
+  set_fact:
+    result_mailcow__build_netfilter_success: success
+  when: result_mailcow__build_netfilter.rc == 0
+
+- name: Eval test failure
+  set_fact:
+    result_mailcow__build_netfilter_success: failed
+  when: (result_mailcow__build_netfilter_success is undefined)
+# end netfilter
+
+# begin watchdog
+- name: Build watchdog-mailcow image
+  become: yes
+  command: docker-compose build watchdog-mailcow
+  args:
+    chdir: /opt/mailcow-dockerized
+  register: result_mailcow__build_watchdog
+  ignore_errors: yes
+
+- name: Print build output
+  debug:
+    var: result_mailcow__build_watchdog
+
+- name: Eval test success
+  set_fact:
+    result_mailcow__build_watchdog_success: success
+  when: result_mailcow__build_watchdog.rc == 0
+
+- name: Eval test failure
+  set_fact:
+    result_mailcow__build_watchdog_success: failed
+  when: (result_mailcow__build_watchdog_success is undefined)
+# end watchdog
+
+# begin dockerapi
+- name: Build dockerapi-mailcow image
+  become: yes
+  command: docker-compose build dockerapi-mailcow
+  args:
+    chdir: /opt/mailcow-dockerized
+  register: result_mailcow__build_dockerapi
+  ignore_errors: yes
+
+- name: Print build output
+  debug:
+    var: result_mailcow__build_dockerapi
+
+- name: Eval test success
+  set_fact:
+    result_mailcow__build_dockerapi_success: success
+  when: result_mailcow__build_dockerapi.rc == 0
+
+- name: Eval test failure
+  set_fact:
+    result_mailcow__build_dockerapi_success: failed
+  when: (result_mailcow__build_dockerapi_success is undefined)
+# end dockerapi
+
+# begin solr
+- name: Build solr-mailcow image
+  become: yes
+  command: docker-compose build solr-mailcow
+  args:
+    chdir: /opt/mailcow-dockerized
+  register: result_mailcow__build_solr
+  ignore_errors: yes
+
+- name: Print build output
+  debug:
+    var: result_mailcow__build_solr
+
+- name: Eval test success
+  set_fact:
+    result_mailcow__build_solr_success: success
+  when: result_mailcow__build_solr.rc == 0
+
+- name: Eval test failure
+  set_fact:
+    result_mailcow__build_solr_success: failed
+  when: (result_mailcow__build_solr_success is undefined)
+# end solr
+
+# begin olefy
+- name: Build olefy-mailcow image
+  become: yes
+  command: docker-compose build olefy-mailcow
+  args:
+    chdir: /opt/mailcow-dockerized
+  register: result_mailcow__build_olefy
+  ignore_errors: yes
+
+- name: Print build output
+  debug:
+    var: result_mailcow__build_olefy
+
+- name: Eval test success
+  set_fact:
+    result_mailcow__build_olefy_success: success
+  when: result_mailcow__build_olefy.rc == 0
+
+- name: Eval test failure
+  set_fact:
+    result_mailcow__build_olefy_success: failed
+  when: (result_mailcow__build_olefy_success is undefined)
+# end olefy
+
+# begin ejabberd
+- name: Build ejabberd-mailcow image
+  become: yes
+  command: docker-compose build ejabberd-mailcow
+  args:
+    chdir: /opt/mailcow-dockerized
+  register: result_mailcow__build_ejabberd
+  ignore_errors: yes
+
+- name: Print build output
+  debug:
+    var: result_mailcow__build_ejabberd
+
+- name: Eval test success
+  set_fact:
+    result_mailcow__build_ejabberd_success: success
+  when: result_mailcow__build_ejabberd.rc == 0
+
+- name: Eval test failure
+  set_fact:
+    result_mailcow__build_ejabberd_success: failed
+  when: (result_mailcow__build_ejabberd_success is undefined)
+# end ejabberd
+
+# begin rspamd
+- name: Build rspamd-mailcow image
+  become: yes
+  command: docker-compose build rspamd-mailcow
+  args:
+    chdir: /opt/mailcow-dockerized
+  register: result_mailcow__build_rspamd
+  ignore_errors: yes
+
+- name: Print build output
+  debug:
+    var: result_mailcow__build_rspamd
+
+- name: Eval test success
+  set_fact:
+    result_mailcow__build_rspamd_success: success
+  when: result_mailcow__build_rspamd.rc == 0
+
+- name: Eval test failure
+  set_fact:
+    result_mailcow__build_rspamd_success: failed
+  when: (result_mailcow__build_rspamd_success is undefined)
+# end rspamd
+
+# begin sogo
+- name: Build sogo-mailcow image
+  become: yes
+  command: docker-compose build sogo-mailcow
+  args:
+    chdir: /opt/mailcow-dockerized
+  register: result_mailcow__build_sogo
+  ignore_errors: yes
+
+- name: Print build output
+  debug:
+    var: result_mailcow__build_sogo
+
+- name: Eval test success
+  set_fact:
+    result_mailcow__build_sogo_success: success
+  when: result_mailcow__build_sogo.rc == 0
+
+- name: Eval test failure
+  set_fact:
+    result_mailcow__build_sogo_success: failed
+  when: (result_mailcow__build_sogo_success is undefined)
+# end sogo

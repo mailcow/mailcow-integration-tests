@@ -97,12 +97,17 @@
   import_tasks: tests/acme.yml
   when: mailcow__tests_test_acme
 
-- name: Generate report mailcow.email
-  import_tasks: reports/generate_mailcowemail.yml
-
 - name: Upload docker logs
   import_tasks: reports/docker_logs.yml
   tags: docker_logs
+
+- name: Run docker image build tests
+  import_tasks: tests/container_image_build.yml
+  when: mailcow__tests_docker_image_build
+  tags: docker_image_build
+
+- name: Generate report mailcow.email
+  import_tasks: reports/generate_mailcowemail.yml
 
 - name: Touch /opt/shutdown_flag
   become: yes

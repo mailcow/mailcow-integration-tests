@@ -291,3 +291,74 @@ mailcow_test_results:
     result: "{{ result_acme_certificate_sucess | default('Test result could not be determiend') }}"
     log: "{{ result_acme_certificate.stdout | default('Test result could not be determiend') }}"
     allow_failure: no
+# container builds
+  - container_unbound:
+    name: "Container build: unbound"
+    result: "{{ result_mailcow__build_unbound_success | default('Test result could not be determiend') }}"
+    log: "{{ result_mailcow__build_unbound.stdout | default('Test result could not be determiend') }}"
+    allow_failure: no
+  - container_clamd:
+    name: "Container build: clamd"
+    result: "{{ result_mailcow__build_clamd_success | default('Test result could not be determiend') }}"
+    log: "{{ result_mailcow__build_clamd.stdout | default('Test result could not be determiend') }}"
+    allow_failure: no
+  - container_php_fpm:
+    name: "Container build: php-fpm"
+    result: "{{ result_mailcow__build_php_fpm_success | default('Test result could not be determiend') }}"
+    log: "{{ result_mailcow__build_php_fpm.stdout | default('Test result could not be determiend') }}"
+    allow_failure: no
+  - container_dovecot:
+    name: "Container build: dovecot"
+    result: "{{ result_mailcow__build_dovecot_success | default('Test result could not be determiend') }}"
+    log: "{{ result_mailcow__build_dovecot.stdout | default('Test result could not be determiend') }}"
+    allow_failure: no
+  - container_postfix:
+    name: "Container build: postfix"
+    result: "{{ result_mailcow__build_postfix_success | default('Test result could not be determiend') }}"
+    log: "{{ result_mailcow__build_postfix.stdout | default('Test result could not be determiend') }}"
+    allow_failure: no
+  - container_acme:
+    name: "Container build: acme"
+    result: "{{ result_mailcow__build_acme_success | default('Test result could not be determiend') }}"
+    log: "{{ result_mailcow__build_acme.stdout | default('Test result could not be determiend') }}"
+    allow_failure: no
+  - container_netfilter:
+    name: "Container build: netfilter"
+    result: "{{ result_mailcow__build_netfilter_success | default('Test result could not be determiend') }}"
+    log: "{{ result_mailcow__build_netfilter.stdout | default('Test result could not be determiend') }}"
+    allow_failure: no
+  - container_watchdog:
+    name: "Container build: watchdog"
+    result: "{{ result_mailcow__build_watchdog_success | default('Test result could not be determiend') }}"
+    log: "{{ result_mailcow__build_watchdog.stdout | default('Test result could not be determiend') }}"
+    allow_failure: no
+  - container_dockerapi:
+    name: "Container build: dockerapi"
+    result: "{{ result_mailcow__build_dockerapi_success | default('Test result could not be determiend') }}"
+    log: "{{ result_mailcow__build_dockerapi.stdout | default('Test result could not be determiend') }}"
+    allow_failure: no
+  - container_solr:
+    name: "Container build: solr"
+    result: "{{ result_mailcow__build_solr_success | default('Test result could not be determiend') }}"
+    log: "{{ result_mailcow__build_solr.stdout | default('Test result could not be determiend') }}"
+    allow_failure: no
+  - container_olefy:
+    name: "Container build: olefy"
+    result: "{{ result_mailcow__build_olefy_success | default('Test result could not be determiend') }}"
+    log: "{{ result_mailcow__build_olefy.stdout | default('Test result could not be determiend') }}"
+    allow_failure: no
+  - container_ejabberd:
+    name: "Container build: ejabberd"
+    result: "{{ result_mailcow__build_ejabberd_success | default('Test result could not be determiend') }}"
+    log: "{{ result_mailcow__build_ejabberd.stdout | default('Test result could not be determiend') }}"
+    allow_failure: no
+  - container_rspamd:
+    name: "Container build: rspamd"
+    result: "{{ result_mailcow__build_rspamd_success | default('Test result could not be determiend') }}"
+    log: "{{ result_mailcow__build_rspamd.stdout | default('Test result could not be determiend') }}"
+    allow_failure: no
+  - container_sogo:
+    name: "Container build: sogo"
+    result: "{{ result_mailcow__build_sogo_success | default('Test result could not be determiend') }}"
+    log: "{{ result_mailcow__build_sogo.stdout | default('Test result could not be determiend') }}"
+    allow_failure: no

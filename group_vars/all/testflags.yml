@@ -63,3 +63,6 @@ mailcow_tests__test_read_only_api: yes
 
 # tests/acme.yml
 mailcow__tests_test_acme: yes
+
+# tests/container_image_build.yml
+mailcow__tests_docker_image_build: yes
