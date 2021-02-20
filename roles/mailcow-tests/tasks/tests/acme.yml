@@ -12,7 +12,7 @@
   set_fact:
     result_acme_certificate_sucess: success
   when: ('stdout' in result_acme_certificate) and
-        ("issuer=CN = (STAGING) Artificial Apricot R3" in result_acme_certificate.stdout)
+        ("issuer=C = US, O = (STAGING) Let's Encrypt, CN = (STAGING) Artificial Apricot R3" in result_acme_certificate.stdout)
 
 - name: Eval test failure
   set_fact:
