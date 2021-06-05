@@ -36,7 +36,7 @@
       zone: "{{ mailcow__dns_zone }}"
       record: "{{ mailcow__hostname_local_part }}"
       type: A
-      account_api_token: "{{ vault__cloudflare__apitoken }}"
+      api_token: "{{ vault__cloudflare__apitoken }}"
 
   - name: "Delete aaaa record for {{ mailcow__hostname }}"
     community.general.cloudflare_dns:
