@@ -6,8 +6,7 @@
     record: "{{ mailcow__hostname_local_part }}"
     type: A
     value: "{{ ansible_default_ipv4.address }}"
-    account_email: "{{ vault__cloudflare__email }}"
-    account_api_token: "{{ vault__cloudflare__apikey }}"
+    api_token: "{{ vault__cloudflare__apitoken }}"
 
 - name: "Create aaaa record for {{ mailcow__hostname }}"
   community.general.cloudflare_dns:
@@ -15,8 +14,7 @@
     record: "{{ mailcow__hostname_local_part }}"
     type: AAAA
     value: "{{ ansible_default_ipv6.address }}"
-    account_email: "{{ vault__cloudflare__email }}"
-    account_api_token: "{{ vault__cloudflare__apikey }}"
+    api_token: "{{ vault__cloudflare__apitoken }}"
 
 - name: "Create mx record for {{ mailcow__hostname }}"
   community.general.cloudflare_dns:
@@ -25,5 +23,4 @@
     priority: 10
     type: MX
     value: "{{ mailcow__hostname }}"
-    account_email: "{{ vault__cloudflare__email }}"
-    account_api_token: "{{ vault__cloudflare__apikey }}"
+    api_token: "{{ vault__cloudflare__apitoken }}"
