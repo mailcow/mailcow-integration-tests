@@ -108,7 +108,7 @@ namesleftpart[100]="vibrant"
 namesrightpart[0]="albattani"
 namesrightpart[1]="allen"
 namesrightpart[2]="almeida"
-namesrightpart[3]="antonelli"
+namesrightpart[3]="andre"
 namesrightpart[4]="ardinghelli"
 namesrightpart[5]="aryabhata"
 namesrightpart[6]="austin"
@@ -207,11 +207,20 @@ namesrightpart[98]="hertz"
 namesrightpart[99]="heyrovsky"
 namesrightpart[100]="hodgkin"
 
-namesleftpart_size=${#namesleftpart[@]}
-namesleftpart_index=$(($RANDOM % $namesleftpart_size))
+exit_loop="false"
 
-namesrightpart_size=${#namesrightpart[@]}
-namesrightpart_index=$(($RANDOM % $namesrightpart_size))
+while [ "$exit_loop" == "false" ]; do
+    namesleftpart_size=${#namesleftpart[@]}
+    namesleftpart_index=$(($RANDOM % $namesleftpart_size))
 
-echo ${namesleftpart[$namesleftpart_index]}.${namesrightpart[$namesrightpart_index]}
+    namesrightpart_size=${#namesrightpart[@]}
+    namesrightpart_index=$(($RANDOM % $namesrightpart_size))
 
+    name_generated=${namesleftpart[$namesleftpart_index]}.${namesrightpart[$namesrightpart_index]}
+    if [ "$name_generated" == "boring.andre" ]; then
+        exit_loop="false"
+    else
+      echo ${name_generated}
+      exit_loop="true"
+    fi
+done
