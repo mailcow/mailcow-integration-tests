@@ -12,8 +12,8 @@
     subject: "sendmail unencrypted test"
     body: "System {{ ansible_hostname }} says hello"
     secure: never
-  register: result_sendmail_no_tls
   ignore_errors: yes
+  register: result_sendmail_no_tls
 
 - name: Eval test success
   set_fact:
@@ -37,6 +37,7 @@
     subject: "sendmail encrypted test"
     body: System {{ ansible_hostname }} says hello
     secure: starttls
+  ignore_errors: yes
   register: result_sendmail_tls
 
 - name: Eval test success
