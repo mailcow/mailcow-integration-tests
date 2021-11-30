@@ -33,10 +33,6 @@
   import_tasks: tests/syncjob.yml
   when: mailcow__tests_test_syncjob
 
-- name: Run langauge coverage tests
-  import_tasks: tests/lang_coverage.yml
-  when: mailcow_tests__test_langcoverage
-
 - name: Run oAuth apps tests
   import_tasks: tests/oauth_apps.yml
   when: mailcow_tests__oauth_apps
