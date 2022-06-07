@@ -28,7 +28,6 @@ echo "ci_mailcow__api_key: $(openssl rand -hex 25)"  > /drone/src/group_vars/all
 echo "ci_mailcow__api_key_read_only: $(openssl rand -hex 25)"  > /drone/src/group_vars/all/drone_mailcow__api_key_read_only.yml
 echo "ci_mailcow__upload_results: true" > /drone/src/group_vars/all/mailcow__upload_results.yml
 
-domains[0]="010111010.xyz"
 domains[0]="4884884.xyz"
 domains[0]="8448448.xyz"
 domains_size=${#domains[@]}
