@@ -11,44 +11,6 @@ mailcow__config_skip_http_verification: y
 mailcow__upload_results_html: yes
 mailcow__upload_results_json: yes
 
-mailcow__lang_files:
-  - name: CA
-    file: lang.ca.json
-  - name: CS
-    file: lang.cs.json
-  - name: DE
-    file: lang.de.json
-  - name: ES
-    file: lang.es.json
-  - name: FI
-    file: lang.fi.json
-  - name: FR
-    file: lang.fr.json
-  - name: IT
-    file: lang.it.json
-  - name: LV
-    file: lang.lv.json
-  - name: NL
-    file: lang.nl.json
-  - name: PL
-    file: lang.pl.json
-  - name: PT
-    file: lang.pt.json
-  - name: RO
-    file: lang.ro.json
-  - name: RU
-    file: lang.ru.json
-  - name: SV
-    file: lang.sv.json
-  - name: SK
-    file: lang.sk.json
-  - name: HU
-    file: lang.hu.json
-  - name: KO
-    file: lang.ko.json
-  - name: ZH
-    file: lang.zh.json
-
 mailcow__pull_images:
     - mysql-mailcow
     - redis-mailcow
@@ -77,24 +39,24 @@ mailcow__docker_logs_directory: /opt/mailcow-logs
 mailcow__docker_logs_archive_path: "/opt/{{ mailcow__docker_logs_archive_name }}"
 mailcow__docker_logs_archive_name: logs-{{ drone_commit_hash }}-{{ mailcow__report_timestamp }}.zip
 mailcow__container_names:
-  - mailcowdockerized_acme-mailcow_1
-  - mailcowdockerized_clamd-mailcow_1
-  - mailcowdockerized_dockerapi-mailcow_1
-  - mailcowdockerized_dovecot-mailcow_1
-  - mailcowdockerized_ipv6nat-mailcow_1
-  - mailcowdockerized_memcached-mailcow_1
-  - mailcowdockerized_mysql-mailcow_1
-  - mailcowdockerized_netfilter-mailcow_1
-  - mailcowdockerized_nginx-mailcow_1
-  - mailcowdockerized_olefy-mailcow_1
-  - mailcowdockerized_php-fpm-mailcow_1
-  - mailcowdockerized_postfix-mailcow_1
-  - mailcowdockerized_redis-mailcow_1
-  - mailcowdockerized_rspamd-mailcow_1
-  - mailcowdockerized_sogo-mailcow_1
-  - mailcowdockerized_solr-mailcow_1
-  - mailcowdockerized_unbound-mailcow_1
-  - mailcowdockerized_watchdog-mailcow_1
+  - mailcowdockerized-acme-mailcow-1
+  - mailcowdockerized-clamd-mailcow-1
+  - mailcowdockerized-dockerapi-mailcow-1
+  - mailcowdockerized-dovecot-mailcow-1
+  - mailcowdockerized-ipv6nat-mailcow-1
+  - mailcowdockerized-memcached-mailcow-1
+  - mailcowdockerized-mysql-mailcow-1
+  - mailcowdockerized-netfilter-mailcow-1
+  - mailcowdockerized-nginx-mailcow-1
+  - mailcowdockerized-olefy-mailcow-1
+  - mailcowdockerized-php-fpm-mailcow-1
+  - mailcowdockerized-postfix-mailcow-1
+  - mailcowdockerized-redis-mailcow-1
+  - mailcowdockerized-rspamd-mailcow-1
+  - mailcowdockerized-sogo-mailcow-1
+  - mailcowdockerized-solr-mailcow-1
+  - mailcowdockerized-unbound-mailcow-1
+  - mailcowdockerized-watchdog-mailcow-1
 
 mailcow__hostname_local_part: "mail-{{ drone_commit_hash }}"
 mailcow__hostname: "{{ mailcow__hostname_local_part }}.{{ mailcow__dns_zone }}"

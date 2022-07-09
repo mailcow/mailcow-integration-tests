@@ -37,6 +37,7 @@
 - name: Wait 10 seconds before grabbing the rspamd logs
   wait_for:
     timeout: 10
+  delegate_to: localhost
 
 # Get Rspamd Symbols
 - name: Get Rspamd log using API

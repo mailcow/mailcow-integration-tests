@@ -20,6 +20,7 @@
       location: "{{ item.datacenter }}"
       state: absent
       api_token: "{{ vault__hcloud__token }}"
+    when: "'{{ ci_hcloud_server_name }}' in item.name"
     loop: "{{ hetzner_cloud_stats.hcloud_server_info }}"
     no_log: yes
 
@@ -28,7 +29,9 @@
       name: "{{ item.name }}"
       state: absent
       api_token: "{{ vault__hcloud__token }}"
+    when: "'{{ ci_hcloud_server_name }}' in item.name"
     loop: "{{ hetzner_cloud_stats.hcloud_server_info }}"
+    no_log: yes
 
   - name: "Delete a record for {{ mailcow__hostname }}"
     community.general.cloudflare_dns:

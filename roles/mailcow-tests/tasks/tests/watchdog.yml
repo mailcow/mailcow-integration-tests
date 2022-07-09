@@ -9,6 +9,7 @@
 - name: Wait 120 seconds
   wait_for:
     timeout: 120
+  delegate_to: localhost
 
 - name: Get watchdog log using API
   uri:
@@ -37,6 +38,7 @@
     - ('service' in item) and ('Postfix' in item.service)
     - ('lvl' in item) and ('100' not in item.lvl)
   loop: "{{ result_watchdog_log.json | json_query('[*]') }}"
+  ignore_errors: yes
 
 - set_fact:
     result_watchdog_log_success: failed
@@ -47,10 +49,11 @@
 - name: Wait 300 seconds
   wait_for:
     timeout: 300
+  delegate_to: localhost
 
 - name: Check if container is running again
   become: yes
-  command: docker inspect -f {% raw %}'{{.State.Running}}'{% endraw %} mailcowdockerized_postfix-mailcow_1
+  command: docker inspect -f {% raw %}'{{.State.Running}}'{% endraw %} mailcowdockerized-postfix-mailcow-1
   args:
     chdir: /opt/mailcow-dockerized
   register: result_watchdog_container_state

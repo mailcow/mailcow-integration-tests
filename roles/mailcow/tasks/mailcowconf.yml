@@ -1,29 +1,5 @@
 ---
 
-- name: Configure HTTP_PORT
-  replace:
-    path: /opt/mailcow-dockerized/mailcow.conf
-    regexp: "^HTTP_PORT=.*"
-    replace: "HTTP_PORT={{ mailcow__config_http_port }}"
-
-- name: Configure HTTP_BIND
-  replace:
-    path: /opt/mailcow-dockerized/mailcow.conf
-    regexp: "^HTTP_BIND=.*"
-    replace: "HTTP_BIND={{ mailcow__config_http_bind }}"
-
-- name: Configure HTTPS_PORT
-  replace:
-    path: /opt/mailcow-dockerized/mailcow.conf
-    regexp: "^HTTPS_PORT=.*"
-    replace: "HTTPS_PORT={{ mailcow__config_https_port }}"
-
-- name: Configure HTTPS_BIND
-  replace:
-    path: /opt/mailcow-dockerized/mailcow.conf
-    regexp: "^HTTPS_BIND=.*"
-    replace: "HTTPS_BIND={{ mailcow__config_https_bind }}"
-
 - name: Configure ACL_ANYONE
   replace:
     path: /opt/mailcow-dockerized/mailcow.conf

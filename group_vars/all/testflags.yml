@@ -16,10 +16,7 @@ mailcow__tests_test_sendmail: yes
 mailcow__tests_test_app_password: yes
 
 # tests/syncjob.yml
-mailcow__tests_test_syncjob: yes
-
-# tests/lang_coverage.yml
-mailcow_tests__test_langcoverage: yes
+mailcow__tests_test_syncjob: no
 
 # tests/oauth_apps.yml
 mailcow_tests__oauth_apps: yes

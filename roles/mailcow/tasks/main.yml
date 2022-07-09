@@ -87,12 +87,10 @@
 
 - name: Start mailcow container stack
   become: yes
-  community.general.docker_compose:
-    project_src: /opt/mailcow-dockerized
-    project_name: mailcowdockerized
-    state: present
-    build: no
-    pull: no
+  shell: |
+    docker-compose up -d
+  args:
+    chdir: /opt/mailcow-dockerized
 
 - name: Check if mailcow is up and returns status code 200
   uri:

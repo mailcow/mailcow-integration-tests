@@ -2,12 +2,9 @@
 
 - name: Stop mailcow container stack
   become: yes
-  community.general.docker_compose:
-    project_src: /opt/mailcow-dockerized
-    project_name: mailcowdockerized
-    state: absent
-    build: no
-    pull: no
+  shell: docker-compose down
+  args:
+    chdir: /opt/mailcow-dockerized
 
 - name: Remove docker volumes
   become: yes
@@ -16,13 +13,11 @@
 
 - name: Start mailcow container stack
   become: yes
-  community.general.docker_compose:
-    project_src: /opt/mailcow-dockerized
-    project_name: mailcowdockerized
-    state: present
-    build: no
-    pull: no
+  shell: docker-compose up -d
+  args:
+    chdir: /opt/mailcow-dockerized
 
 - name: Wait 120 seconds before starting tests
   wait_for:
     timeout: 120
+  delegate_to: localhost

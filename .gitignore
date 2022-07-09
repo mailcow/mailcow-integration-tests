@@ -5,7 +5,7 @@ keys/*
 hostvars.yml
 id_ssh_rsa
 id_ssh_rsa.pub
-group_vars/all/secrets.yml
+group_vars/all/secrets*.yml
 group_vars/all/localdev_conf.yml
 node_modules/*
 package-lock.json

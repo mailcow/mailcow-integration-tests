@@ -1,13 +1,11 @@
 ---
+# Deprecated and not used anymore!
 
 - name: Stop mailcow container stack
   become: yes
-  community.general.docker_compose:
-    project_src: /opt/mailcow-dockerized
-    project_name: mailcowdockerized
-    state: absent
-    build: no
-    pull: no
+  shell: docker-compose down
+  args:
+    chdir: /opt/mailcow-dockerized
 
 - name: Remove docker images and containers
   become: yes
@@ -276,30 +274,6 @@
     result_mailcow__build_olefy_success: failed
   when: (result_mailcow__build_olefy_success is undefined)
 # end olefy
-
-# begin ejabberd
-- name: Build ejabberd-mailcow image
-  become: yes
-  command: docker-compose build ejabberd-mailcow
-  args:
-    chdir: /opt/mailcow-dockerized
-  register: result_mailcow__build_ejabberd
-  ignore_errors: yes
-
-- name: Print build output
-  debug:
-    var: result_mailcow__build_ejabberd
-
-- name: Eval test success
-  set_fact:
-    result_mailcow__build_ejabberd_success: success
-  when: result_mailcow__build_ejabberd.rc == 0
-
-- name: Eval test failure
-  set_fact:
-    result_mailcow__build_ejabberd_success: failed
-  when: (result_mailcow__build_ejabberd_success is undefined)
-# end ejabberd
 
 # begin rspamd
 - name: Build rspamd-mailcow image

@@ -10,27 +10,6 @@
       name: hcloud
       state: present
 
-  - name: Gather hcloud server infos
-    hcloud_server_info:
-      api_token: "{{ vault__hcloud__token }}"
-    register: hetzner_cloud_stats
-
-  - name: Delete all mailcow integration test servers
-    hetzner.hcloud.hcloud_server:
-      name: "{{ item.name }}"
-      location: "{{ item.datacenter }}"
-      state: absent
-      api_token: "{{ vault__hcloud__token }}"
-    loop: "{{ hetzner_cloud_stats.hcloud_server_info }}"
-    no_log: yes
-
-  - name: Delete SSH Key from hcloud
-    hetzner.hcloud.hcloud_ssh_key:
-      name: "{{ item.name }}"
-      state: absent
-      api_token: "{{ vault__hcloud__token }}"
-    loop: "{{ hetzner_cloud_stats.hcloud_server_info }}"
-
   - name: Generate SSH Key
     openssh_keypair:
       path: "{{ playbook_dir }}/id_ssh_rsa"

@@ -60,19 +60,26 @@
     headers:
       X-API-Key: "{{ mailcow__api_key }}"
   register: result_sendmail_rspamd
+  until:
+    - ('json' in result_sendmail_rspamd)
+  retries: 5
+  delay: 10
+  ignore_errors: yes
 
 - set_fact:
     result_sendmail_rspamd_symbols_list: "{{ result_sendmail_rspamd.json[0].symbols | list }}"
+  ignore_errors: yes
 
 - name: Debug Rspamd symbols as list
   debug:
     var: result_sendmail_rspamd_symbols_list
+  ignore_errors: yes
 
 ## Symbol Checks
 - name: Eval test success
   set_fact:
     result_sendmail_rspamd_symbols_mailcow_auth_sucess: success
-  when: ('MAILCOW_AUTH' in result_sendmail_rspamd_symbols_list)
+  when: ('MAILCOW_AUTH' in result_sendmail_rspamd_symbols_list) and (result_sendmail_rspamd_symbols_list is defined)
 
 - name: Eval test failure
   set_fact:
@@ -82,7 +89,7 @@
 - name: Eval test success
   set_fact:
     result_sendmail_rspamd_symbols_dyn_rl_check_sucess: success
-  when: ('DYN_RL_CHECK' in result_sendmail_rspamd_symbols_list)
+  when: ('DYN_RL_CHECK' in result_sendmail_rspamd_symbols_list) and (result_sendmail_rspamd_symbols_list is defined)
 
 - name: Eval test failure
   set_fact:
@@ -92,7 +99,7 @@
 - name: Eval test success
   set_fact:
     result_sendmail_rspamd_symbols_dkim_signed_sucess: success
-  when: ('DKIM_SIGNED' in result_sendmail_rspamd_symbols_list)
+  when: ('DKIM_SIGNED' in result_sendmail_rspamd_symbols_list) and (result_sendmail_rspamd_symbols_list is defined)
 
 - name: Eval test failure
   set_fact:

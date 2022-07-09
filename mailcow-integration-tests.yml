@@ -2,7 +2,6 @@
 - name: Integration Tests
   hosts: all
   gather_facts: true
-  become: yes
   roles:
     - role: mailcow-tests
       tags: [ 'mailcow-tests' ]
