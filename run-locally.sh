@@ -2,6 +2,14 @@
 
 PHASE=$1
 
+if [ -z $PHASE ]; then
+    echo "Please select a phase:"
+    echo "setup"
+    echo "tests"
+    echo "teardown"
+    exit 1
+fi
+
 if [ $PHASE == "setup" ]; then
     ansible-playbook mailcow-start-server.yml --diff
     sleep 10

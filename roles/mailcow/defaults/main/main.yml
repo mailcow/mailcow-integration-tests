@@ -3,4 +3,4 @@
 mailcow__git_repo: https://github.com/mailcow/mailcow-dockerized.git
 mailcow__git_version: master
 
-timezone_selection: Europe/Berlin
+mailcow__timezone: Europe/Berlin

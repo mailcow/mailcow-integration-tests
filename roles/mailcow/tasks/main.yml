@@ -39,7 +39,8 @@
   shell: ./generate_config.sh
   environment:
     MAILCOW_HOSTNAME: "{{ mailcow__hostname }}"
-    MAILCOW_TZ: "{{ timezone_selection }}"
+    MAILCOW_TZ: "{{ mailcow__timezone }}"
+    MAILCOW_BRANCH: "{{ mailcow__git_version }}"
   args:
     executable: /bin/bash
     chdir: /opt/mailcow-dockerized
